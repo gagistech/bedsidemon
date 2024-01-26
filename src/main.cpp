@@ -12,7 +12,14 @@ public:
 		        return wp;
 			}())
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../res"));
+		this->gui.init_standard_widgets(*this->get_res_file());
+
+		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
+
+		auto c = this->gui.context.get().inflater.inflate(
+				*this->get_res_file("res/main.gui")
+			);
+		this->gui.set_root(c);
     }
 };
 

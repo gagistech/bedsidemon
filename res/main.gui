@@ -1,0 +1,69 @@
+@row{
+	@column{
+		lp{
+			dx{0}
+			dy{fill}
+			weight{1}
+		}
+
+		@pile{
+			lp{
+				dx{fill}
+				weight{0}
+				dy{min}
+			}
+			/*
+			@image{
+				image{ruis_img_gauge_scale}
+				keep_aspect_ratio{true}
+				lp{
+					dx{fill} dy{min}
+				}
+			*/
+
+			@margins{
+				defs{w{0.08}}
+				lp{dx{fill} dy{fill}}
+				weight_left{${w}}
+				weight_right{${w}}
+				weight_top{${w}}
+				weight_bottom{${w}}
+/*
+				@Gauge{
+					id{gauge}
+					lp{dx{fill} dy{fill}}
+					armFraction{0.75}
+					startAngle{225}
+					endAngle{-45}
+				}
+*/
+			}
+		}
+
+		/*
+		@CubeWidget{
+			id{cubeWidget}
+			lp{
+				dx{fill}
+				dy{0}
+				weight{1}
+			}
+		}
+		*/
+		@push_button{
+			id{btnToggleSpinning}
+			lp{dx{fill}dy{40pp}}
+			@text{
+				text{"Toggle cube spinning"}
+			}
+		}
+	}
+
+	@vertical_scroll_bar{
+		id{gauge_slider}
+		lp{
+			dy{max}
+			dx{50pp}
+		}
+	}
+}
