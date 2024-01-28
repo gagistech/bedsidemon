@@ -1,9 +1,11 @@
 #include <ruisapp/application.hpp>
 
+#include "contec_cms50d_plus.hpp"
+
 namespace bedsidemon{
 
 class application : public ruisapp::application{
-
+	contec_cms50d_plus spo2_sensor;
 public:
     application() :
 			ruisapp::application("ruis-tests", [](){
