@@ -44,6 +44,8 @@ contec_cms50d_plus::~contec_cms50d_plus()
 
 std::optional<uint32_t> contec_cms50d_plus::on_loop()
 {
+	auto triggered = this->wait_set.get_triggered();
+
 	std::cout << "loop" << std::endl;
 	return {};
 }

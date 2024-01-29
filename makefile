@@ -30,7 +30,7 @@ this_test_deps := $(prorab_this_name)
 this_test_ld_path := ../src/out/$(c)
 $(eval $(prorab-run))
 
+this_src_dir := src
 $(eval $(prorab-clang-format))
-
 this_license_file := LICENSE
 $(eval $(prorab-license))
