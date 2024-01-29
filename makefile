@@ -1,5 +1,7 @@
 include prorab.mk
 include prorab-test.mk
+include prorab-clang-format.mk
+include prorab-license.mk
 
 this_name := bedsidemon
 
@@ -18,7 +20,7 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += -lruisapp-opengl -lnitki -lruis -lutki -lm
+this_ldlibs += -lruisapp-opengl -lnitki -lopros -lruis -lutki -lm
 
 $(eval $(prorab-build-app))
 
@@ -27,3 +29,8 @@ this_test_cmd := $(prorab_this_name)
 this_test_deps := $(prorab_this_name)
 this_test_ld_path := ../src/out/$(c)
 $(eval $(prorab-run))
+
+$(eval $(prorab-clang-format))
+
+this_license_file := LICENSE
+$(eval $(prorab-license))

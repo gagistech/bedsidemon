@@ -21,29 +21,29 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <nitki/loop_thread.hpp>
-
-#include "serial_port.hpp"
+#include <opros/waitable.hpp>
+#include <utki/span.hpp>
 
 namespace bedsidemon {
 
-class contec_cms50d_plus : private nitki::loop_thread
+class serial_port : public opros::waitable
 {
-	serial_port port;
-
 public:
-	contec_cms50d_plus();
+	serial_port(std::string_view port_filename, unsigned baud_rate);
 
-	contec_cms50d_plus(const contec_cms50d_plus&) = delete;
-	contec_cms50d_plus& operator=(const contec_cms50d_plus&) = delete;
+	serial_port(const serial_port&) = delete;
+	serial_port& operator=(const serial_port&) = delete;
 
-	contec_cms50d_plus(contec_cms50d_plus&&) = delete;
-	contec_cms50d_plus& operator=(contec_cms50d_plus&&) = delete;
+	serial_port(serial_port&&) = delete;
+	serial_port& operator=(serial_port&&) = delete;
 
-	~contec_cms50d_plus() override;
+	~serial_port();
 
-private:
-	std::optional<uint32_t> on_loop() override;
+	void send(utki::span<const uint8_t> data);
+
+	// return number of bytes received.
+	// return 0 in case port is closed/disconnected.
+	size_t receive(utki::span<uint8_t> buffer);
 };
 
 } // namespace bedsidemon
