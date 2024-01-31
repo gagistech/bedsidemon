@@ -69,12 +69,13 @@ serial_port::~serial_port()
 	close(this->handle);
 }
 
-void serial_port::send(utki::span<const uint8_t> data)
+size_t serial_port::send(utki::span<const uint8_t> data)
 {
 	auto res = write(this->handle, data.data(), data.size_bytes());
 	if (res < 0) {
 		throw std::runtime_error("serial_port::send(): failed");
 	}
+    return res;
 }
 
 size_t serial_port::receive(utki::span<uint8_t> buffer)

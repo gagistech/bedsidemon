@@ -39,7 +39,7 @@ public:
 
 	~serial_port();
 
-	void send(utki::span<const uint8_t> data);
+	size_t send(utki::span<const uint8_t> data);
 
 	// return number of bytes received.
 	// return 0 in case port is closed/disconnected.

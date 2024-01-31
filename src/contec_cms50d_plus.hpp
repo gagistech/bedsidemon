@@ -31,6 +31,9 @@ class contec_cms50d_plus : private nitki::loop_thread
 {
 	serial_port port;
 
+    std::vector<uint8_t> send_buffer;
+    std::vector<uint8_t> recieve_buffer;
+
 public:
 	contec_cms50d_plus();
 
@@ -44,6 +47,8 @@ public:
 
 private:
 	std::optional<uint32_t> on_loop() override;
+
+    void send(std::vector<uint8_t> data);
 };
 
 } // namespace bedsidemon
