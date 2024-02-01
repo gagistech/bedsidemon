@@ -27,7 +27,7 @@ using namespace std::string_view_literals;
 
 using namespace bedsidemon;
 
-constexpr auto serial_port_baud_rate = 115200;
+constexpr auto serial_port_baud_rate = baud_rate::baud_115200;
 
 contec_cms50d_plus::contec_cms50d_plus() :
 	nitki::loop_thread(1),
@@ -67,6 +67,7 @@ std::optional<uint32_t> contec_cms50d_plus::on_loop()
                 ASSERT(num_sent <= this->send_buffer.size())
                 this->send_buffer.erase(this->send_buffer.begin(), utki::next(this->send_buffer.begin(), num_sent));
                 if(this->send_buffer.empty()){
+                    std::cout << "all sent" << std::endl;
                     this->wait_set.change(this->port, opros::ready::read, &this->port);
                 }
             }

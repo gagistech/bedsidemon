@@ -29,7 +29,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace bedsidemon;
 
-serial_port::serial_port(std::string_view port_filename, unsigned baud_rate) :
+namespace{
+std::array<speed_t, size_t(baud_rate::enum_size)> baud_rate_map = {
+    B50,
+    B75,
+    B110,
+    B134,
+    B150,
+    B200,
+    B300,
+    B600,
+    B1200,
+    B1800,
+    B2400,
+    B4800,
+    B9600,
+    B19200,
+    B38400,
+    B57600,
+    B115200,
+    B230400,
+    B460800,
+    B500000,
+    B576000,
+    B921600,
+    B1000000,
+    B1152000,
+    B1500000,
+    B2000000
+};
+}
+
+serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 	opros::waitable([&]() {
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
 		int fd = open(utki::make_string(port_filename).c_str(), O_RDWR | O_NOCTTY);
@@ -41,17 +72,19 @@ serial_port::serial_port(std::string_view port_filename, unsigned baud_rate) :
 			close(fd);
 		});
 
-		// TODO: move setting port config to the classe's public method
-		termios newtermios{};
+		// TODO: move setting port config to the class's public method
+		termios newtermios{0};
 		newtermios.c_cflag = CBAUD | CS8 | CLOCAL | CREAD;
-		newtermios.c_iflag = IGNPAR;
+		newtermios.c_iflag = IGNPAR | IGNBRK;
 		newtermios.c_oflag = 0;
 		newtermios.c_lflag = 0;
-		newtermios.c_cc[VMIN] = 1;
+		newtermios.c_cc[VMIN] = 0;
 		newtermios.c_cc[VTIME] = 0;
 
-		cfsetospeed(&newtermios, baud_rate);
-		cfsetispeed(&newtermios, baud_rate);
+        ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size))
+        speed_t br = baud_rate_map[size_t(baud_rate)];
+		cfsetospeed(&newtermios, br);
+		cfsetispeed(&newtermios, br);
 
 		if (tcflush(fd, TCIOFLUSH) == -1) {
 			throw std::runtime_error("serial_port(): could not flush serial port");
