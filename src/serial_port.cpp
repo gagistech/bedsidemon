@@ -46,7 +46,7 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 		}
 
 		utki::scope_exit scope_exit([&]() {
-			close(fd);
+			::close(fd);
 		});
 
 		// TODO: move setting port config to the class's public method
@@ -81,7 +81,10 @@ serial_port::~serial_port()
 
 void serial_port::close()
 {
-	close(this->handle);
+	::close(this->handle);
+
+	// set invalid file descriptor because close() can be called again on closed serail port
+	this->handle = -1;
 }
 
 size_t serial_port::send(utki::span<const uint8_t> data)
