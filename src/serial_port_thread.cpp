@@ -40,19 +40,21 @@ serial_port_thread::~serial_port_thread()
 	this->wait_set.remove(this->port);
 }
 
-void serial_port_thread::on_quit(){
+void serial_port_thread::on_quit()
+{
 	this->port.close();
 	this->on_port_closed();
 }
+
 // TODO: close port in loop_thread::on_quit()
 
 void serial_port_thread::send(std::vector<uint8_t> data)
 {
 	std::lock_guard lock_guard(this->send_buffer_mutex);
 
-	if(this->send_buffer.empty()){
+	if (this->send_buffer.empty()) {
 		this->send_buffer = std::move(data);
-	}else{
+	} else {
 		this->send_buffer.insert(this->send_buffer.end(), data.begin(), data.end());
 	}
 
@@ -95,7 +97,7 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 #endif
 				this->on_data_received(received_span);
 			}
-			if(t.flags.get(opros::ready::error)){
+			if (t.flags.get(opros::ready::error)) {
 				std::cout << "port error" << std::endl;
 				this->quit();
 			}

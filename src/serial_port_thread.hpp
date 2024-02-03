@@ -55,7 +55,7 @@ public:
 
 private:
 	std::optional<uint32_t> on_loop() override;
-	void on_quit()override;
+	void on_quit() override;
 };
 
 } // namespace bedsidemon

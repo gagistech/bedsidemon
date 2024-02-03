@@ -79,7 +79,8 @@ serial_port::~serial_port()
 	this->close();
 }
 
-void serial_port::close(){
+void serial_port::close()
+{
 	close(this->handle);
 }
 
