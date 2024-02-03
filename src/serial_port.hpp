@@ -26,35 +26,35 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace bedsidemon {
 
-enum class baud_rate{
-    baud_50,
-    baud_75,
-    baud_110,
-    baud_134,
-    baud_150,
-    baud_200,
-    baud_300,
-    baud_600,
-    baud_1200,
-    baud_1800,
-    baud_2400,
-    baud_4800,
-    baud_9600,
-    baud_19200,
-    baud_38400,
-    baud_57600,
-    baud_115200,
-    baud_230400,
-    baud_460800,
-    baud_500000,
-    baud_576000,
-    baud_921600,
-    baud_1000000,
-    baud_1152000,
-    baud_1500000,
-    baud_2000000,
+enum class baud_rate {
+	baud_50,
+	baud_75,
+	baud_110,
+	baud_134,
+	baud_150,
+	baud_200,
+	baud_300,
+	baud_600,
+	baud_1200,
+	baud_1800,
+	baud_2400,
+	baud_4800,
+	baud_9600,
+	baud_19200,
+	baud_38400,
+	baud_57600,
+	baud_115200,
+	baud_230400,
+	baud_460800,
+	baud_500000,
+	baud_576000,
+	baud_921600,
+	baud_1000000,
+	baud_1152000,
+	baud_1500000,
+	baud_2000000,
 
-    enum_size
+	enum_size
 };
 
 class serial_port : public opros::waitable

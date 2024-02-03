@@ -19,39 +19,36 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include <ruisapp/application.hpp>
+#pragma once
 
-#include "contec_cms50d_plus.hpp"
+#include <nitki/loop_thread.hpp>
+
+#include "serial_port.hpp"
 
 namespace bedsidemon {
 
-class application : public ruisapp::application
+class serial_port_thread : private nitki::loop_thread
 {
-	contec_cms50d_plus spo2_sensor;
+	serial_port port;
+
+	std::vector<uint8_t> send_buffer;
+	std::vector<uint8_t> recieve_buffer;
 
 public:
-	application() :
-		ruisapp::application(
-			"ruis-tests",
-			[]() {
-				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
-				return wp;
-			}()
-		),
-		spo2_sensor("/dev/ttyUSB0")
-	{
-		this->gui.init_standard_widgets(*this->get_res_file());
+	serial_port_thread(std::string_view port_filename, baud_rate speed);
 
-		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
+	serial_port_thread(const serial_port_thread&) = delete;
+	serial_port_thread& operator=(const serial_port_thread&) = delete;
 
-		auto c = this->gui.context.get().inflater.inflate(*this->get_res_file("res/main.gui"));
-		this->gui.set_root(c);
-	}
+	serial_port_thread(serial_port_thread&&) = delete;
+	serial_port_thread& operator=(serial_port_thread&&) = delete;
+
+	~serial_port_thread() override;
+
+private:
+	std::optional<uint32_t> on_loop() override;
+
+	void send(std::vector<uint8_t> data);
 };
-
-const ruisapp::application_factory app_fac([](auto args) {
-	return std::make_unique<application>();
-});
 
 } // namespace bedsidemon

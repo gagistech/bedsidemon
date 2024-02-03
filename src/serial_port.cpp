@@ -29,36 +29,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace bedsidemon;
 
-namespace{
+namespace {
 std::array<speed_t, size_t(baud_rate::enum_size)> baud_rate_map = {
-    B50,
-    B75,
-    B110,
-    B134,
-    B150,
-    B200,
-    B300,
-    B600,
-    B1200,
-    B1800,
-    B2400,
-    B4800,
-    B9600,
-    B19200,
-    B38400,
-    B57600,
-    B115200,
-    B230400,
-    B460800,
-    B500000,
-    B576000,
-    B921600,
-    B1000000,
-    B1152000,
-    B1500000,
-    B2000000
+	B50,     B75,     B110,    B134,    B150,     B200,     B300,     B600,    B1200,
+	B1800,   B2400,   B4800,   B9600,   B19200,   B38400,   B57600,   B115200, B230400,
+	B460800, B500000, B576000, B921600, B1000000, B1152000, B1500000, B2000000
 };
-}
+} // namespace
 
 serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 	opros::waitable([&]() {
@@ -81,8 +58,8 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 		newtermios.c_cc[VMIN] = 0;
 		newtermios.c_cc[VTIME] = 0;
 
-        ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size))
-        speed_t br = baud_rate_map[size_t(baud_rate)];
+		ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size))
+		speed_t br = baud_rate_map[size_t(baud_rate)];
 		cfsetospeed(&newtermios, br);
 		cfsetispeed(&newtermios, br);
 
@@ -108,7 +85,7 @@ size_t serial_port::send(utki::span<const uint8_t> data)
 	if (res < 0) {
 		throw std::runtime_error("serial_port::send(): failed");
 	}
-    return res;
+	return res;
 }
 
 size_t serial_port::receive(utki::span<uint8_t> buffer)
