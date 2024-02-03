@@ -46,6 +46,7 @@ public:
 
 	~serial_port_thread() override;
 
+	// this method is thread safe
 	void send(std::vector<uint8_t> data);
 
 	// these callbacks are invoked from within this thread
