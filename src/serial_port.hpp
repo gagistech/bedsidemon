@@ -75,6 +75,8 @@ public:
 	// return number of bytes received.
 	// return 0 in case port is closed/disconnected.
 	size_t receive(utki::span<uint8_t> buffer);
+
+	void close();
 };
 
 } // namespace bedsidemon

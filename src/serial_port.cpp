@@ -76,6 +76,10 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 
 serial_port::~serial_port()
 {
+	this->close();
+}
+
+void serial_port::close(){
 	close(this->handle);
 }
 

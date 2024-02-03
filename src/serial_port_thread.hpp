@@ -31,8 +31,9 @@ class serial_port_thread : private nitki::loop_thread
 {
 	serial_port port;
 
+	std::mutex send_buffer_mutex;
+
 	std::vector<uint8_t> send_buffer;
-	std::vector<uint8_t> recieve_buffer;
 
 public:
 	serial_port_thread(std::string_view port_filename, baud_rate speed);
@@ -45,10 +46,16 @@ public:
 
 	~serial_port_thread() override;
 
+	void send(std::vector<uint8_t> data);
+
+	// these callbacks are invoked from within this thread
+	virtual void on_data_sent() = 0;
+	virtual void on_data_received(utki::span<const uint8_t> data) = 0;
+	virtual void on_port_closed() = 0;
+
 private:
 	std::optional<uint32_t> on_loop() override;
-
-	void send(std::vector<uint8_t> data);
+	void on_quit()override;
 };
 
 } // namespace bedsidemon

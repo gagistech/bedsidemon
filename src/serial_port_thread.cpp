@@ -31,8 +31,6 @@ serial_port_thread::serial_port_thread(std::string_view port_filename, baud_rate
 {
 	this->wait_set.add(this->port, opros::ready::read, &this->port);
 	this->start();
-
-	this->send({0x7d, 0x81, 0xa1, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80});
 }
 
 serial_port_thread::~serial_port_thread()
@@ -42,11 +40,21 @@ serial_port_thread::~serial_port_thread()
 	this->wait_set.remove(this->port);
 }
 
+void serial_port_thread::on_quit(){
+	this->port.close();
+	this->on_port_closed();
+}
+// TODO: close port in loop_thread::on_quit()
+
 void serial_port_thread::send(std::vector<uint8_t> data)
 {
-	ASSERT(this->send_buffer.empty())
+	std::lock_guard lock_guard(this->send_buffer_mutex);
 
-	this->send_buffer = std::move(data);
+	if(this->send_buffer.empty()){
+		this->send_buffer = std::move(data);
+	}else{
+		this->send_buffer.insert(this->send_buffer.end(), data.begin(), data.end());
+	}
 
 	this->wait_set.change(this->port, opros::ready::read | opros::ready::write, &this->port);
 }
@@ -60,12 +68,15 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 	for (const auto& t : triggered) {
 		if (t.user_data == &this->port) {
 			if (t.flags.get(opros::ready::write)) {
+				std::lock_guard(this->send_buffer_mutex);
+
 				auto num_sent = this->port.send(this->send_buffer);
 				ASSERT(num_sent <= this->send_buffer.size())
 				this->send_buffer.erase(this->send_buffer.begin(), utki::next(this->send_buffer.begin(), num_sent));
 				if (this->send_buffer.empty()) {
-					std::cout << "all sent" << std::endl;
+					// std::cout << "all sent" << std::endl;
 					this->wait_set.change(this->port, opros::ready::read, &this->port);
+					this->on_data_sent();
 				}
 			}
 			if (t.flags.get(opros::ready::read)) {
@@ -74,16 +85,19 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 				auto num_received = this->port.receive(buffer);
 				ASSERT(num_received <= buffer.size())
 
+				auto received_span = utki::make_span(buffer.data(), num_received);
 #ifdef DEBUG
 				std::cout << "received = ";
-				for (const auto& c : buffer) {
+				for (const auto& c : received_span) {
 					std::cout << c;
 				}
 				std::cout << std::endl;
 #endif
-
-				this->recieve_buffer
-					.insert(this->recieve_buffer.end(), buffer.begin(), utki::next(buffer.begin(), num_received));
+				this->on_data_received(received_span);
+			}
+			if(t.flags.get(opros::ready::error)){
+				std::cout << "port error" << std::endl;
+				this->quit();
 			}
 		}
 	}
