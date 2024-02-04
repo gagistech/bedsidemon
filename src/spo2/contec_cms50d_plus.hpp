@@ -31,6 +31,8 @@ class contec_cms50d_plus : private serial_port_thread
     } packet_v;
 
     bool is_sending = false;
+
+    unsigned num_live_data_packages_received = 0;
 public:
 	contec_cms50d_plus(std::string_view port_filename);
 

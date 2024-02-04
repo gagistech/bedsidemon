@@ -171,5 +171,14 @@ void contec_cms50d_plus::handle_packet(){
 		std::cout << "\t" << "pi = " << unsigned(data.pi) << "\n";
 
 		std::cout << std::endl;
+
+		// CMS50D+ has limitation of sending live data for only 30 seconds after it was requested.
+		// Workaround this limitation by requesting live data every ~15 seconds, assuming that it sends
+		// about 60 live data packets per second.
+		++this->num_live_data_packages_received;
+		if(this->num_live_data_packages_received > 60 * 15){
+			this->num_live_data_packages_received = 0;
+			this->request_live_data();
+		}
 	}
 }
