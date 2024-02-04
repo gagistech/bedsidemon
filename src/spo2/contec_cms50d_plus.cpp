@@ -91,8 +91,10 @@ void contec_cms50d_plus::handle_packet_type_byte(uint8_t byte){
 		case live_data_packet_type:
 			this->packet_v.type = packet_type::live_data;
 			this->packet_v.num_bytes_to_read = 7;
+			std::cout << "live data packet" << std::endl;
 			break;
 		default:
+			std::cout << "packet type = " << byte << std::endl;
 			// unknown packet, ignore
 			// remain in wait_response state
 			return;
@@ -109,12 +111,49 @@ void contec_cms50d_plus::apply_packet_high_bits(){
 	}
 }
 
-void contec_cms50d_plus::handle_packet(){
-	std::cout << "handle packet, high bits = " << std::hex << "0x" << unsigned(this->packet_v.high_bits) << std::endl;
-	for(const auto& b : this->packet_v.buffer){
-		std::cout << "0x" << std::hex << unsigned(b) << " ";
-	}
-	std::cout << std::endl;
+struct live_data
+{
+	enum class status{
+		finger_out,
+		searching
+	};
 
-	// TODO:
+	uint8_t signal_strength;
+
+	bool pulse_beep;
+
+	uint8_t waveform_point;
+
+	uint8_t pulse_rate; // 0xff = invalid
+
+	uint8_t spo2; // oxygenation, %, >100 = invalid
+};
+
+void contec_cms50d_plus::handle_packet(){
+	// std::cout << "handle packet, high bits = " << std::hex << "0x" << unsigned(this->packet_v.high_bits) << std::endl;
+	// for(const auto& b : this->packet_v.buffer){
+	// 	std::cout << "0x" << std::hex << unsigned(b) << " ";
+	// }
+	// std::cout << std::endl;
+
+	if(this->packet_v.type == packet_type::live_data){
+		live_data data;
+
+		data.signal_strength = this->packet_v.buffer[0] & utki::lower_nibble_mask;
+
+		data.pulse_beep = (this->packet_v.buffer[0] & 0b01000000) != 0;
+
+		data.waveform_point = this->packet_v.buffer[1] & 0x7f;
+
+		data.pulse_rate = this->packet_v.buffer[3];
+		data.spo2 = this->packet_v.buffer[4];
+
+		std::cout << "signal_strength = " << unsigned(data.signal_strength) << "\n";
+		std::cout << "\t" << "pulse_beep = " << data.pulse_beep << "\n";
+		std::cout << "\t" << "waveform_point = " << unsigned(data.waveform_point) << "\n";
+		std::cout << "\t" << "pulse_rate = " << unsigned(data.pulse_rate) << "\n";
+		std::cout << "\t" << "spo2 = " << unsigned(data.spo2) << "\n";
+
+		std::cout << std::endl;
+	}
 }
