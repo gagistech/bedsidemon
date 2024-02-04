@@ -83,6 +83,7 @@ void contec_cms50d_plus::feed(uint8_t byte){
 
 namespace{
 constexpr auto live_data_packet_type = 0x01;
+constexpr auto live_data_packet_size = 7;
 }
 
 void contec_cms50d_plus::handle_packet_type_byte(uint8_t byte){
@@ -90,7 +91,7 @@ void contec_cms50d_plus::handle_packet_type_byte(uint8_t byte){
 	switch(byte){
 		case live_data_packet_type:
 			this->packet_v.type = packet_type::live_data;
-			this->packet_v.num_bytes_to_read = 7;
+			this->packet_v.num_bytes_to_read = live_data_packet_size;
 			std::cout << "live data packet" << std::endl;
 			break;
 		default:
@@ -113,20 +114,25 @@ void contec_cms50d_plus::apply_packet_high_bits(){
 
 struct live_data
 {
-	enum class status{
-		finger_out,
-		searching
-	};
-
 	uint8_t signal_strength;
 
+	bool searching_time_too_long;
+
 	bool pulse_beep;
+
+	bool finger_out;
+
+	bool searching_pulse;
+
+	bool is_pi_data_valid;
 
 	uint8_t waveform_point;
 
 	uint8_t pulse_rate; // 0xff = invalid
 
 	uint8_t spo2; // oxygenation, %, >100 = invalid
+
+	uint16_t pi;
 };
 
 void contec_cms50d_plus::handle_packet(){
@@ -137,22 +143,32 @@ void contec_cms50d_plus::handle_packet(){
 	// std::cout << std::endl;
 
 	if(this->packet_v.type == packet_type::live_data){
+		ASSERT(this->packet_v.buffer.size() == live_data_packet_size)
 		live_data data;
 
 		data.signal_strength = this->packet_v.buffer[0] & utki::lower_nibble_mask;
-
+		data.searching_time_too_long = (this->packet_v.buffer[0] & 0x10) != 0;
 		data.pulse_beep = (this->packet_v.buffer[0] & 0b01000000) != 0;
+		data.finger_out = (this->packet_v.buffer[0] & 0x80) != 0;
 
 		data.waveform_point = this->packet_v.buffer[1] & 0x7f;
+		data.searching_pulse = (this->packet_v.buffer[1] & 0x80) != 0;
+		data.is_pi_data_valid = (this->packet_v.buffer[2] & 0x10) == 0;
 
 		data.pulse_rate = this->packet_v.buffer[3];
 		data.spo2 = this->packet_v.buffer[4];
+		data.pi = utki::deserialize16le(&this->packet_v.buffer[5]);
 
 		std::cout << "signal_strength = " << unsigned(data.signal_strength) << "\n";
+		std::cout << "\t" << "searching_time_too_long = " << data.searching_time_too_long << "\n";
 		std::cout << "\t" << "pulse_beep = " << data.pulse_beep << "\n";
+		std::cout << "\t" << "finger_out = " << data.finger_out << "\n";
 		std::cout << "\t" << "waveform_point = " << unsigned(data.waveform_point) << "\n";
+		std::cout << "\t" << "searching_pulse = " << data.searching_pulse << "\n";
+		std::cout << "\t" << "is_pi_data_valid = " << data.is_pi_data_valid << "\n";
 		std::cout << "\t" << "pulse_rate = " << unsigned(data.pulse_rate) << "\n";
 		std::cout << "\t" << "spo2 = " << unsigned(data.spo2) << "\n";
+		std::cout << "\t" << "pi = " << unsigned(data.pi) << "\n";
 
 		std::cout << std::endl;
 	}
