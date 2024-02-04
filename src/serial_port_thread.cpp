@@ -46,8 +46,6 @@ void serial_port_thread::on_quit()
 	this->on_port_closed();
 }
 
-// TODO: close port in loop_thread::on_quit()
-
 void serial_port_thread::send(std::vector<uint8_t> data)
 {
 	std::lock_guard lock_guard(this->send_buffer_mutex);
@@ -65,7 +63,7 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 {
 	auto triggered = this->wait_set.get_triggered();
 
-	std::cout << "loop: triggered.size() = " << triggered.size() << std::endl;
+	// std::cout << "loop: triggered.size() = " << triggered.size() << std::endl;
 
 	for (const auto& t : triggered) {
 		if (t.user_data == &this->port) {
@@ -88,13 +86,13 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 				ASSERT(num_received <= buffer.size())
 
 				auto received_span = utki::make_span(buffer.data(), num_received);
-#ifdef DEBUG
-				std::cout << "received = ";
-				for (const auto& c : received_span) {
-					std::cout << c;
-				}
-				std::cout << std::endl;
-#endif
+
+				// std::cout << "received = ";
+				// for (const auto& c : received_span) {
+				// 	std::cout << c;
+				// }
+				// std::cout << std::endl;
+
 				this->on_data_received(received_span);
 			}
 			if (t.flags.get(opros::ready::error)) {
