@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruisapp/application.hpp>
 
-#include "contec_cms50d_plus.hpp"
+#include "spo2/contec_cms50d_plus.hpp"
 
 namespace bedsidemon {
 

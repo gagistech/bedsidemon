@@ -1,6 +1,6 @@
 #pragma once
 
-#include "serial_port_thread.hpp"
+#include "../serial_port_thread.hpp"
 
 namespace bedsidemon {
 
