@@ -30,7 +30,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace bedsidemon;
 
 namespace {
-std::array<speed_t, size_t(baud_rate::enum_size)> baud_rate_map = {
+const std::array<speed_t, size_t(baud_rate::enum_size)> baud_rate_map = {
 	B50,     B75,     B110,    B134,    B150,     B200,     B300,     B600,    B1200,
 	B1800,   B2400,   B4800,   B9600,   B19200,   B38400,   B57600,   B115200, B230400,
 	B460800, B500000, B576000, B921600, B1000000, B1152000, B1500000, B2000000

@@ -68,7 +68,7 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 	for (const auto& t : triggered) {
 		if (t.user_data == &this->port) {
 			if (t.flags.get(opros::ready::write)) {
-				std::lock_guard(this->send_buffer_mutex);
+				std::lock_guard lock_guard(this->send_buffer_mutex);
 
 				auto num_sent = this->port.send(this->send_buffer);
 				ASSERT(num_sent <= this->send_buffer.size())
@@ -81,7 +81,7 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 			}
 			if (t.flags.get(opros::ready::read)) {
 				constexpr auto receive_buffer_size = 0x100;
-				std::array<uint8_t, receive_buffer_size> buffer;
+				std::array<uint8_t, receive_buffer_size> buffer{};
 				auto num_received = this->port.receive(buffer);
 				ASSERT(num_received <= buffer.size())
 
