@@ -26,6 +26,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 namespace bedsidemon {
 
 class spo2_parameter_window : public ruis::widget
-{};
+{
+public:
+	spo2_parameter_window(utki::shared_ref<ruis::context> context) :
+		ruis::widget(std::move(context), tml::forest())
+	{}
+};
 
 } // namespace bedsidemon

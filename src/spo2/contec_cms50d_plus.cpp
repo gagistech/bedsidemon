@@ -116,10 +116,10 @@ void contec_cms50d_plus::handle_packet_type_byte(uint8_t byte)
 		case live_data_packet_type:
 			this->packet_v.type = packet_type::live_data;
 			this->packet_v.num_bytes_to_read = live_data_packet_size;
-			std::cout << "live data packet" << std::endl;
+			// std::cout << "live data packet" << std::endl;
 			break;
 		default:
-			std::cout << "packet type = " << byte << std::endl;
+			std::cout << "unknown packet type = " << byte << std::endl;
 			// unknown packet, ignore
 			// remain in wait_response state
 			return;
@@ -137,7 +137,7 @@ void contec_cms50d_plus::apply_packet_high_bits()
 	}
 }
 
-namespace{
+namespace {
 struct live_data {
 	uint8_t signal_strength;
 
@@ -159,7 +159,7 @@ struct live_data {
 
 	uint16_t pi;
 };
-}
+} // namespace
 
 void contec_cms50d_plus::handle_packet()
 {
@@ -211,7 +211,7 @@ void contec_cms50d_plus::handle_packet()
 			.finger_out = data.finger_out,
 			.waveform_point = float(data.waveform_point),
 			.pulse_rate = data.pulse_rate,
-			.spo2 = data.spo2,
+			.spo2 = float(data.spo2),
 			.perfusion_index = data.pi,
 			.delta_time_ms = 0 // TODO:
 		});

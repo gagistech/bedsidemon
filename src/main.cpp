@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruisapp/application.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
+#include "spo2/spo2_parameter_window.hpp"
 
 namespace bedsidemon {
 
@@ -42,6 +43,8 @@ public:
 		spo2_sensor("/dev/ttyUSB0")
 	{
 		this->gui.init_standard_widgets(*this->get_res_file());
+
+		this->spo2_sensor.set(std::make_shared<spo2_parameter_window>(this->gui.context));
 
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 

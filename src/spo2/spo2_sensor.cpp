@@ -23,13 +23,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace bedsidemon;
 
+void spo2_sensor::set(std::shared_ptr<spo2_parameter_window> param_window)
+{
+	std::lock_guard<std::mutex> lock_guard(this->param_window_mutex);
+	this->param_window = std::move(param_window);
+}
+
 void spo2_sensor::push(const measurement& meas)
 {
-    std::cout << "\t" << "pulse_beep = " << meas.pulse_beat << "\n";
-    std::cout << "\t" << "finger_out = " << meas.finger_out << "\n";
-    std::cout << "\t" << "waveform_point = " << unsigned(meas.waveform_point) << "\n";
-    std::cout << "\t" << "pulse_rate = " << unsigned(meas.pulse_rate) << "\n";
-    std::cout << "\t" << "spo2 = " << unsigned(meas.spo2) << "\n";
-    std::cout << "\t" << "perfusion_index = " << unsigned(meas.perfusion_index) << "\n";
-    std::cout << std::endl;
+	std::lock_guard<std::mutex> lock_guard(this->param_window_mutex);
+
+	if (!this->param_window) {
+		return;
+	}
+
+	this->param_window->context.get().run_from_ui_thread([pw = this->param_window, meas]() {
+		std::cout << "\t" << "pulse_beep = " << meas.pulse_beat << "\n";
+		std::cout << "\t" << "finger_out = " << meas.finger_out << "\n";
+		std::cout << "\t" << "waveform_point = " << unsigned(meas.waveform_point) << "\n";
+		std::cout << "\t" << "pulse_rate = " << unsigned(meas.pulse_rate) << "\n";
+		std::cout << "\t" << "spo2 = " << unsigned(meas.spo2) << "\n";
+		std::cout << "\t" << "perfusion_index = " << unsigned(meas.perfusion_index) << "\n";
+		std::cout << std::endl;
+	});
 }

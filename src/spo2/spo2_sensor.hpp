@@ -21,19 +21,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <mutex>
+
 #include "spo2_parameter_window.hpp"
 
 namespace bedsidemon {
 
 class spo2_sensor
 {
+	std::mutex param_window_mutex;
 	std::shared_ptr<spo2_parameter_window> param_window;
 
 public:
-	void set(std::shared_ptr<spo2_parameter_window> param_window)
-	{
-		this->param_window = std::move(param_window);
-	}
+	void set(std::shared_ptr<spo2_parameter_window> param_window);
 
 protected:
 	struct measurement {
@@ -45,7 +45,7 @@ protected:
 
 		uint8_t pulse_rate; // 0xff = invalid
 
-		uint8_t spo2; // oxygenation, %, >100 = invalid
+		float spo2; // oxygenation, %, >100 = invalid
 
 		uint16_t perfusion_index; // in 0.01 of %
 
