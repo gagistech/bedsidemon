@@ -22,15 +22,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <ruis/widget.hpp>
+#include <ruis/widgets/label/text.hpp>
+
+#include "spo2_measurement.hpp"
 
 namespace bedsidemon {
 
-class spo2_parameter_window : public ruis::widget
+class spo2_parameter_window :
+	virtual public ruis::widget, //
+	private ruis::container
 {
+	ruis::text& spo2_value;
+
 public:
-	spo2_parameter_window(utki::shared_ref<ruis::context> context) :
-		ruis::widget(std::move(context), tml::forest())
-	{}
+	spo2_parameter_window(utki::shared_ref<ruis::context> context);
+
+	void set(const spo2_measurement& meas);
 };
 
 } // namespace bedsidemon

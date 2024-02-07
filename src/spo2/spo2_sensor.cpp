@@ -27,7 +27,7 @@ spo2_sensor::spo2_sensor(utki::shared_ref<spo2_parameter_window> pw) :
 	param_window(std::move(pw))
 {}
 
-void spo2_sensor::push(const measurement& meas)
+void spo2_sensor::push(const spo2_measurement& meas)
 {
 	this->param_window.get().context.get().run_from_ui_thread([pw = this->param_window, meas]() {
 		std::cout << "\t" << "pulse_beep = " << meas.pulse_beat << "\n";
@@ -36,7 +36,9 @@ void spo2_sensor::push(const measurement& meas)
 		std::cout << "\t" << "pulse_rate = " << unsigned(meas.pulse_rate) << "\n";
 		std::cout << "\t" << "spo2 = " << unsigned(meas.spo2) << "\n";
 		std::cout << "\t" << "perfusion_index = " << unsigned(meas.perfusion_index) << "\n";
-        std::cout << "\t" << "delta_time = " << unsigned(meas.delta_time_ms) << "\n";
+		std::cout << "\t" << "delta_time = " << unsigned(meas.delta_time_ms) << "\n";
 		std::cout << std::endl;
+
+        pw.get().set(meas);
 	});
 }

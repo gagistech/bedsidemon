@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <mutex>
 
+#include "spo2_measurement.hpp"
 #include "spo2_parameter_window.hpp"
 
 namespace bedsidemon {
@@ -35,24 +36,8 @@ public:
 	spo2_sensor(utki::shared_ref<spo2_parameter_window> pw);
 
 protected:
-	struct measurement {
-		bool pulse_beat;
-
-		bool finger_out;
-
-		float waveform_point;
-
-		uint8_t pulse_rate; // 0xff = invalid
-
-		float spo2; // oxygenation, %, >100 = invalid
-
-		uint16_t perfusion_index; // in 0.01 of %
-
-		uint16_t delta_time_ms;
-	};
-
 	// thread safe
-	void push(const measurement& meas);
+	void push(const spo2_measurement& meas);
 };
 
 } // namespace bedsidemon

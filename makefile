@@ -20,7 +20,7 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += -lruisapp-opengl -lnitki -lopros -lruis -lutki -lm
+this_ldlibs += -lruisapp-opengl -lnitki -lopros -ltreeml -lruis -lutki -lm
 
 $(eval $(prorab-build-app))
 

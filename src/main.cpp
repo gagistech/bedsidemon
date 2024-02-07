@@ -43,13 +43,17 @@ public:
 	{
 		this->gui.init_standard_widgets(*this->get_res_file());
 
-		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
-		this->spo2_sensor = std::make_unique<contec_cms50d_plus>(pw, "/dev/ttyUSB0");
-
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 
 		auto c = this->gui.context.get().inflater.inflate(*this->get_res_file("res/main.gui"));
 		this->gui.set_root(c);
+
+		auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
+
+		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
+		this->spo2_sensor = std::make_unique<contec_cms50d_plus>(pw, "/dev/ttyUSB0");
+
+		pw_container.push_back(pw);
 	}
 };
 

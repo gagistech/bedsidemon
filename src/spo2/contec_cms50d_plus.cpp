@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "contec_cms50d_plus.hpp"
 
-#include <utki/util.hpp>
 #include <utki/time.hpp>
+#include <utki/util.hpp>
 
 using namespace bedsidemon;
 
@@ -205,7 +205,7 @@ void contec_cms50d_plus::handle_packet()
 		uint16_t delta_time = uint16_t(cur_ticks - this->last_ticks);
 		this->last_ticks = cur_ticks;
 
-		this->push(measurement{
+		this->push(spo2_measurement{
 			.pulse_beat = data.pulse_beep,
 			.finger_out = data.finger_out,
 			.waveform_point = float(data.waveform_point),

@@ -59,7 +59,7 @@ class contec_cms50d_plus :
 
 	unsigned num_live_data_packages_received = 0;
 
-    uint32_t last_ticks;
+	uint32_t last_ticks;
 
 public:
 	contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> pw, std::string_view port_filename);
