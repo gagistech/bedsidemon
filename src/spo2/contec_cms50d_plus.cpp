@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "contec_cms50d_plus.hpp"
 
 #include <utki/util.hpp>
+#include <utki/time.hpp>
 
 using namespace bedsidemon;
 
@@ -35,7 +36,7 @@ contec_cms50d_plus::contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> p
 	spo2_sensor(std::move(pw)),
 	serial_port_thread(port_filename, serial_port_baud_rate)
 {
-	this->request_live_data();
+	this->request_live_data(utki::get_ticks_ms());
 }
 
 void contec_cms50d_plus::on_data_received(utki::span<const uint8_t> data)
@@ -57,9 +58,11 @@ void contec_cms50d_plus::on_port_closed()
 	this->state_v = state::disconnected;
 }
 
-void contec_cms50d_plus::request_live_data()
+void contec_cms50d_plus::request_live_data(uint32_t cur_ticks)
 {
 	ASSERT(!this->is_sending)
+
+	this->last_ticks = cur_ticks;
 	this->send({0x7d, 0x81, 0xa1, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80});
 	this->is_sending = true;
 }
@@ -198,14 +201,9 @@ void contec_cms50d_plus::handle_packet()
 		// std::cout << "\t" << "pi = " << unsigned(data.pi) << "\n";
 		// std::cout << std::endl;
 
-		// CMS50D+ has limitation of sending live data for only 30 seconds after it was requested.
-		// Workaround this limitation by requesting live data every ~15 seconds, assuming that it sends
-		// about 60 live data packets per second.
-		++this->num_live_data_packages_received;
-		if (this->num_live_data_packages_received > 60 * 15) {
-			this->num_live_data_packages_received = 0;
-			this->request_live_data();
-		}
+		uint32_t cur_ticks = utki::get_ticks_ms();
+		uint16_t delta_time = uint16_t(cur_ticks - this->last_ticks);
+		this->last_ticks = cur_ticks;
 
 		this->push(measurement{
 			.pulse_beat = data.pulse_beep,
@@ -214,7 +212,16 @@ void contec_cms50d_plus::handle_packet()
 			.pulse_rate = data.pulse_rate,
 			.spo2 = float(data.spo2),
 			.perfusion_index = data.pi,
-			.delta_time_ms = 0 // TODO:
+			.delta_time_ms = delta_time
 		});
+
+		// CMS50D+ has limitation of sending live data for only 30 seconds after it was requested.
+		// Workaround this limitation by requesting live data every ~15 seconds, assuming that it sends
+		// about 60 live data packets per second.
+		++this->num_live_data_packages_received;
+		if (this->num_live_data_packages_received > 60 * 15) {
+			this->num_live_data_packages_received = 0;
+			this->request_live_data(cur_ticks);
+		}
 	}
 }

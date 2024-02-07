@@ -36,6 +36,7 @@ void spo2_sensor::push(const measurement& meas)
 		std::cout << "\t" << "pulse_rate = " << unsigned(meas.pulse_rate) << "\n";
 		std::cout << "\t" << "spo2 = " << unsigned(meas.spo2) << "\n";
 		std::cout << "\t" << "perfusion_index = " << unsigned(meas.perfusion_index) << "\n";
+        std::cout << "\t" << "delta_time = " << unsigned(meas.delta_time_ms) << "\n";
 		std::cout << std::endl;
 	});
 }

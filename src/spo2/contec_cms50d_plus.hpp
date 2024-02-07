@@ -59,6 +59,8 @@ class contec_cms50d_plus :
 
 	unsigned num_live_data_packages_received = 0;
 
+    uint32_t last_ticks;
+
 public:
 	contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> pw, std::string_view port_filename);
 
@@ -67,7 +69,7 @@ private:
 	void on_data_sent() override;
 	void on_port_closed() override;
 
-	void request_live_data();
+	void request_live_data(uint32_t cur_ticks);
 
 	void feed(uint8_t byte);
 	void handle_packet_type_byte(uint8_t byte);
