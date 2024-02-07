@@ -39,6 +39,6 @@ void spo2_sensor::push(const spo2_measurement& meas)
 		std::cout << "\t" << "delta_time = " << unsigned(meas.delta_time_ms) << "\n";
 		std::cout << std::endl;
 
-        pw.get().set(meas);
+		pw.get().set(meas);
 	});
 }
