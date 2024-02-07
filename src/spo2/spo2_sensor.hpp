@@ -29,11 +29,10 @@ namespace bedsidemon {
 
 class spo2_sensor
 {
-	std::mutex param_window_mutex;
-	std::shared_ptr<spo2_parameter_window> param_window;
+	utki::shared_ref<spo2_parameter_window> param_window;
 
 public:
-	void set(std::shared_ptr<spo2_parameter_window> param_window);
+	spo2_sensor(utki::shared_ref<spo2_parameter_window> pw);
 
 protected:
 	struct measurement {

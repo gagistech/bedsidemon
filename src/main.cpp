@@ -28,23 +28,23 @@ namespace bedsidemon {
 
 class application : public ruisapp::application
 {
-	contec_cms50d_plus spo2_sensor;
+	std::unique_ptr<contec_cms50d_plus> spo2_sensor;
 
 public:
 	application() :
-		ruisapp::application(
+		ruisapp::application( //
 			"ruis-tests",
 			[]() {
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
 				return wp;
 			}()
-		),
-		spo2_sensor("/dev/ttyUSB0")
+		)
 	{
 		this->gui.init_standard_widgets(*this->get_res_file());
 
-		this->spo2_sensor.set(std::make_shared<spo2_parameter_window>(this->gui.context));
+		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
+		this->spo2_sensor = std::make_unique<contec_cms50d_plus>(pw, "/dev/ttyUSB0");
 
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 

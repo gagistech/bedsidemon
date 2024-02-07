@@ -23,21 +23,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace bedsidemon;
 
-void spo2_sensor::set(std::shared_ptr<spo2_parameter_window> param_window)
-{
-	std::lock_guard<std::mutex> lock_guard(this->param_window_mutex);
-	this->param_window = std::move(param_window);
-}
+spo2_sensor::spo2_sensor(utki::shared_ref<spo2_parameter_window> pw) :
+	param_window(std::move(pw))
+{}
 
 void spo2_sensor::push(const measurement& meas)
 {
-	std::lock_guard<std::mutex> lock_guard(this->param_window_mutex);
-
-	if (!this->param_window) {
-		return;
-	}
-
-	this->param_window->context.get().run_from_ui_thread([pw = this->param_window, meas]() {
+	this->param_window.get().context.get().run_from_ui_thread([pw = this->param_window, meas]() {
 		std::cout << "\t" << "pulse_beep = " << meas.pulse_beat << "\n";
 		std::cout << "\t" << "finger_out = " << meas.finger_out << "\n";
 		std::cout << "\t" << "waveform_point = " << unsigned(meas.waveform_point) << "\n";

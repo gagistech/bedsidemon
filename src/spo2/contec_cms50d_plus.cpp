@@ -31,7 +31,8 @@ namespace {
 constexpr auto serial_port_baud_rate = baud_rate::baud_115200;
 } // namespace
 
-contec_cms50d_plus::contec_cms50d_plus(std::string_view port_filename) :
+contec_cms50d_plus::contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> pw, std::string_view port_filename) :
+	spo2_sensor(std::move(pw)),
 	serial_port_thread(port_filename, serial_port_baud_rate)
 {
 	this->request_live_data();
