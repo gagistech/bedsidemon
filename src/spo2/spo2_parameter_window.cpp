@@ -55,7 +55,7 @@ const tml::forest pw_layout = tml::read(R"qwertyuiop(
 
     @column{
         lp{
-            dx{min}
+            dx{0}
             dy{min}
             weight{1}
         }

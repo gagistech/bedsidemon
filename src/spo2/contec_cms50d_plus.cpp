@@ -177,13 +177,13 @@ void contec_cms50d_plus::handle_packet()
 		live_data data;
 
 		data.signal_strength = this->packet_v.buffer[0] & utki::lower_nibble_mask;
-		data.searching_time_too_long = (this->packet_v.buffer[0] & 0x10) != 0;
-		data.pulse_beep = (this->packet_v.buffer[0] & 0b01000000) != 0;
-		data.finger_out = (this->packet_v.buffer[0] & 0x80) != 0;
+		data.searching_time_too_long = (this->packet_v.buffer[0] & utki::bit_4_mask) != 0;
+		data.pulse_beep = (this->packet_v.buffer[0] & utki::bit_6_mask) != 0;
+		data.finger_out = (this->packet_v.buffer[0] & utki::bit_7_mask) != 0;
 
-		data.waveform_point = this->packet_v.buffer[1] & 0x7f;
-		data.searching_pulse = (this->packet_v.buffer[1] & 0x80) != 0;
-		data.is_pi_data_valid = (this->packet_v.buffer[2] & 0x10) == 0;
+		data.waveform_point = this->packet_v.buffer[1] & (~utki::bit_7_mask);
+		data.searching_pulse = (this->packet_v.buffer[1] & utki::bit_7_mask) != 0;
+		data.is_pi_data_valid = (this->packet_v.buffer[2] & utki::bit_4_mask) == 0;
 
 		data.pulse_rate = this->packet_v.buffer[3];
 		data.spo2 = this->packet_v.buffer[4];
@@ -205,7 +205,11 @@ void contec_cms50d_plus::handle_packet()
 		uint16_t delta_time = uint16_t(cur_ticks - this->last_ticks);
 		this->last_ticks = cur_ticks;
 
+		using std::min;
+		using std::max;
+
 		this->push(spo2_measurement{
+			.signal_strength = uint8_t((min(max(int(data.signal_strength), 4), 10) - 4) * std::centi::den / 6), // value is from [4, 10]
 			.pulse_beat = data.pulse_beep,
 			.finger_out = data.finger_out,
 			.waveform_point = float(data.waveform_point),

@@ -5,6 +5,8 @@
 namespace bedsidemon {
 
 struct spo2_measurement {
+    uint8_t signal_strength; // in %
+
 	bool pulse_beat;
 
 	bool finger_out;
