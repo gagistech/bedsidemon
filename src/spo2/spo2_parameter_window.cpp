@@ -87,7 +87,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 void spo2_parameter_window::set(const spo2_measurement& meas)
 {
 	// set oxygenation
-	if (meas.spo2 == 0) {
+	if (meas.spo2 == 0 || meas.spo2 > 100) {
 		// invalid value
 		this->spo2_value.set_text("---");
 	} else {

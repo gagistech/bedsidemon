@@ -21,6 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "setocare_st_t130_u01.hpp"
 
+#include <utki/time.hpp>
+
 using namespace bedsidemon;
 
 namespace {
@@ -95,75 +97,59 @@ void setocare_st_t130_u01::feed(uint8_t byte)
 
 void setocare_st_t130_u01::handle_packet()
 {
-	// std::cout << "handle packet, high bits = " << std::hex << "0x" << unsigned(this->packet_v.high_bits) <<
-	// std::endl; for(const auto& b : this->packet_v.buffer){ 	std::cout << "0x" << std::hex << unsigned(b) << " ";
+	const auto& buf = this->packet_v.buffer;
+
+	ASSERT(buf.size() == bci_protocol_packet_size)
+
+	// std::cout << "packet received =";
+	// for (const auto& b : buf) {
+	// 	std::cout << " 0x" << std::hex << unsigned(b);
 	// }
 	// std::cout << std::endl;
 
-	ASSERT(this->packet_v.buffer.size() == bci_protocol_packet_size)
+	uint8_t signal_strength = buf[0] & utki::lower_nibble_mask;
+	// bool no_signal = buf[0] & utki::bit_4_mask;
+	// bool probe_unplugged = buf[0] & utki::bit_5_mask;
+	bool pulse_beep = buf[0] & utki::bit_6_mask;
 
-	std::cout << "packet received =";
-	for (const auto& b : this->packet_v.buffer) {
-		std::cout << " 0x" << std::hex << unsigned(b);
-	}
-	std::cout << std::endl;
+	uint8_t pleth = buf[1] & (~utki::bit_7_mask);
+	
+	// uint8_t bar_graph = buf[2] & utki::lower_nibble_mask;
+	bool no_finger = buf[2] & utki::bit_4_mask;
+	// bool pulse_search = buf[2] & utki::bit_5_mask;
 
-	// if (this->packet_v.type == packet_type::live_data) {
-	// 	ASSERT(this->packet_v.buffer.size() == live_data_packet_size)
-	// 	live_data data;
+	uint8_t pulse_rate = ((buf[2] & utki::bit_6_mask) << 1) | (buf[3] & (~utki::bit_7_mask));
+	uint spo2 = buf[4] & (~utki::bit_7_mask);
 
-	// 	data.signal_strength = this->packet_v.buffer[0] & utki::lower_nibble_mask;
-	// 	data.searching_time_too_long = (this->packet_v.buffer[0] & utki::bit_4_mask) != 0;
-	// 	data.pulse_beep = (this->packet_v.buffer[0] & utki::bit_6_mask) != 0;
-	// 	data.finger_out = (this->packet_v.buffer[0] & utki::bit_7_mask) != 0;
+	// std::cout << std::dec;
+	// std::cout << "signal_strength = " << unsigned(signal_strength) << "\n";
+	// std::cout << "\t" << "no_signal = " << no_signal << "\n";
+	// std::cout << "\t" << "probe_unplugged = " << probe_unplugged << "\n";
+	// std::cout << "\t" << "pulse_beep = " << pulse_beep << "\n";
+	// std::cout << "\t" << "bar_graph = " << unsigned(bar_graph) << "\n";
+	// std::cout << "\t" << "finger_out = " << no_finger << "\n";
+	// std::cout << "\t" << "waveform_point = " << unsigned(pleth) << "\n";
+	// std::cout << "\t" << "searching_pulse = " << pulse_search << "\n";
+	// std::cout << "\t" << "pulse_rate = " << unsigned(pulse_rate) << "\n";
+	// std::cout << "\t" << "spo2 = " << unsigned(spo2) << "\n";
+	// std::cout << std::endl;
 
-	// 	data.waveform_point = this->packet_v.buffer[1] & (~utki::bit_7_mask);
-	// 	data.searching_pulse = (this->packet_v.buffer[1] & utki::bit_7_mask) != 0;
-	// 	data.is_pi_data_valid = (this->packet_v.buffer[2] & utki::bit_4_mask) == 0;
+	uint32_t cur_ticks = utki::get_ticks_ms();
+	uint16_t delta_time = uint16_t(cur_ticks - this->last_ticks);
+	this->last_ticks = cur_ticks;
 
-	// 	data.pulse_rate = this->packet_v.buffer[3];
-	// 	data.spo2 = this->packet_v.buffer[4];
-	// 	data.pi = utki::deserialize16le(&this->packet_v.buffer[5]);
+	using std::min;
 
-	// 	// std::cout << "signal_strength = " << unsigned(data.signal_strength) << "\n";
-	// 	// std::cout << "\t" << "searching_time_too_long = " << data.searching_time_too_long << "\n";
-	// 	// std::cout << "\t" << "pulse_beep = " << data.pulse_beep << "\n";
-	// 	// std::cout << "\t" << "finger_out = " << data.finger_out << "\n";
-	// 	// std::cout << "\t" << "waveform_point = " << unsigned(data.waveform_point) << "\n";
-	// 	// std::cout << "\t" << "searching_pulse = " << data.searching_pulse << "\n";
-	// 	// std::cout << "\t" << "is_pi_data_valid = " << data.is_pi_data_valid << "\n";
-	// 	// std::cout << "\t" << "pulse_rate = " << unsigned(data.pulse_rate) << "\n";
-	// 	// std::cout << "\t" << "spo2 = " << unsigned(data.spo2) << "\n";
-	// 	// std::cout << "\t" << "pi = " << unsigned(data.pi) << "\n";
-	// 	// std::cout << std::endl;
+	constexpr uint8_t max_signal_strength = 8;
 
-	// 	uint32_t cur_ticks = utki::get_ticks_ms();
-	// 	uint16_t delta_time = uint16_t(cur_ticks - this->last_ticks);
-	// 	this->last_ticks = cur_ticks;
-
-	// 	using std::min;
-	// 	using std::max;
-
-	// 	this->push(spo2_measurement{
-	// 		.signal_strength = uint8_t(
-	// 			(min(max(int(data.signal_strength), 4), 10) - 4) * std::centi::den / 6
-	// 		), // value is from [4, 10]
-	// 		.pulse_beat = data.pulse_beep,
-	// 		.finger_out = data.finger_out,
-	// 		.waveform_point = float(data.waveform_point),
-	// 		.pulse_rate = data.pulse_rate,
-	// 		.spo2 = float(data.spo2),
-	// 		.perfusion_index = data.pi,
-	// 		.delta_time_ms = delta_time
-	// 	});
-
-	// 	// CMS50D+ has limitation of sending live data for only 30 seconds after it was requested.
-	// 	// Workaround this limitation by requesting live data every ~15 seconds, assuming that it sends
-	// 	// about 60 live data packets per second.
-	// 	++this->num_live_data_packages_received;
-	// 	if (this->num_live_data_packages_received > 60 * 15) {
-	// 		this->num_live_data_packages_received = 0;
-	// 		this->request_live_data(cur_ticks);
-	// 	}
-	// }
+	this->push(spo2_measurement{
+		.signal_strength = min(signal_strength, max_signal_strength),
+		.pulse_beat = pulse_beep,
+		.finger_out = no_finger,
+		.waveform_point = float(pleth),
+		.pulse_rate = pulse_rate,
+		.spo2 = float(spo2),
+		.perfusion_index = 0,
+		.delta_time_ms = delta_time
+	});
 }
