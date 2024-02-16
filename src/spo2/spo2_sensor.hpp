@@ -35,6 +35,8 @@ class spo2_sensor
 public:
 	spo2_sensor(utki::shared_ref<spo2_parameter_window> pw);
 
+	virtual ~spo2_sensor() = default;
+
 protected:
 	// thread safe
 	void push(const spo2_measurement& meas);
