@@ -26,7 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 namespace bedsidemon {
 
 struct spo2_measurement {
-    uint8_t signal_strength; // in %
+	uint8_t signal_strength; // in %
 
 	bool pulse_beat;
 

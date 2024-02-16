@@ -30,7 +30,7 @@ spo2_sensor::spo2_sensor(utki::shared_ref<spo2_parameter_window> pw) :
 void spo2_sensor::push(const spo2_measurement& meas)
 {
 	this->param_window.get().context.get().run_from_ui_thread([pw = this->param_window, meas]() {
-        std::cout << "\t" << "signal_strength = " << unsigned(meas.signal_strength) << "\n";
+		std::cout << "\t" << "signal_strength = " << unsigned(meas.signal_strength) << "\n";
 		std::cout << "\t" << "pulse_beep = " << meas.pulse_beat << "\n";
 		std::cout << "\t" << "finger_out = " << meas.finger_out << "\n";
 		std::cout << "\t" << "waveform_point = " << unsigned(meas.waveform_point) << "\n";

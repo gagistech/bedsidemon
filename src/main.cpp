@@ -22,13 +22,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruisapp/application.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
+#include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
 
 namespace bedsidemon {
 
 class application : public ruisapp::application
 {
-	std::unique_ptr<contec_cms50d_plus> spo2_sensor;
+	std::unique_ptr<spo2_sensor> spo2_sensor_v;
 
 public:
 	application() :
@@ -51,7 +52,8 @@ public:
 		auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
 
 		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
-		this->spo2_sensor = std::make_unique<contec_cms50d_plus>(pw, "/dev/ttyUSB0");
+		// this->spo2_sensor_v = std::make_unique<contec_cms50d_plus>(pw, "/dev/ttyUSB0");
+		this->spo2_sensor_v = std::make_unique<setocare_st_t130_u01>(pw, "/dev/ttyUSB0");
 
 		pw_container.push_back(pw);
 	}

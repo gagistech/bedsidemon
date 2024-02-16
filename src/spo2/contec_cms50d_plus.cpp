@@ -209,7 +209,9 @@ void contec_cms50d_plus::handle_packet()
 		using std::max;
 
 		this->push(spo2_measurement{
-			.signal_strength = uint8_t((min(max(int(data.signal_strength), 4), 10) - 4) * std::centi::den / 6), // value is from [4, 10]
+			.signal_strength = uint8_t(
+				(min(max(int(data.signal_strength), 4), 10) - 4) * std::centi::den / 6
+			), // value is from [4, 10]
 			.pulse_beat = data.pulse_beep,
 			.finger_out = data.finger_out,
 			.waveform_point = float(data.waveform_point),
