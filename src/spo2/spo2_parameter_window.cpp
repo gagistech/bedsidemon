@@ -42,9 +42,13 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 
 	constexpr auto color_border = 0xff808080;
 	constexpr auto color_main_value = 0xffffff00;
+	constexpr auto color_secondary_value = 0xff00ffff;
 
-	constexpr auto font_size_main_value_pp = 40;
+	constexpr auto font_size_main_value_pp = 60;
 	auto font_size_main_value = c.get().units.pp_to_px(font_size_main_value_pp);
+
+	constexpr auto font_size_secondary_value_pp = 40;
+	auto font_secondary_main_value = c.get().units.pp_to_px(font_size_secondary_value_pp);
 
 	// clang-format off
     return {
@@ -98,6 +102,21 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                     },
                     U"---"s
                 ),
+                m::text(c,
+                    {
+                        .widget_params = {
+                            .id = "bpm_value"s
+                        },
+                        .color_params = {
+                            .color = color_secondary_value
+                        },
+                        .text_params = {
+                            .font_size = font_secondary_main_value
+                        }
+                    },
+                    U"---"s
+                ),
+                
                 m::rectangle(c,
                     {
                         .widget_params = {
@@ -136,6 +155,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 		build_layout(this->context)
 	),
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),
+	bpm_value(this->get_widget_as<ruis::text>("bpm_value")),
 	waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform"))
 {}
 
@@ -147,5 +167,13 @@ void spo2_parameter_window::set(const spo2_measurement& meas)
 		this->spo2_value.set_text("---");
 	} else {
 		this->spo2_value.set_text(std::to_string(unsigned(meas.spo2)));
+	}
+
+	// set bpm
+	if (meas.pulse_rate == 0xff) {
+		// invalid value
+		this->bpm_value.set_text("---");
+	} else {
+		this->bpm_value.set_text(std::to_string(unsigned(meas.pulse_rate)));
 	}
 }
