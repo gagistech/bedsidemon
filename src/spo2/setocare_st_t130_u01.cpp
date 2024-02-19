@@ -127,7 +127,7 @@ void setocare_st_t130_u01::handle_packet()
 	// bool pulse_search = buf[2] & utki::bit_5_mask;
 
 	uint8_t pulse_rate = ((buf[2] & utki::bit_6_mask) << 1) | (buf[3] & (~utki::bit_7_mask));
-	uint spo2 = buf[4] & (~utki::bit_7_mask);
+	uint8_t spo2 = buf[4] & (~utki::bit_7_mask);
 
 	// std::cout << std::dec;
 	// std::cout << "signal_strength = " << unsigned(signal_strength) << "\n";
@@ -156,7 +156,7 @@ void setocare_st_t130_u01::handle_packet()
 		.finger_out = no_finger,
 		.waveform_point = float(pleth),
 		.pulse_rate = pulse_rate,
-		.spo2 = float(spo2),
+		.spo2 = spo2,
 		.perfusion_index = 0,
 		.delta_time_ms = delta_time
 	});

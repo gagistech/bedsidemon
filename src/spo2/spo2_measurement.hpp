@@ -36,10 +36,11 @@ struct spo2_measurement {
 
 	uint8_t pulse_rate; // 0xff = invalid
 
-	float spo2; // oxygenation, %, >100 = invalid
+	uint8_t spo2; // oxygenation, %, >100 = invalid
 
 	uint16_t perfusion_index; // in 0.01 of %
 
+	// time from previous sample
 	uint16_t delta_time_ms;
 };
 

@@ -223,7 +223,7 @@ void contec_cms50d_plus::handle_packet()
 			.finger_out = data.finger_out,
 			.waveform_point = float(data.waveform_point),
 			.pulse_rate = data.pulse_rate,
-			.spo2 = float(data.spo2),
+			.spo2 = data.spo2,
 			.perfusion_index = data.pi,
 			.delta_time_ms = delta_time
 		});
