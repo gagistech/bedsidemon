@@ -31,9 +31,13 @@ using namespace std::string_literals;
 using namespace bedsidemon;
 
 namespace {
+namespace m {
+using namespace ruis::make;
+using namespace bedsidemon::make;
+}; // namespace m
+
 std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::context> c)
 {
-	namespace m = ruis::make;
 	using ruis::lp;
 
 	constexpr auto color_border = 0xff808080;
@@ -44,12 +48,14 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 
 	// clang-format off
     return {
-        m::widget(c,
+        m::waveform(c,
             {
-                .id = "pw_waveform"s,
-                .lp = {
-                    .dims = {0, ruis::lp::min},
-                    .weight = 3
+                .widget_params = {
+                    .id = "pw_waveform"s,
+                    .lp = {
+                        .dims = {0, ruis::lp::min},
+                        .weight = 3
+                    }
                 }
             }
         ),
@@ -112,14 +118,25 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 } // namespace
 
 spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> context) :
-	ruis::widget(std::move(context), {.lp = {.dims = {ruis::lp::fill, ruis::lp::min}}}),
+	ruis::widget( //
+		std::move(context),
+		{//
+		 .lp =
+			 {//
+			  .dims = {ruis::lp::fill, ruis::lp::min}
+			 }
+		}
+	),
 	ruis::container( //
 		this->context,
 		{},
-		{.layout = ruis::row_layout::instance},
+		{//
+		 .layout = ruis::row_layout::instance
+		},
 		build_layout(this->context)
 	),
-	spo2_value(this->get_widget_as<ruis::text>("spo2_value"))
+	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),
+	waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform"))
 {}
 
 void spo2_parameter_window::set(const spo2_measurement& meas)

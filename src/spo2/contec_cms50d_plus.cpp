@@ -41,7 +41,8 @@ contec_cms50d_plus::contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> p
 	this->start();
 }
 
-contec_cms50d_plus::~contec_cms50d_plus(){
+contec_cms50d_plus::~contec_cms50d_plus()
+{
 	this->quit();
 	this->join();
 }
