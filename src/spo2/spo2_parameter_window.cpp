@@ -21,66 +21,96 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "spo2_parameter_window.hpp"
 
+#include <vector>
+
+#include <ruis/layouts/linear_layout.hpp>
+#include <ruis/widgets/label/rectangle.hpp>
+
+using namespace std::string_literals;
+
 using namespace bedsidemon;
 
 namespace {
-const tml::forest pw_layout = tml::read(R"qwertyuiop(
-    lp{
-        dx{fill}
-    }
+std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::context> c)
+{
+	namespace m = ruis::make;
+	using ruis::lp;
 
-    layout{row}
+	constexpr auto color_border = 0xff808080;
+	constexpr auto color_main_value = 0xffffff00;
 
-    // TODO: this doesn't work
-    defs{
-        color_border{0xff808080}
-        color_main_value{0xff00ffff}
-    }
+	constexpr auto font_size_main_value_pp = 40;
+	auto font_size_main_value = c.get().units.pp_to_px(font_size_main_value_pp);
 
-    @widget{
-        lp{
-            dx{0}
-            weight{3}
-        }
-        id{pw_waveform}
-    }
-
-    @color{
-        lp{
-            dx{1pp}
-            dy{fill}
-        }
-        color{${color_border}}
-    }
-
-    @column{
-        lp{
-            dx{0}
-            dy{min}
-            weight{1}
-        }
-
-        @text{
-            id{spo2_value}
-            text{---}
-            font_size{40pp}
-            color{${color_main_value}}
-        }
-
-        @color{
-            lp{
-                dx{fill}
-                dy{1pp}
+	// clang-format off
+    return {
+        m::widget(c,
+            {
+                .id = "pw_waveform"s,
+                .lp = {
+                    .dims = {0, ruis::lp::min},
+                    .weight = 3
+                }
             }
-            color{${color_border}}
-        }
-    }
-)qwertyuiop");
+        ),
+        m::rectangle(c,
+            {
+                .lp = {
+                    .dims = {c.get().units.pp_to_px(1), ruis::lp::fill}
+                }
+            },
+            {
+                .color = color_border
+            }
+        ),
+        m::container(c,
+            {
+                .lp = {
+                    .dims = {0, lp::min},
+                    .weight = 1
+                }
+            },
+            {
+                .layout = ruis::column_layout::instance
+            },
+            {
+                m::text(c,
+                    {
+                        .id = "spo2_value"s
+                    },
+                    U"---"s,
+                    {
+                        .color = color_main_value
+                    },
+                    {
+                        .font_size = font_size_main_value
+                    }
+                ),
+                m::rectangle(c,
+                    {
+                        .lp = {
+                            .dims = {lp::fill, c.get().units.pp_to_px(1)}
+                        }
+                    },
+                    {
+                        .color = color_border
+                    }
+                )
+            }
+        )
+    };
+	// clang-format on
+}
 } // namespace
 
 spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> context) :
-	ruis::widget(std::move(context), pw_layout),
-	ruis::container(this->context, pw_layout),
+	ruis::widget(std::move(context), {.lp = {.dims = {ruis::lp::fill, ruis::lp::min}}}),
+	ruis::container( //
+		this->context,
+		{},
+		{.layout = ruis::row_layout::instance},
+		build_layout(this->context)
+	),
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value"))
 {}
 

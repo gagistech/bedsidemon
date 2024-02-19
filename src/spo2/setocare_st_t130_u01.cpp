@@ -54,7 +54,7 @@ void setocare_st_t130_u01::on_data_received(utki::span<const uint8_t> data)
 
 void setocare_st_t130_u01::feed(uint8_t byte)
 {
-    // std::cout << "byte received, state = " << unsigned(this->state_v) << std::endl;
+	// std::cout << "byte received, state = " << unsigned(this->state_v) << std::endl;
 	switch (this->state_v) {
 		case state::disconnected:
 			// ignore any data, it is not supposed to come from disconnected port
@@ -69,7 +69,7 @@ void setocare_st_t130_u01::feed(uint8_t byte)
 			ASSERT(this->packet_v.buffer.empty())
 			this->packet_v.buffer.push_back(byte);
 			this->packet_v.num_bytes_to_read = bci_protocol_packet_size - 1;
-            this->state_v = state::read_packet;
+			this->state_v = state::read_packet;
 			break;
 		case state::read_packet:
 			if (byte & utki::bit_7_mask) {
@@ -113,7 +113,7 @@ void setocare_st_t130_u01::handle_packet()
 	bool pulse_beep = buf[0] & utki::bit_6_mask;
 
 	uint8_t pleth = buf[1] & (~utki::bit_7_mask);
-	
+
 	// uint8_t bar_graph = buf[2] & utki::lower_nibble_mask;
 	bool no_finger = buf[2] & utki::bit_4_mask;
 	// bool pulse_search = buf[2] & utki::bit_5_mask;
