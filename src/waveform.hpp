@@ -28,6 +28,8 @@ class waveform :
 
 	ruis::real px_per_ms;
 
+	ruis::real sweep_pos = 0;
+
 public:
 	waveform(
 		utki::shared_ref<ruis::context> context,
