@@ -21,9 +21,29 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruisapp/application.hpp>
 
+#include <ruis/layouts/linear_layout.hpp>
+
 #include "spo2/contec_cms50d_plus.hpp"
 #include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
+
+namespace{
+utki::shared_ref<ruis::widget> build_root_layout(utki::shared_ref<ruis::context> c){
+	namespace m = ruis::make;
+	using ruis::lp;
+
+	return //
+	m::container(c,
+		{
+			.id = "pw_container"
+		},
+		{
+			.layout = ruis::column_layout::instance
+		},
+		{}
+	);
+}
+}
 
 namespace bedsidemon {
 
@@ -46,7 +66,7 @@ public:
 
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 
-		auto c = this->gui.context.get().inflater.inflate(*this->get_res_file("res/main.gui"));
+		auto c = build_root_layout(this->gui.context);
 		this->gui.set_root(c);
 
 		auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
