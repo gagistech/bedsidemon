@@ -30,13 +30,10 @@ serial_port_thread::serial_port_thread(std::string_view port_filename, baud_rate
 	port(port_filename, speed)
 {
 	this->wait_set.add(this->port, opros::ready::read, &this->port);
-	this->start();
 }
 
 serial_port_thread::~serial_port_thread()
 {
-	this->quit();
-	this->join();
 	this->wait_set.remove(this->port);
 }
 

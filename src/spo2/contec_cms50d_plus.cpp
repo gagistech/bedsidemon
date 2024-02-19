@@ -37,6 +37,13 @@ contec_cms50d_plus::contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> p
 	serial_port_thread(port_filename, serial_port_baud_rate)
 {
 	this->request_live_data(utki::get_ticks_ms());
+
+	this->start();
+}
+
+contec_cms50d_plus::~contec_cms50d_plus(){
+	this->quit();
+	this->join();
 }
 
 void contec_cms50d_plus::on_data_received(utki::span<const uint8_t> data)

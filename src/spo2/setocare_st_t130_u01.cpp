@@ -36,6 +36,14 @@ setocare_st_t130_u01::setocare_st_t130_u01(utki::shared_ref<spo2_parameter_windo
 	serial_port_thread(port_filename, serial_port_baud_rate)
 {
 	this->state_v = state::wait_packet_first_byte;
+
+	this->start();
+}
+
+setocare_st_t130_u01::~setocare_st_t130_u01()
+{
+	this->quit();
+	this->join();
 }
 
 void setocare_st_t130_u01::on_port_closed()

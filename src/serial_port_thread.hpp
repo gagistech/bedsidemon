@@ -27,7 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace bedsidemon {
 
-class serial_port_thread : private nitki::loop_thread
+class serial_port_thread : protected nitki::loop_thread
 {
 	serial_port port;
 

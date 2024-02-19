@@ -63,6 +63,7 @@ class contec_cms50d_plus :
 
 public:
 	contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> pw, std::string_view port_filename);
+	~contec_cms50d_plus();
 
 private:
 	void on_data_received(utki::span<const uint8_t> data) override;
