@@ -53,7 +53,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                 .widget_params = {
                     .id = "pw_waveform"s,
                     .lp = {
-                        .dims = {0, ruis::lp::min},
+                        .dims = {0, ruis::lp::fill},
                         .weight = 3
                     }
                 }
