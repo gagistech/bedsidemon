@@ -19,31 +19,38 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include <ruisapp/application.hpp>
-
 #include <ruis/layouts/linear_layout.hpp>
+#include <ruisapp/application.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
 #include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
 
-namespace{
-utki::shared_ref<ruis::widget> build_root_layout(utki::shared_ref<ruis::context> c){
+using namespace std::string_literals;
+
+namespace {
+utki::shared_ref<ruis::widget> build_root_layout(utki::shared_ref<ruis::context> c)
+{
 	namespace m = ruis::make;
 	using ruis::lp;
 
-	return //
-	m::container(c,
-		{
-			.id = "pw_container"
-		},
-		{
-			.layout = ruis::column_layout::instance
-		},
-		{}
-	);
+	return
+		// clang-format off
+		m::container(
+			c,
+			{
+				.widget_params = {
+					.id = "pw_container"s
+				},
+				.container_params = {
+					.layout = ruis::column_layout::instance
+				}
+			},
+			{}
+		);
+	// clang-format on
 }
-}
+} // namespace
 
 namespace bedsidemon {
 

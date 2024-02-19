@@ -55,45 +55,53 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
         ),
         m::rectangle(c,
             {
-                .lp = {
-                    .dims = {c.get().units.pp_to_px(1), ruis::lp::fill}
+                .widget_params = {
+                    .lp = {
+                        .dims = {c.get().units.pp_to_px(1), ruis::lp::fill}
+                    }
+                },
+                .color_params = {
+                    .color = color_border
                 }
-            },
-            {
-                .color = color_border
             }
         ),
         m::container(c,
             {
-                .lp = {
-                    .dims = {0, lp::min},
-                    .weight = 1
+                .widget_params = {
+                    .lp = {
+                        .dims = {0, lp::min},
+                        .weight = 1
+                    }
+                },
+                .container_params = {
+                    .layout = ruis::column_layout::instance
                 }
-            },
-            {
-                .layout = ruis::column_layout::instance
             },
             {
                 m::text(c,
                     {
-                        .id = "spo2_value"s
+                        .widget_params = {
+                            .id = "spo2_value"s
+                        },
+                        .color_params = {
+                            .color = color_main_value
+                        },
+                        .text_params = {
+                            .font_size = font_size_main_value
+                        }
                     },
-                    U"---"s,
-                    {
-                        .color = color_main_value
-                    },
-                    {
-                        .font_size = font_size_main_value
-                    }
+                    U"---"s
                 ),
                 m::rectangle(c,
                     {
-                        .lp = {
-                            .dims = {lp::fill, c.get().units.pp_to_px(1)}
+                        .widget_params = {
+                            .lp = {
+                                .dims = {lp::fill, c.get().units.pp_to_px(1)}
+                            }
+                        },
+                        .color_params = {
+                            .color = color_border
                         }
-                    },
-                    {
-                        .color = color_border
                     }
                 )
             }
