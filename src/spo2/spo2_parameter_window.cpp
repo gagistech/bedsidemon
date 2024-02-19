@@ -170,7 +170,7 @@ void spo2_parameter_window::set(const spo2_measurement& meas)
 	}
 
 	// set bpm
-	if (meas.pulse_rate == 0xff) {
+	if (meas.pulse_rate == 0 || meas.pulse_rate == 0xff) {
 		// invalid value
 		this->bpm_value.set_text("---");
 	} else {
