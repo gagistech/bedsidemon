@@ -64,7 +64,7 @@ public:
 			"ruis-tests",
 			[]() {
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
+				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 600));
 				return wp;
 			}()
 		)
