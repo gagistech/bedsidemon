@@ -165,7 +165,7 @@ struct skip
 
 void waveform::make_vaos(){
 	ASSERT(this->value_max > this->value_offset)
-	const auto& height = this->rect().d.y();
+	const auto& height = this->rect().d.y() - 1; // -1 due to line width
 	auto scale = height / (this->value_max - this->value_offset);
 
 	for(auto& pv : this->paths){

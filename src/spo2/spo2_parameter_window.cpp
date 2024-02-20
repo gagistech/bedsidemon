@@ -41,6 +41,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 	using ruis::lp;
 
 	constexpr auto color_border = 0xff808080;
+    constexpr auto color_info_text = 0xff808080;
 	constexpr auto color_main_value = 0xffffff00;
 	constexpr auto color_secondary_value = 0xff00ffff;
 
@@ -91,6 +92,17 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                 }
             },
             {
+                m::text(c,
+                    {
+                        .color_params = {
+                            .color = color_info_text
+                        },
+                        .text_params = {
+                            .font_size = 16
+                        }
+                    },
+                    U"SpO2 %"s
+                ),
                 m::text(c,
                     {
                         .widget_params = {
