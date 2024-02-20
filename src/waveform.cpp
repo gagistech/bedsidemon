@@ -9,8 +9,10 @@ waveform::waveform(
 ) :
 	ruis::widget(std::move(context), std::move(widget_params)),
 	ruis::color_widget(this->context, std::move(color_params)),
-	left_path_vao(this->context.get().renderer),
-	right_path_vao(this->context.get().renderer)
+	paths{{
+		{.vao{this->context.get().renderer}},
+		{.vao{this->context.get().renderer}}
+	}}
 {
 	this->value_offset = 0;
 	this->value_max = 0xff;
@@ -23,107 +25,107 @@ waveform::waveform(
 }
 
 void waveform::render(const ruis::matrix4& matrix)const {
-	this->left_path_vao.render(matrix, 0xffffff00);
-	this->right_path_vao.render(matrix, 0xffffff00);
+	for(const auto& pv : this->paths){
+		pv.vao.render(matrix, 0xffffff00);
+	}
 }
 
 void waveform::on_resize(){
-	this->sweep_pos_px = 0;
-	// TODO: clear all points
+	for(auto& p : this->paths){
+		p.points.clear();
+	}
+	this->make_vaos();
 }
 
 void waveform::push(ruis::real value, ruis::real dt_ms){
 	auto dx = dt_ms * this->px_per_ms;
 
 	// push new point
-	if(this->left_points.empty()){
-		this->left_points.push_back({0 , value});
+	if(this->paths[0].points.empty()){
+		this->paths[0].points.push_back({0 , value});
 	}else{
-		this->left_points.push_back(
+		this->paths[0].points.push_back(
 			{
-				this->left_points.back().x() + dx,
+				this->paths[0].points.back().x() + dx,
 				value
 			}
 		);
 	}
 
-	// wrap around left_points if needed
-	ASSERT(!this->left_points.empty())
-	if(this->left_points.back().x() >= this->rect().d.x()){
-		auto dx1 = this->left_points.back().x() - this->rect().d.x();
+	// wrap around paths[0].points if needed
+	ASSERT(!this->paths[0].points.empty())
+	if(this->paths[0].points.back().x() >= this->rect().d.x()){
+		auto dx1 = this->paths[0].points.back().x() - this->rect().d.x();
 		auto dx2 = dx - dx1;
 		ASSERT(dx1 >= 0)
 		ASSERT(dx2 >= 0)
 
 		auto ratio = dx1 / dx;
 		
-		ASSERT(this->left_points.size() >= 2) // TODO: why?
+		ASSERT(this->paths[0].points.size() >= 2) // TODO: why?
 
-		auto v = this->left_points.back().y();
-		auto dv = v - std::next(this->left_points.rbegin())->y();
+		auto v = this->paths[0].points.back().y();
+		auto dv = v - std::next(this->paths[0].points.rbegin())->y();
 
 		auto dv1 = dv * ratio;
 		auto dv2 = dv - dv1;
 
-		this->left_points.back().x() = this->rect().d.x();
-		this->left_points.back().y() -= dv2;
+		this->paths[0].points.back().x() = this->rect().d.x();
+		this->paths[0].points.back().y() -= dv2;
 
 		// swap left<->right
 		using std::swap;
-		swap(this->left_points, this->right_points);
-		this->left_points.clear();
-		this->left_points.push_back({0, this->right_points.back().y()});
-		this->left_points.push_back({dx2, v});
+		swap(this->paths[0].points, this->paths[1].points);
+		this->paths[0].points.clear();
+		this->paths[0].points.push_back({0, this->paths[1].points.back().y()});
+		this->paths[0].points.push_back({dx2, v});
 	}
 
-	// pop point from right_points
-	if(!this->right_points.empty()){
+	// pop point from points[1]
+	if(!this->paths[1].points.empty()){
 		// there should be at least one line segment
-		ASSERT(this->right_points.size() >= 2)
+		ASSERT(this->paths[1].points.size() >= 2)
 
 		for(;;){
-			auto tail_dx = std::next(this->right_points.begin())->x() - this->right_points.front().x();
+			auto tail_dx = std::next(this->paths[1].points.begin())->x() - this->paths[1].points.front().x();
 			if(tail_dx <= dx){
-				this->right_points.pop_front();
-				if(this->right_points.size() == 1){
-					this->right_points.clear();
-					// TODO: pop from left_points
+				this->paths[1].points.pop_front();
+				if(this->paths[1].points.size() == 1){
+					this->paths[1].points.clear();
+					// TODO: pop from paths[0].points
 					break;
 				}
 				dx -= tail_dx;
 				continue;
 			}else{
 				auto ratio = dx / tail_dx;
-				auto tail_dv = std::next(this->right_points.begin())->y() - this->right_points.front().y();
+				auto tail_dv = std::next(this->paths[1].points.begin())->y() - this->paths[1].points.front().y();
 
 				auto dv1 = tail_dv * ratio;
 
-				this->right_points.front() += ruis::vector2{dx, dv1};
+				this->paths[1].points.front() += ruis::vector2{dx, dv1};
 
 				break;
 			}
 		}
 	}
 
-	std::cout << "num_left = " << this->left_points.size() << ", num_right = " << this->right_points.size() << std::endl;
+	std::cout << "num_left = " << this->paths[0].points.size() << ", num_right = " << this->paths[1].points.size() << std::endl;
 
 	this->make_vaos();
 }
 
-decltype(std::declval<ruis::path>().stroke()) waveform::make_vertices(const std::deque<ruis::vector2>& points){
+void waveform::make_vaos(){
 	ASSERT(this->value_max > this->value_offset)
 	auto scale = this->rect().d.y() / (this->value_max - this->value_offset);
 
-	ruis::path path;
-	for(const auto& p : points){
-		auto v = this->rect().d.y() - p.y() * scale + this->value_offset;
-		path.line_to(p.x(), v);
+	for(auto& pv : this->paths){
+		ruis::path path;
+		for(const auto& p : pv.points){
+			auto v = this->rect().d.y() - p.y() * scale + this->value_offset;
+			path.line_to(p.x(), v);
+		}
+
+		pv.vao.set(path.stroke());
 	}
-
-	return path.stroke();
-}
-
-void waveform::make_vaos(){
-	this->left_path_vao.set(this->make_vertices(this->left_points));
-	this->right_path_vao.set(this->make_vertices(this->right_points));
 }

@@ -12,11 +12,14 @@ class waveform :
 	virtual public ruis::widget, //
 	public ruis::color_widget
 {
-	ruis::path_vao left_path_vao;
-	ruis::path_vao right_path_vao;
+	struct path{
+		ruis::path_vao vao;
+		ruis::vector2 origin;
 
-	std::deque<ruis::vector2> left_points;
-	std::deque<ruis::vector2> right_points;
+		std::deque<ruis::vector2> points;
+	};
+
+	std::array<path, 2> paths;
 
 	ruis::real value_offset;
 	ruis::real value_max;
@@ -42,8 +45,6 @@ public:
 	void push(ruis::real value, ruis::real dt_ms);
 
 private:
-	decltype(std::declval<ruis::path>().stroke()) make_vertices(const std::deque<ruis::vector2>& points);
-
 	void make_vaos();
 };
 
