@@ -15,7 +15,7 @@ waveform::waveform(
 	}}
 {
 	this->value_offset = 0;
-	this->value_max = 0xff;
+	this->value_max = 100;
 
 	// this->px_per_ms = this->context.get().units.mm_to_px(25.0 / 1000.0); // 25 mm per second
 	this->px_per_ms = 25.0 / 1000.0;
@@ -124,6 +124,7 @@ struct skip
 	
     auto begin() -> typename T::iterator
     {
+		ASSERT(!t.empty())
 		using std::begin;
         return utki::next(begin(t), n);
     }
