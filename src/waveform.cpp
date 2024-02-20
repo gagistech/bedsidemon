@@ -12,7 +12,7 @@ waveform::waveform(
 	left_path_vao(this->context.get().renderer),
 	right_path_vao(this->context.get().renderer)
 {
-	this->value_min = 0;
+	this->value_offset = 0;
 	this->value_max = 0xff;
 
 	// this->px_per_ms = this->context.get().units.mm_to_px(25.0 / 1000.0); // 25 mm per second
@@ -23,7 +23,8 @@ waveform::waveform(
 }
 
 void waveform::render(const ruis::matrix4& matrix)const {
-	// TODO:
+	this->left_path_vao.render(matrix, 0xffffff00);
+	this->right_path_vao.render(matrix, 0xffffff00);
 }
 
 void waveform::on_resize(){
@@ -105,4 +106,24 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 	}
 
 	std::cout << "num_left = " << this->left_points.size() << ", num_right = " << this->right_points.size() << std::endl;
+
+	this->make_vaos();
+}
+
+decltype(std::declval<ruis::path>().stroke()) waveform::make_vertices(const std::deque<ruis::vector2>& points){
+	ASSERT(this->value_max > this->value_offset)
+	auto scale = this->rect().d.y() / (this->value_max - this->value_offset);
+
+	ruis::path path;
+	for(const auto& p : points){
+		auto v = this->rect().d.y() - p.y() * scale + this->value_offset;
+		path.line_to(p.x(), v);
+	}
+
+	return path.stroke();
+}
+
+void waveform::make_vaos(){
+	this->left_path_vao.set(this->make_vertices(this->left_points));
+	this->right_path_vao.set(this->make_vertices(this->right_points));
 }

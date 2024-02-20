@@ -18,7 +18,7 @@ class waveform :
 	std::deque<ruis::vector2> left_points;
 	std::deque<ruis::vector2> right_points;
 
-	ruis::real value_min;
+	ruis::real value_offset;
 	ruis::real value_max;
 
 	ruis::real px_per_ms;
@@ -40,6 +40,11 @@ public:
 	void on_resize()override;
 
 	void push(ruis::real value, ruis::real dt_ms);
+
+private:
+	decltype(std::declval<ruis::path>().stroke()) make_vertices(const std::deque<ruis::vector2>& points);
+
+	void make_vaos();
 };
 
 namespace make {
