@@ -15,20 +15,16 @@ class waveform :
 	ruis::path_vao left_path_vao;
 	ruis::path_vao right_path_vao;
 
-	struct point {
-		ruis::real delta_time_ms;
-		ruis::real value;
-	};
-
-	std::deque<point> left_points;
-	std::deque<point> right_points;
+	std::deque<ruis::vector2> left_points;
+	std::deque<ruis::vector2> right_points;
 
 	ruis::real value_min;
 	ruis::real value_max;
 
 	ruis::real px_per_ms;
 
-	ruis::real sweep_pos = 0;
+	// TODO: is needed?
+	ruis::real sweep_pos_px = 0;
 
     ruis::real gap_px;
 
@@ -40,6 +36,10 @@ public:
 	);
 
 	void render(const ruis::matrix4& matrix) const override;
+
+	void on_resize()override;
+
+	void push(ruis::real value, ruis::real dt_ms);
 };
 
 namespace make {

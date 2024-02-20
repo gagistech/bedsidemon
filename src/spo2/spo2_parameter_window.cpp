@@ -176,4 +176,6 @@ void spo2_parameter_window::set(const spo2_measurement& meas)
 	} else {
 		this->bpm_value.set_text(std::to_string(unsigned(meas.pulse_rate)));
 	}
+
+    this->waveform.push(meas.spo2, meas.delta_time_ms);
 }
