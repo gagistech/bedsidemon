@@ -3,6 +3,8 @@ include prorab-test.mk
 include prorab-clang-format.mk
 include prorab-license.mk
 
+include raspberrypi.mk
+
 this_name := bedsidemon
 
 $(eval $(call prorab-config, config))
@@ -20,7 +22,15 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += -lruisapp-opengl -lnitki -lopros -ltreeml -lruis -lutki -lm
+this_ldlibs += -lruisapp-opengles -lnitki -lopros -ltreeml -lruis -lutki -lm
+
+ifeq ($(raspberrypi),true)
+    this_cxxflags += -I/opt/vc/include
+    this_ldflags += -L/opt/vc/lib
+    this_ldlibs += -lbrcmGLESv2
+else
+    # this_ldlibs += -lGLESv2
+endif
 
 $(eval $(prorab-build-app))
 
