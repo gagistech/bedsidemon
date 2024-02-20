@@ -30,6 +30,8 @@ class waveform :
 
 	ruis::real sweep_pos = 0;
 
+    ruis::real gap_px;
+
 public:
 	waveform(
 		utki::shared_ref<ruis::context> context,
