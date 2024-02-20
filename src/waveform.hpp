@@ -26,9 +26,6 @@ class waveform :
 
 	ruis::real px_per_ms;
 
-	// TODO: is needed?
-	ruis::real sweep_pos_px = 0;
-
     ruis::real gap_px;
 
 public:

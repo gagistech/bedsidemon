@@ -39,21 +39,30 @@ void waveform::on_resize(){
 
 void waveform::push(ruis::real value, ruis::real dt_ms){
 	auto dx = dt_ms * this->px_per_ms;
+	// dx can be 0 when it is a very first sample received from sensor, dt_ms == 0 in this case and => dx == 0
+	ASSERT(dx >= 0, [&](auto&o){o << "dx = " << dx << ", dt_ms = " << dt_ms << ", this->px_per_ms = " << this->px_per_ms;})
 
 	// push new point
 	if(this->paths[0].points.empty()){
 		this->paths[0].points.push_back({0 , value});
 	}else{
-		this->paths[0].points.push_back(
-			{
-				this->paths[0].points.back().x() + dx,
-				value
-			}
-		);
+		if(dx == 0){
+			// if first sample received from sensor we don't know the delta time from previous sample,
+			// so just update the latest value
+			this->paths[0].points.back().y() = value;
+		}else{
+			this->paths[0].points.push_back(
+				{
+					this->paths[0].points.back().x() + dx,
+					value
+				}
+			);
+		}
 	}
 
-	// wrap around paths[0].points if needed
 	ASSERT(!this->paths[0].points.empty())
+
+	// wrap around paths[0].points if needed
 	if(this->paths[0].points.back().x() >= this->rect().d.x()){
 		auto dx1 = this->paths[0].points.back().x() - this->rect().d.x();
 		auto dx2 = dx - dx1;
@@ -81,29 +90,48 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 		this->paths[0].points.push_back({dx2, v});
 	}
 
-	// pop point from points[1]
-	if(!this->paths[1].points.empty()){
+	auto sweep_pos = this->paths[0].points.back().x();
+	auto pop_pos = sweep_pos + this->gap_px;
+
+	// pop points from another path
+	auto& pop_path = [&]() -> path& {
+		if(pop_pos >= this->rect().d.x()){
+			pop_pos -= this->rect().d.x();
+			return this->paths[0];
+		}
+		return this->paths[1];
+	}();
+
+	if(!pop_path.points.empty()){
 		// there should be at least one line segment
-		ASSERT(this->paths[1].points.size() >= 2)
+		ASSERT(pop_path.points.size() >= 2)
 
 		for(;;){
-			auto tail_dx = std::next(this->paths[1].points.begin())->x() - this->paths[1].points.front().x();
-			if(tail_dx <= dx){
-				this->paths[1].points.pop_front();
-				if(this->paths[1].points.size() == 1){
-					this->paths[1].points.clear();
-					// TODO: pop from paths[0].points
+			if(std::next(pop_path.points.begin())->x() < pop_pos){
+				pop_path.points.pop_front();
+				if(pop_path.points.size() == 1){
+					pop_path.points.clear();
 					break;
 				}
-				dx -= tail_dx;
 				continue;
 			}else{
-				auto ratio = dx / tail_dx;
-				auto tail_dv = std::next(this->paths[1].points.begin())->y() - this->paths[1].points.front().y();
+				auto tail_x = pop_path.points.front().x();
+				auto tail_dx = std::next(pop_path.points.begin())->x() - tail_x;
+				ASSERT(tail_dx > 0)
+				if(tail_dx <= 0){
+					pop_path.points.pop_front();
+					if(pop_path.points.size() == 1){
+						pop_path.points.clear();
+						break;
+					}
+					continue;
+				}
+				auto ratio = (pop_pos - tail_x) / tail_dx;
+				auto tail_dv = std::next(pop_path.points.begin())->y() - pop_path.points.front().y();
 
 				auto dv1 = tail_dv * ratio;
 
-				this->paths[1].points.front() += ruis::vector2{dx, dv1};
+				pop_path.points.front() += ruis::vector2{dx, dv1};
 
 				break;
 			}
@@ -159,6 +187,6 @@ void waveform::make_vaos(){
 			path.line_to(point - pv.origin);
 		}
 
-		pv.vao.set(path.stroke());
+		pv.vao.set(path.stroke(0.5));
 	}
 }
