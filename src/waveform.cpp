@@ -26,7 +26,7 @@ waveform::waveform(
 
 void waveform::render(const ruis::matrix4& matrix)const {
 	for(const auto& pv : this->paths){
-		pv.vao.render(matrix, 0xffffff00);
+		pv.vao.render(ruis::matrix4(matrix).translate(pv.origin), this->get_color());
 	}
 }
 
@@ -115,15 +115,47 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 	this->make_vaos();
 }
 
+template <typename T>
+struct skip
+{
+    T& t;
+    size_t n;
+    skip(T& v, size_t s) : t(v), n(s) {}
+	
+    auto begin() -> typename T::iterator
+    {
+		using std::begin;
+        return utki::next(begin(t), n);
+    }
+    auto end() -> typename T::iterator
+    {
+		using std::end;
+        return end(t);
+    }
+};
+
 void waveform::make_vaos(){
 	ASSERT(this->value_max > this->value_offset)
-	auto scale = this->rect().d.y() / (this->value_max - this->value_offset);
+	const auto& height = this->rect().d.y();
+	auto scale = height / (this->value_max - this->value_offset);
 
 	for(auto& pv : this->paths){
+		if(pv.points.empty()){
+			continue;
+		}
+
+		pv.origin = {
+			pv.points.front().x(),
+			height - pv.points.front().y() * scale + this->value_offset
+		};
+
 		ruis::path path;
-		for(const auto& p : pv.points){
-			auto v = this->rect().d.y() - p.y() * scale + this->value_offset;
-			path.line_to(p.x(), v);
+		for(const auto& p : skip(pv.points, 1)){
+			ruis::vector2 point = {
+				p.x(),
+				height - p.y() * scale + this->value_offset
+			};
+			path.line_to(point - pv.origin);
 		}
 
 		pv.vao.set(path.stroke());

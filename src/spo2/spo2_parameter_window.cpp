@@ -60,6 +60,9 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                         .dims = {0, ruis::lp::fill},
                         .weight = 3
                     }
+                },
+                .color_params = {
+                    .color = color_main_value
                 }
             }
         ),
