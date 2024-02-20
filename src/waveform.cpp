@@ -17,8 +17,9 @@ waveform::waveform(
 	this->value_offset = 0;
 	this->value_max = 100;
 
-	// this->px_per_ms = this->context.get().units.mm_to_px(25.0 / 1000.0); // 25 mm per second
-	this->px_per_ms = 25.0 / 1000.0;
+	constexpr auto default_sweep_speed_mm_per_sec = 100;
+	// this->px_per_ms = this->context.get().units.mm_to_px(default_sweep_speed_mm_per_sec / 1000.0);
+	this->px_per_ms = default_sweep_speed_mm_per_sec / 1000.0;
 
     constexpr auto default_gap_pp = 20;
     this->gap_px = this->context.get().units.pp_to_px(default_gap_pp);
@@ -45,11 +46,13 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 	// push new point
 	if(this->paths[0].points.empty()){
 		this->paths[0].points.push_back({0 , value});
+		return;
 	}else{
 		if(dx == 0){
 			// if first sample received from sensor we don't know the delta time from previous sample,
 			// so just update the latest value
 			this->paths[0].points.back().y() = value;
+			return;
 		}else{
 			this->paths[0].points.push_back(
 				{
@@ -106,26 +109,15 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 		// there should be at least one line segment
 		ASSERT(pop_path.points.size() >= 2)
 
-		for(;;){
-			if(std::next(pop_path.points.begin())->x() < pop_pos){
+		for(; pop_path.points.size() >= 2;){
+			if(std::next(pop_path.points.begin())->x() <= pop_pos){
 				pop_path.points.pop_front();
-				if(pop_path.points.size() == 1){
-					pop_path.points.clear();
-					break;
-				}
 				continue;
 			}else{
 				auto tail_x = pop_path.points.front().x();
 				auto tail_dx = std::next(pop_path.points.begin())->x() - tail_x;
-				ASSERT(tail_dx > 0)
-				if(tail_dx <= 0){
-					pop_path.points.pop_front();
-					if(pop_path.points.size() == 1){
-						pop_path.points.clear();
-						break;
-					}
-					continue;
-				}
+				ASSERT(tail_dx > 0, [&](auto&o){o << "tail_dx = " << tail_dx << ", pop_path.size() = " << pop_path.points.size();})
+				
 				auto ratio = (pop_pos - tail_x) / tail_dx;
 				auto tail_dv = std::next(pop_path.points.begin())->y() - pop_path.points.front().y();
 
@@ -133,8 +125,16 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 
 				pop_path.points.front() += ruis::vector2{dx, dv1};
 
+				// it is possible that due to floating point calculation errors points coincide
+				if(pop_path.points.front().x() >= std::next(pop_path.points.begin())->x()){
+					pop_path.points.pop_front();
+				}
+
 				break;
 			}
+		}
+		if(pop_path.points.size() <= 1){
+			pop_path.points.clear();
 		}
 	}
 
