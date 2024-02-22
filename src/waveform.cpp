@@ -143,25 +143,29 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 	this->make_vaos();
 }
 
-template <typename T>
-struct skip
+template <size_t num_to_skip, typename collection_type>
+struct skip_front_wrapper
 {
-    T& t;
-    size_t n;
-    skip(T& v, size_t s) : t(v), n(s) {}
+    collection_type& collection;
+    skip_front_wrapper(collection_type& collection) : collection(collection){}
 	
-    auto begin() -> typename T::iterator
+    auto begin() -> typename collection_type::iterator
     {
-		ASSERT(!t.empty())
+		ASSERT(!this->collection.empty())
 		using std::begin;
-        return utki::next(begin(t), n);
+        return utki::next(begin(this->collection), num_to_skip);
     }
-    auto end() -> typename T::iterator
+    auto end() -> typename collection_type::iterator
     {
 		using std::end;
-        return end(t);
+        return end(this->collection);
     }
 };
+
+template <size_t num_to_skip, typename collection_type>
+auto skip_front(collection_type& collection){
+	return skip_front_wrapper<num_to_skip, collection_type>(collection);
+}
 
 void waveform::make_vaos(){
 	ASSERT(this->value_max > this->value_offset)
@@ -179,7 +183,7 @@ void waveform::make_vaos(){
 		};
 
 		ruis::path path;
-		for(const auto& p : skip(pv.points, 1)){
+		for(const auto& p : skip_front<1>(pv.points)){
 			ruis::vector2 point = {
 				p.x(),
 				height - p.y() * scale + this->value_offset
