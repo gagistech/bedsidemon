@@ -162,6 +162,7 @@ struct skip_front_wrapper
     }
 };
 
+// TODO: use utki::skip_front()
 template <size_t num_to_skip, typename collection_type>
 auto skip_front(collection_type& collection){
 	return skip_front_wrapper<num_to_skip, collection_type>(collection);
