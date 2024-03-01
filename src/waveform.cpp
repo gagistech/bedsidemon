@@ -138,7 +138,7 @@ void waveform::push(ruis::real value, ruis::real dt_ms){
 		}
 	}
 
-	std::cout << "num_left = " << this->paths[0].points.size() << ", num_right = " << this->paths[1].points.size() << std::endl;
+	// std::cout << "num_left = " << this->paths[0].points.size() << ", num_right = " << this->paths[1].points.size() << std::endl;
 
 	this->make_vaos();
 }
