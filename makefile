@@ -20,7 +20,7 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += -lruisapp-opengles -lnitki -lopros -ltreeml -lruis -lutki -lm
+this_ldlibs += -lruisapp-opengles -lnitki -lopros -ltml -lruis -lutki -lm
 
 this_ldlibs += -lGLESv2
 
