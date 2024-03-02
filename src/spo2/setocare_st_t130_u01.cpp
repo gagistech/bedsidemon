@@ -35,8 +35,6 @@ setocare_st_t130_u01::setocare_st_t130_u01(utki::shared_ref<spo2_parameter_windo
 	spo2_sensor(std::move(pw)),
 	serial_port_thread(port_filename, serial_port_baud_rate)
 {
-	this->state_v = state::wait_packet_first_byte;
-
 	this->start();
 }
 
@@ -143,18 +141,19 @@ void setocare_st_t130_u01::handle_packet()
 	// std::cout << std::endl;
 
 	uint32_t cur_ticks = utki::get_ticks_ms();
-	uint16_t delta_time = uint16_t(cur_ticks - this->last_ticks);
+	auto delta_time = uint16_t(cur_ticks - this->last_ticks);
 	this->last_ticks = cur_ticks;
 
 	using std::min;
 
 	constexpr uint8_t max_signal_strength = 8;
+	constexpr auto max_pleth_value = 100;
 
 	this->push(spo2_measurement{
 		.signal_strength = min(signal_strength, max_signal_strength),
 		.pulse_beat = pulse_beep,
 		.finger_out = no_finger,
-		.waveform_point = pleth > 100 ? 50 : float(pleth),
+		.waveform_point = float(pleth > max_pleth_value ? max_pleth_value / 2 : pleth),
 		.pulse_rate = pulse_rate,
 		.spo2 = spo2,
 		.perfusion_index = 0,

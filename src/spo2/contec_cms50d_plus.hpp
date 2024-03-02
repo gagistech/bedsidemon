@@ -49,9 +49,9 @@ class contec_cms50d_plus :
 	};
 
 	struct packet {
-		uint8_t high_bits;
-		packet_type type;
-		size_t num_bytes_to_read;
+		uint8_t high_bits{};
+		packet_type type{packet_type::enum_size};
+		size_t num_bytes_to_read{};
 		std::vector<uint8_t> buffer;
 	} packet_v;
 
@@ -59,11 +59,18 @@ class contec_cms50d_plus :
 
 	unsigned num_live_data_packages_received = 0;
 
-	uint32_t last_ticks;
+	uint32_t last_ticks{};
 
 public:
 	contec_cms50d_plus(utki::shared_ref<spo2_parameter_window> pw, std::string_view port_filename);
-	~contec_cms50d_plus();
+
+	contec_cms50d_plus(const contec_cms50d_plus&) = delete;
+	contec_cms50d_plus& operator=(const contec_cms50d_plus&) = delete;
+
+	contec_cms50d_plus(contec_cms50d_plus&&) = delete;
+	contec_cms50d_plus& operator=(contec_cms50d_plus&&) = delete;
+
+	~contec_cms50d_plus() override;
 
 private:
 	void on_data_received(utki::span<const uint8_t> data) override;

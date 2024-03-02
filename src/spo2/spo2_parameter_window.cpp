@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "spo2_parameter_window.hpp"
 
+#include <ratio>
 #include <vector>
 
 #include <ruis/layouts/linear_layout.hpp>
@@ -41,9 +42,11 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 	using ruis::lp;
 
 	constexpr auto color_border = 0xff808080;
-    constexpr auto color_info_text = 0xff808080;
+	constexpr auto color_info_text = 0xff808080;
 	constexpr auto color_main_value = 0xffffff00;
 	constexpr auto color_secondary_value = 0xff00ffff;
+
+	constexpr auto font_size_label = 16;
 
 	constexpr auto font_size_main_value_pp = 60;
 	auto font_size_main_value = c.get().units.pp_to_px(font_size_main_value_pp);
@@ -98,7 +101,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                             .color = color_info_text
                         },
                         .text_params = {
-                            .font_size = 16
+                            .font_size = font_size_label
                         }
                     },
                     U"SpO2 %"s
@@ -177,20 +180,22 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 void spo2_parameter_window::set(const spo2_measurement& meas)
 {
 	// set oxygenation
-	if (meas.spo2 == 0 || meas.spo2 > 100) {
+	if (meas.spo2 == 0 || meas.spo2 > std::centi::den) {
 		// invalid value
 		this->spo2_value.set_text("---");
 	} else {
 		this->spo2_value.set_text(std::to_string(unsigned(meas.spo2)));
 	}
 
+	constexpr auto bpm_invalid_value = 0xff;
+
 	// set bpm
-	if (meas.pulse_rate == 0 || meas.pulse_rate == 0xff) {
+	if (meas.pulse_rate == 0 || meas.pulse_rate == bpm_invalid_value) {
 		// invalid value
 		this->bpm_value.set_text("---");
 	} else {
 		this->bpm_value.set_text(std::to_string(unsigned(meas.pulse_rate)));
 	}
 
-    this->waveform.push(meas.waveform_point, meas.delta_time_ms);
+	this->waveform.push(meas.waveform_point, meas.delta_time_ms);
 }

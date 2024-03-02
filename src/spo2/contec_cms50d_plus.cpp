@@ -71,6 +71,7 @@ void contec_cms50d_plus::request_live_data(uint32_t cur_ticks)
 	ASSERT(!this->is_sending)
 
 	this->last_ticks = cur_ticks;
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	this->send({0x7d, 0x81, 0xa1, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80});
 	this->is_sending = true;
 }
@@ -82,7 +83,7 @@ void contec_cms50d_plus::feed(uint8_t byte)
 			// ignore any data, it is not supposed to come from disconnected port
 			break;
 		case state::idle:
-			if (byte & 0x80) {
+			if (byte & utki::bit_7_mask) {
 				// not a packet type byte,
 				// need to wait for next packet start,
 				// ignore
@@ -91,7 +92,7 @@ void contec_cms50d_plus::feed(uint8_t byte)
 			this->handle_packet_type_byte(byte);
 			break;
 		case state::read_packet_high_bits:
-			if (!(byte & 0x80)) {
+			if (!(byte & utki::bit_7_mask)) {
 				// not a packet body byte, process it as packet type byte
 				this->state_v = state::idle;
 				this->handle_packet_type_byte(byte);
@@ -182,20 +183,18 @@ void contec_cms50d_plus::handle_packet()
 
 	if (this->packet_v.type == packet_type::live_data) {
 		ASSERT(this->packet_v.buffer.size() == live_data_packet_size)
-		live_data data;
-
-		data.signal_strength = this->packet_v.buffer[0] & utki::lower_nibble_mask;
-		data.searching_time_too_long = (this->packet_v.buffer[0] & utki::bit_4_mask) != 0;
-		data.pulse_beep = (this->packet_v.buffer[0] & utki::bit_6_mask) != 0;
-		data.finger_out = (this->packet_v.buffer[0] & utki::bit_7_mask) != 0;
-
-		data.waveform_point = this->packet_v.buffer[1] & (~utki::bit_7_mask);
-		data.searching_pulse = (this->packet_v.buffer[1] & utki::bit_7_mask) != 0;
-		data.is_pi_data_valid = (this->packet_v.buffer[2] & utki::bit_4_mask) == 0;
-
-		data.pulse_rate = this->packet_v.buffer[3];
-		data.spo2 = this->packet_v.buffer[4];
-		data.pi = utki::deserialize16le(&this->packet_v.buffer[5]);
+		live_data data{
+			.signal_strength = uint8_t(this->packet_v.buffer[0] & utki::lower_nibble_mask),
+			.searching_time_too_long = (this->packet_v.buffer[0] & utki::bit_4_mask) != 0,
+			.pulse_beep = (this->packet_v.buffer[0] & utki::bit_6_mask) != 0,
+			.finger_out = (this->packet_v.buffer[0] & utki::bit_7_mask) != 0,
+			.searching_pulse = (this->packet_v.buffer[1] & utki::bit_7_mask) != 0,
+			.is_pi_data_valid = (this->packet_v.buffer[2] & utki::bit_4_mask) == 0,
+			.waveform_point = uint8_t(this->packet_v.buffer[1] & (~utki::bit_7_mask)),
+			.pulse_rate = this->packet_v.buffer[3],
+			.spo2 = this->packet_v.buffer[4],
+			.pi = utki::deserialize16le(&this->packet_v.buffer[5]), // NOLINT(cppcoreguidelines-avoid-magic-numbers)
+		};
 
 		// std::cout << "signal_strength = " << unsigned(data.signal_strength) << "\n";
 		// std::cout << "\t" << "searching_time_too_long = " << data.searching_time_too_long << "\n";
@@ -210,16 +209,20 @@ void contec_cms50d_plus::handle_packet()
 		// std::cout << std::endl;
 
 		uint32_t cur_ticks = utki::get_ticks_ms();
-		uint16_t delta_time = uint16_t(cur_ticks - this->last_ticks);
+		auto delta_time = uint16_t(cur_ticks - this->last_ticks);
 		this->last_ticks = cur_ticks;
 
 		using std::min;
 		using std::max;
 
+		constexpr auto max_signal_strength = 10;
+		constexpr auto min_signal_strength = 4;
+
 		this->push(spo2_measurement{
 			.signal_strength = uint8_t(
-				(min(max(int(data.signal_strength), 4), 10) - 4) * std::centi::den / 6
-			), // value is from [4, 10]
+				(min(max(int(data.signal_strength), min_signal_strength), max_signal_strength) - min_signal_strength) *
+				std::centi::den / (max_signal_strength - min_signal_strength)
+			),
 			.pulse_beat = data.pulse_beep,
 			.finger_out = data.finger_out,
 			.waveform_point = float(data.waveform_point),
@@ -229,11 +232,14 @@ void contec_cms50d_plus::handle_packet()
 			.delta_time_ms = delta_time
 		});
 
+		constexpr auto sample_rate = 60;
+		constexpr auto acquisition_time_sec = 30;
+
 		// CMS50D+ has limitation of sending live data for only 30 seconds after it was requested.
 		// Workaround this limitation by requesting live data every ~15 seconds, assuming that it sends
 		// about 60 live data packets per second.
 		++this->num_live_data_packages_received;
-		if (this->num_live_data_packages_received > 60 * 15) {
+		if (this->num_live_data_packages_received > sample_rate * (acquisition_time_sec / 2)) {
 			this->num_live_data_packages_received = 0;
 			this->request_live_data(cur_ticks);
 		}

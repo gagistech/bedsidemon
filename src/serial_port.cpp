@@ -50,16 +50,16 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 		});
 
 		// TODO: move setting port config to the class's public method
-		termios newtermios{0};
-		newtermios.c_cflag = CBAUD | CS8 | CLOCAL | CREAD;
-		newtermios.c_iflag = IGNPAR | IGNBRK;
-		newtermios.c_oflag = 0;
-		newtermios.c_lflag = 0;
+		termios newtermios{
+			.c_iflag = IGNPAR | IGNBRK, //
+			.c_oflag = 0,
+			.c_cflag = CBAUD | CS8 | CLOCAL | CREAD,
+			.c_lflag = 0
+		};
 		newtermios.c_cc[VMIN] = 0;
 		newtermios.c_cc[VTIME] = 0;
 
-		ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size))
-		speed_t br = baud_rate_map[size_t(baud_rate)];
+		ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size)) speed_t br = baud_rate_map[size_t(baud_rate)];
 		cfsetospeed(&newtermios, br);
 		cfsetispeed(&newtermios, br);
 

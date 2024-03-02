@@ -39,18 +39,25 @@ class setocare_st_t130_u01 :
 		enum_size
 	};
 
-	state state_v = state::disconnected;
+	state state_v = state::wait_packet_first_byte;
 
 	struct packet {
-		size_t num_bytes_to_read;
+		size_t num_bytes_to_read{};
 		std::vector<uint8_t> buffer;
 	} packet_v;
 
-	uint32_t last_ticks;
+	uint32_t last_ticks{};
 
 public:
 	setocare_st_t130_u01(utki::shared_ref<spo2_parameter_window> pw, std::string_view port_filename);
-	~setocare_st_t130_u01();
+
+	setocare_st_t130_u01(const setocare_st_t130_u01&) = delete;
+	setocare_st_t130_u01& operator=(const setocare_st_t130_u01&) = delete;
+
+	setocare_st_t130_u01(setocare_st_t130_u01&&) = delete;
+	setocare_st_t130_u01& operator=(setocare_st_t130_u01&&) = delete;
+
+	~setocare_st_t130_u01() override;
 
 private:
 	void on_data_received(utki::span<const uint8_t> data) override;

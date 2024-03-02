@@ -35,6 +35,12 @@ class spo2_sensor
 public:
 	spo2_sensor(utki::shared_ref<spo2_parameter_window> pw);
 
+	spo2_sensor(const spo2_sensor&) = delete;
+	spo2_sensor& operator=(const spo2_sensor&) = delete;
+
+	spo2_sensor(spo2_sensor&&) = delete;
+	spo2_sensor& operator=(spo2_sensor&&) = delete;
+
 	virtual ~spo2_sensor() = default;
 
 protected:

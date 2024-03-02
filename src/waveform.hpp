@@ -1,3 +1,24 @@
+/*
+bedsidemon - Bed-side monitor example GUI project
+
+Copyright (C) 2024 Ivan Gagis  <igagis@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+/* ================ LICENSE END ================ */
+
 #pragma once
 
 #include <deque>
@@ -12,7 +33,7 @@ class waveform :
 	virtual public ruis::widget, //
 	public ruis::color_widget
 {
-	struct path{
+	struct path {
 		ruis::path_vao vao;
 		ruis::vector2 origin;
 
@@ -21,12 +42,12 @@ class waveform :
 
 	std::array<path, 2> paths;
 
-	ruis::real value_offset;
+	ruis::real value_offset{0};
 	ruis::real value_max;
 
 	ruis::real px_per_ms;
 
-    ruis::real gap_px;
+	ruis::real gap_px;
 
 public:
 	waveform(
@@ -37,7 +58,7 @@ public:
 
 	void render(const ruis::matrix4& matrix) const override;
 
-	void on_resize()override;
+	void on_resize() override;
 
 	void push(ruis::real value, ruis::real dt_ms);
 

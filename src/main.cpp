@@ -19,10 +19,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
+#include <clargs/parser.hpp>
 #include <ruis/layouts/linear_layout.hpp>
 #include <ruisapp/application.hpp>
-
-#include <clargs/parser.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
 #include "spo2/setocare_st_t130_u01.hpp"
@@ -95,7 +94,9 @@ const ruisapp::application_factory app_fac([](auto args) {
 
 	clargs::parser p;
 
-	p.add("window","run in window mode", [&](){window = true;});
+	p.add("window", "run in window mode", [&]() {
+		window = true;
+	});
 
 	p.parse(args);
 
