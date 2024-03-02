@@ -23,3 +23,5 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Bed side monitor demo app.
  Demo application of medical bed side monitor.
+
+# TODO: create a separate package with resources of /usr/share
