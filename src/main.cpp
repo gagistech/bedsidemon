@@ -92,6 +92,7 @@ public:
 const ruisapp::application_factory app_fac([](auto args) {
 	bool window = false;
 
+	// TODO: look in /usr/local/share/bedsidemon first?
 	std::string res_path = "/usr/share/bedsidemon"s;
 
 	clargs::parser p;
