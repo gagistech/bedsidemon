@@ -20,14 +20,14 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += -lruisapp-opengles -lnitki -lopros -ltml -lruis -lutki -lm
+this_ldlibs += -lruisapp-opengles -lclargs -lnitki -lopros -ltml -lruis -lutki -lm
 
 this_ldlibs += -lGLESv2
 
 $(eval $(prorab-build-app))
 
 this_run_name := app
-this_test_cmd := $(prorab_this_name)
+this_test_cmd := $(prorab_this_name) --window
 this_test_deps := $(prorab_this_name)
 this_test_ld_path := ../src/out/$(c)
 $(eval $(prorab-run))

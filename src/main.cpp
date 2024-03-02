@@ -22,6 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/layouts/linear_layout.hpp>
 #include <ruisapp/application.hpp>
 
+#include <clargs/parser.hpp>
+
 #include "spo2/contec_cms50d_plus.hpp"
 #include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
@@ -59,7 +61,7 @@ class application : public ruisapp::application
 	std::unique_ptr<spo2_sensor> spo2_sensor_v;
 
 public:
-	application() :
+	application(bool window) :
 		ruisapp::application( //
 			"ruis-tests",
 			[]() {
@@ -69,6 +71,8 @@ public:
 			}()
 		)
 	{
+		this->set_fullscreen(!window);
+
 		this->gui.init_standard_widgets(*this->get_res_file());
 
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
@@ -87,7 +91,15 @@ public:
 };
 
 const ruisapp::application_factory app_fac([](auto args) {
-	return std::make_unique<application>();
+	bool window = false;
+
+	clargs::parser p;
+
+	p.add("window","run in window mode", [&](){window = true;});
+
+	p.parse(args);
+
+	return std::make_unique<application>(window);
 });
 
 } // namespace bedsidemon
