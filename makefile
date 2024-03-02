@@ -22,8 +22,6 @@ endif
 
 this_ldlibs += -lruisapp-opengles -lclargs -lnitki -lopros -ltml -lruis -lutki -lm
 
-this_ldlibs += -lGLESv2
-
 $(eval $(prorab-build-app))
 
 this_run_name := app
