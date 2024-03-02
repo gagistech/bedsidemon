@@ -10,6 +10,7 @@ Build-Depends:
 	myci,
 	clang-tidy,
 	clang-format,
+	libnitki-dev,
 	libtst-dev,
 	libclargs-dev,
 	libruisapp-dev
