@@ -3,3 +3,4 @@
 # by "make install" automatically, no need to list them here.
 
 # usr/bin/*
+# usr/share/*

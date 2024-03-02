@@ -60,7 +60,7 @@ class application : public ruisapp::application
 	std::unique_ptr<spo2_sensor> spo2_sensor_v;
 
 public:
-	application(bool window) :
+	application(bool window, std::string_view res_path) :
 		ruisapp::application( //
 			"ruis-tests",
 			[]() {
@@ -74,7 +74,7 @@ public:
 
 		this->gui.init_standard_widgets(*this->get_res_file());
 
-		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
+		this->gui.context.get().loader.mount_res_pack(*this->get_res_file(papki::as_dir(res_path)));
 
 		auto c = build_root_layout(this->gui.context);
 		this->gui.set_root(c);
@@ -92,15 +92,21 @@ public:
 const ruisapp::application_factory app_fac([](auto args) {
 	bool window = false;
 
+	std::string res_path = "/usr/share/bedsidemon"s;
+
 	clargs::parser p;
 
 	p.add("window", "run in window mode", [&]() {
 		window = true;
 	});
 
+	p.add("res-path", "resources path, default = /usr/share/bedsidemon", [&](std::string_view v) {
+		res_path = v;
+	});
+
 	p.parse(args);
 
-	return std::make_unique<application>(window);
+	return std::make_unique<application>(window, res_path);
 });
 
 } // namespace bedsidemon

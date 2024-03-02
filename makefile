@@ -20,12 +20,12 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-this_ldlibs += -lruisapp-opengles -lclargs -lnitki -lopros -ltml -lruis -lutki -lm
+this_ldlibs += -lruisapp-opengles -lpapki -lclargs -lnitki -lopros -ltml -lruis -lutki -lm
 
 $(eval $(prorab-build-app))
 
 this_run_name := app
-this_test_cmd := $(prorab_this_name) --window
+this_test_cmd := $(prorab_this_name) --window --res-path=res
 this_test_deps := $(prorab_this_name)
 this_test_ld_path := ../src/out/$(c)
 $(eval $(prorab-run))
@@ -34,3 +34,13 @@ this_src_dir := src
 $(eval $(prorab-clang-format))
 this_license_file := LICENSE
 $(eval $(prorab-license))
+
+# install resources
+define this_rules
+install::
+$(.RECIPEPREFIX)$(a)for i in $(patsubst $(d)res/%,/%,$(shell find $(d)res -type f -name "*")); do \
+		install -d $(DESTDIR)$(PREFIX)/share/$(this_name)$$$${i%/*}; \
+		install -m 644 $(d)res$$$$i $(DESTDIR)$(PREFIX)/share/$(this_name)$$$$i; \
+	done
+endef
+$(eval $(this_rules))
