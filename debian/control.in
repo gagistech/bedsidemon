@@ -1,5 +1,5 @@
 Source: bedsidemon
-Section: utils
+Section: misc
 Priority: extra
 Maintainer: Ivan Gagis <igagis@gmail.com>
 Build-Depends:
@@ -18,10 +18,16 @@ Build-Depends-Indep: doxygen
 Standards-Version: 3.9.2
 
 Package: bedsidemon
-Section: utils
+Section: misc
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends},
+	bedsidemon-data
 Description: Bed side monitor demo app.
  Demo application of medical bed side monitor.
 
-# TODO: create a separate package with resources of /usr/share
+Package: bedsidemon-data
+Section: misc
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Bed side monitor demo app.
+ Data files for bedsidemon.
