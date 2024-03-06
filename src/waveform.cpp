@@ -181,6 +181,7 @@ void waveform::make_vaos()
 
 	for (auto& pv : this->paths) {
 		if (pv.points.empty()) {
+			pv.vao.set(ruis::path().stroke());
 			continue;
 		}
 
