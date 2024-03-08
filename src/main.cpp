@@ -1,7 +1,7 @@
 /*
 bedsidemon - Bed-side monitor example GUI project
 
-Copyright (C) 2024 Ivan Gagis  <igagis@gmail.com>
+Copyright (C) 2024 Gagistech Oy <gagistechoy@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -83,6 +83,7 @@ public:
 
 		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
 		// this->spo2_sensor_v = std::make_unique<contec_cms50d_plus>(pw, "/dev/ttyUSB0");
+		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->spo2_sensor_v = std::make_unique<setocare_st_t130_u01>(pw, "/dev/ttyUSB0");
 
 		pw_container.push_back(pw);
