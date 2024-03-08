@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ratio>
 #include <vector>
 
-#include <ruis/layouts/linear_layout.hpp>
+#include <ruis/layout.hpp>
 #include <ruis/widgets/label/rectangle.hpp>
 
 using namespace std::string_literals;
@@ -91,7 +91,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                     }
                 },
                 .container_params = {
-                    .layout = ruis::column_layout::instance
+                    .layout = ruis::layout::column
                 }
             },
             {
@@ -168,7 +168,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 		this->context,
 		{},
 		{//
-		 .layout = ruis::row_layout::instance
+		 .layout = ruis::layout::row
 		},
 		build_layout(this->context)
 	),

@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /* ================ LICENSE END ================ */
 
 #include <clargs/parser.hpp>
-#include <ruis/layouts/linear_layout.hpp>
+#include <ruis/layout.hpp>
 #include <ruisapp/application.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
@@ -44,7 +44,7 @@ utki::shared_ref<ruis::widget> build_root_layout(utki::shared_ref<ruis::context>
 					.id = "pw_container"s
 				},
 				.container_params = {
-					.layout = ruis::column_layout::instance
+					.layout = ruis::layout::column
 				}
 			},
 			{}
