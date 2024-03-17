@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ratio>
 #include <vector>
 
-#include <ruis/layout.hpp>
+#include <ruis/layouts/layout.hpp>
 #include <ruis/widgets/label/rectangle.hpp>
 
 using namespace std::string_literals;
@@ -61,7 +61,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                 .widget_params = {
                     .id = "pw_waveform"s,
                     .lp = {
-                        .dims = {0, ruis::lp::fill},
+                        .dims = {lp::fill, lp::fill},
                         .weight = 3
                     }
                 },
@@ -74,7 +74,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
             {
                 .widget_params = {
                     .lp = {
-                        .dims = {c.get().units.pp_to_px(1), ruis::lp::fill}
+                        .dims = {c.get().units.pp_to_px(1), lp::fill}
                     }
                 },
                 .color_params = {
@@ -86,7 +86,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
             {
                 .widget_params = {
                     .lp = {
-                        .dims = {0, lp::min},
+                        .dims = {lp::fill, lp::min},
                         .weight = 1
                     }
                 },
@@ -158,18 +158,19 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	ruis::widget( //
 		std::move(context),
 		{//
-		 .lp =
-			 {//
-			  .dims = {ruis::lp::fill, ruis::lp::min}
-			 }
+		 .widget_params =
+			 {.lp =
+				  {//
+				   .dims = {ruis::lp::fill, ruis::lp::min}
+				  }}
 		}
 	),
 	ruis::container( //
 		this->context,
-		{},
-		{//
-		 .layout = ruis::layout::row
-		},
+		{.container_params =
+			 {//
+			  .layout = ruis::layout::row
+			 }},
 		build_layout(this->context)
 	),
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),

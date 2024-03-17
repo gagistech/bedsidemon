@@ -20,7 +20,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 /* ================ LICENSE END ================ */
 
 #include <clargs/parser.hpp>
-#include <ruis/layout.hpp>
+#include <ruis/layouts/layout.hpp>
 #include <ruisapp/application.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"

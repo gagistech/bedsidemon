@@ -29,19 +29,18 @@ namespace {
 constexpr auto default_max_value = 100;
 } // namespace
 
-waveform::waveform(
-	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::color_widget::parameters color_params
-) :
-	ruis::widget(std::move(context), std::move(widget_params)),
-	ruis::color_widget(this->context, std::move(color_params)),
-	paths{
-		{//
-		 {.vao{this->context.get().renderer}},
-		 {.vao{this->context.get().renderer}}
-		}
-},
+waveform::waveform(utki::shared_ref<ruis::context> context, all_parameters params) :
+	ruis::widget(
+		std::move(context),
+		{
+			.widget_params = std::move(params.widget_params)
+}
+	),
+	ruis::color_widget(this->context, std::move(params.color_params)),
+	paths{{//
+		   {.vao{this->context.get().renderer}},
+		   {.vao{this->context.get().renderer}}
+	}},
 	value_max(default_max_value)
 {
 	constexpr auto default_sweep_speed_mm_per_sec = 100;
