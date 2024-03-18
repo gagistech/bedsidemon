@@ -90,7 +90,7 @@ public:
 	}
 };
 
-const ruisapp::application_factory app_fac([](auto args) {
+const ruisapp::application_factory app_fac([](auto executbale, auto args) {
 	bool window = false;
 
 	// TODO: look in /usr/local/share/bedsidemon first?
