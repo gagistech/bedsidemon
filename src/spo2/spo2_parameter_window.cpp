@@ -97,6 +97,11 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
             {
                 m::text(c,
                     {
+                        .widget_params = {
+                            .lp = {
+                                .align = {lp::align::front, lp::align::front}
+                            }
+                        },
                         .color_params = {
                             .color = color_info_text
                         },
