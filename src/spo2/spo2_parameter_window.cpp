@@ -29,6 +29,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using namespace std::string_literals;
 
+using namespace ruis::length_literals;
+
 using namespace bedsidemon;
 
 namespace {
@@ -37,7 +39,7 @@ using namespace ruis::make;
 using namespace bedsidemon::make;
 }; // namespace m
 
-std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::context> c)
+std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::context> c)
 {
 	using ruis::lp;
 
@@ -74,7 +76,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
             {
                 .widget_params = {
                     .lp = {
-                        .dims = {c.get().units.pp_to_px(1), lp::fill}
+                        .dims = {1_pp, lp::fill}
                     }
                 },
                 .color_params = {
@@ -144,7 +146,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
                     {
                         .widget_params = {
                             .lp = {
-                                .dims = {lp::fill, c.get().units.pp_to_px(1)}
+                                .dims = {lp::fill, 1_pp}
                             }
                         },
                         .color_params = {
@@ -176,7 +178,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 			 {//
 			  .layout = ruis::layout::row
 			 }},
-		build_layout(this->context)
+		make_widgets(this->context)
 	),
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),
 	bpm_value(this->get_widget_as<ruis::text>("bpm_value")),

@@ -30,7 +30,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace std::string_literals;
 
 namespace {
-utki::shared_ref<ruis::widget> build_root_layout(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_root_widgets(utki::shared_ref<ruis::context> c)
 {
 	namespace m = ruis::make;
 	using ruis::lp;
@@ -76,7 +76,7 @@ public:
 
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file(papki::as_dir(res_path)));
 
-		auto c = build_root_layout(this->gui.context);
+		auto c = make_root_widgets(this->gui.context);
 		this->gui.set_root(c);
 
 		auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
