@@ -9,11 +9,11 @@ jobs:
 ##### coverage #####
   coverage:
     runs-on: ubuntu-latest
-    container: debian:bullseye
+    container: debian:bookworm
     name: coverage - measure
     env:
       linux_distro: debian
-      linux_release: bullseye
+      linux_release: bookworm
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
@@ -52,7 +52,7 @@ jobs:
           name: cobertura.xml
           path: cobertura.xml
       - name: upload coverage data to codecov.io
-        uses: codecov/codecov-action@v4.0.1
+        uses: codecov/codecov-action@v4
         if: always() # even if previous steps fail, this one needs to be run
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
