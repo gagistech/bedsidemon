@@ -28,12 +28,6 @@ jobs:
           repo: deb https://apt.llvm.org/${{ env.linux_release }} llvm-toolchain-${{ env.linux_release }} main
           repo-name: llvm
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
-      - name: install gcovr
-        run: |
-          apt --quiet install --assume-yes devscripts equivs python3-pip
-
-          # install gcovr >5.2
-          pipx install git+https://github.com/gcovr/gcovr.git
       - name: git clone
         uses: myci-actions/checkout@master
       - name: prepare debian package
