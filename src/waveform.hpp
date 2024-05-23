@@ -72,6 +72,8 @@ public:
 
 	void push(ruis::real value, ruis::real dt_ms);
 
+	void clear();
+
 private:
 	void make_vaos();
 };

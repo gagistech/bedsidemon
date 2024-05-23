@@ -58,12 +58,18 @@ void waveform::render(const ruis::matrix4& matrix) const
 	}
 }
 
-void waveform::on_resize()
+void waveform::clear()
 {
 	for (auto& p : this->paths) {
 		p.points.clear();
 	}
+	this->clear_accumulated_value();
 	this->make_vaos();
+}
+
+void waveform::on_resize()
+{
+	this->clear();
 }
 
 void waveform::clear_accumulated_value()
