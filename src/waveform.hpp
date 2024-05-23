@@ -49,6 +49,15 @@ class waveform :
 
 	ruis::real gap_px;
 
+	ruis::real min_step_px = 1;
+
+	ruis::real accumulated_dx = 0;
+	ruis::real accumulated_value = 0;
+	// assuming values are coming with same delta time on average, so just store number of values accumulated
+	unsigned num_values_accumulated = 0;
+
+	void clear_accumulated_value();
+
 public:
 	struct all_parameters {
 		ruis::widget::parameters widget_params;

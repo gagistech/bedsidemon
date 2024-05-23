@@ -66,11 +66,32 @@ void waveform::on_resize()
 	this->make_vaos();
 }
 
+void waveform::clear_accumulated_value()
+{
+	this->accumulated_value = 0;
+	this->accumulated_dx = 0;
+	this->num_values_accumulated = 0;
+}
+
 void waveform::push(ruis::real value, ruis::real dt_ms)
 {
 	auto dx = dt_ms * this->px_per_ms;
+
+	this->accumulated_dx += dx;
+	this->accumulated_value += value;
+	++this->num_values_accumulated;
+
+	if (this->accumulated_dx < this->min_step_px) {
+		return;
+	}
+
+	value = this->accumulated_value / ruis::real(this->num_values_accumulated);
+	dx = this->accumulated_dx;
+
+	this->clear_accumulated_value();
+
 	// dx can be 0 when it is a very first sample received from sensor, dt_ms == 0 in this case and => dx == 0
-	ASSERT(dx >= 0, [&](auto& o) {
+	ASSERT(dx > 0 || (dx == 0 && dt_ms == 0), [&](auto& o) {
 		o << "dx = " << dx << ", dt_ms = " << dt_ms << ", this->px_per_ms = " << this->px_per_ms;
 	})
 
