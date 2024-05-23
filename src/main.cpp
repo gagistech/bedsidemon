@@ -27,31 +27,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
 
+#include "gui.hpp"
+
 using namespace std::string_literals;
-
-namespace {
-utki::shared_ref<ruis::widget> make_root_widgets(utki::shared_ref<ruis::context> c)
-{
-	namespace m = ruis::make;
-	using ruis::lp;
-
-	return
-		// clang-format off
-		m::container(
-			c,
-			{
-				.widget_params = {
-					.id = "pw_container"s
-				},
-				.container_params = {
-					.layout = ruis::layout::column
-				}
-			},
-			{}
-		);
-	// clang-format on
-}
-} // namespace
 
 namespace bedsidemon {
 
