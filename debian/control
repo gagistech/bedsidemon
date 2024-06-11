@@ -17,7 +17,15 @@ Build-Depends:
 Build-Depends-Indep: doxygen
 Standards-Version: 3.9.2
 
-Package: bedsidemon
+Package: bedsidemon-opengles-xorg
+Section: misc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends},
+	bedsidemon-data
+Description: Bed side monitor demo app.
+ Demo application of medical bed side monitor.
+
+Package: bedsidemon-opengles-wayland
 Section: misc
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
