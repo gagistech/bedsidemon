@@ -62,6 +62,8 @@ $(eval $(call bedsidemon_rules,opengles,wayland))
 
 # ================================================
 # ============== format and license ==============
+$(eval $(prorab-clear-this-vars))
+
 this_src_dir := .
 $(eval $(prorab-clang-format))
 this_license_file := ../LICENSE
