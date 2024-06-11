@@ -140,8 +140,8 @@ jobs:
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@master
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
-      - name: prepare debian package
-        run: myci-deb-prepare.sh
+      # - name: prepare debian package
+      #   run: myci-deb-prepare.sh
       - name: install deps
         run: myci-deb-install-build-deps.sh
       - name: build
