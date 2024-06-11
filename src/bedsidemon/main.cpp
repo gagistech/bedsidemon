@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruisapp/application.hpp>
 
-#include "bedsidemon/application.hpp"
+#include "application.hpp"
 
 namespace bedsidemon {
 

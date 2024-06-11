@@ -10,16 +10,33 @@ this_name := bedsidemon
 
 $(eval $(call prorab-config, ../config))
 
-this_srcs += $(call prorab-src-dir, bedsidemon)
+this_srcs += $(filter-out main.cpp,$(call prorab-src-dir, bedsidemon))
 
 this_no_install := true
 this_static_lib_only := true
 
 $(eval $(prorab-build-lib))
 
+# ================================================
+# ============== format and license ==============
+this_src_dir := $(this_name)
+$(eval $(prorab-clang-format))
+this_license_file := ../LICENSE
+$(eval $(prorab-license))
+
+# ===============================================
+# ============== install resources ==============
+define this_rules
+install::
+$(.RECIPEPREFIX)$(a)for i in $(patsubst $(d)../res/%,/%,$(shell find $(d)../res -type f -name "*")); do \
+		install -d $(DESTDIR)$(PREFIX)/share/$(this_name)$$$${i%/*}; \
+		install -m 644 $(d)../res$$$$i $(DESTDIR)$(PREFIX)/share/$(this_name)$$$$i; \
+	done
+endef
+$(eval $(this_rules))
+
 # =========================================
 # ============== application ==============
-
 define bedsidemon_rules
     $$(eval $$(prorab-clear-this-vars))
 
@@ -27,7 +44,7 @@ define bedsidemon_rules
 
     $$(eval $$(call prorab-config, ../config))
 
-    this_srcs += main.cpp
+    this_srcs += bedsidemon/main.cpp
 
     this_ldlibs += -pthread
     this_ldflags += -rdynamic
@@ -59,23 +76,3 @@ endef
 $(eval $(call bedsidemon_rules,opengles,xorg))
 # $(eval $(call bedsidemon_rules,opengl,wayland))
 $(eval $(call bedsidemon_rules,opengles,wayland))
-
-# ================================================
-# ============== format and license ==============
-$(eval $(prorab-clear-this-vars))
-
-this_src_dir := .
-$(eval $(prorab-clang-format))
-this_license_file := ../LICENSE
-$(eval $(prorab-license))
-
-# ===============================================
-# ============== install resources ==============
-define this_rules
-install::
-$(.RECIPEPREFIX)$(a)for i in $(patsubst $(d)../res/%,/%,$(shell find $(d)../res -type f -name "*")); do \
-		install -d $(DESTDIR)$(PREFIX)/share/$(this_name)$$$${i%/*}; \
-		install -m 644 $(d)../res$$$$i $(DESTDIR)$(PREFIX)/share/$(this_name)$$$$i; \
-	done
-endef
-$(eval $(this_rules))
