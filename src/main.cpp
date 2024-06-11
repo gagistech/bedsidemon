@@ -23,11 +23,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/layouts/layout.hpp>
 #include <ruisapp/application.hpp>
 
-#include "spo2/contec_cms50d_plus.hpp"
-#include "spo2/setocare_st_t130_u01.hpp"
-#include "spo2/spo2_parameter_window.hpp"
-
-#include "gui.hpp"
+#include "bedsidemon/gui.hpp"
+#include "bedsidemon/spo2/contec_cms50d_plus.hpp"
+#include "bedsidemon/spo2/setocare_st_t130_u01.hpp"
+#include "bedsidemon/spo2/spo2_parameter_window.hpp"
 
 using namespace std::string_literals;
 
