@@ -36,6 +36,6 @@ Description: Bed side monitor demo app.
 Package: bedsidemon-data
 Section: misc
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${misc:Depends}
 Description: Bed side monitor demo app.
  Data files for bedsidemon.
