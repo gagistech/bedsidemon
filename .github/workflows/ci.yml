@@ -105,7 +105,6 @@ jobs:
           - {os: debian, codename: bullseye, image_owner: , labels: [arm32,docker]}
           - {os: debian, codename: bullseye, image_owner: , labels: [arm64,docker]}
           - {os: debian, codename: bookworm, image_owner: }
-          # - {os: debian, codename: bookworm, image_owner: , labels: [i386,docker]}
           - {os: debian, codename: bookworm, image_owner: , labels: [arm32,docker]}
           - {os: debian, codename: bookworm, image_owner: , labels: [arm64,docker]}
           # - {os: ubuntu, codename: focal, image_owner: }
