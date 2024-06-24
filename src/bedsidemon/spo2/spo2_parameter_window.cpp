@@ -25,6 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <vector>
 
 #include <ruis/layouts/layout.hpp>
+#include <ruis/widgets/label/image.hpp>
 #include <ruis/widgets/label/rectangle.hpp>
 
 using namespace std::string_literals;
@@ -42,6 +43,7 @@ using namespace bedsidemon::make;
 std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::context> c)
 {
 	using ruis::lp;
+	using namespace ruis::length_literals;
 
 	constexpr auto color_border = 0xff808080;
 	constexpr auto color_info_text = 0xff808080;
@@ -84,16 +86,13 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 }
             }
         ),
-        m::container(c,
+        m::column(c,
             {
                 .widget_params = {
                     .lp = {
                         .dims = {lp::fill, lp::min},
                         .weight = 1
                     }
-                },
-                .container_params = {
-                    .layout = ruis::layout::column
                 }
             },
             {
@@ -127,21 +126,41 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                     },
                     U"---"s
                 ),
-                m::text(c,
+                m::row(c,
+                    {},
                     {
-                        .widget_params = {
-                            .id = "bpm_value"s
-                        },
-                        .color_params = {
-                            .color = color_secondary_value
-                        },
-                        .text_params = {
-                            .font_size = font_secondary_main_value
-                        }
-                    },
-                    U"---"s
+                        m::text(c,
+                            {
+                                .widget_params = {
+                                    .id = "bpm_value"s
+                                },
+                                .color_params = {
+                                    .color = color_secondary_value
+                                },
+                                .text_params = {
+                                    .font_size = font_secondary_main_value
+                                }
+                            },
+                            U"---"s
+                        ),
+                        m::image(c,
+                            {
+                                .widget_params = {
+                                    .id = "heart"s,
+                                    .lp = {
+                                        .dims = {15_pp, lp::min},
+                                        .align = {lp::align::front, lp::align::front}
+                                    },
+                                    .visible = false
+                                },
+                                .image_params = {
+                                    .img = c.get().loader.load<ruis::res::image>("img_heart"),
+                                    .keep_aspect_ratio = true
+                                }
+                            }
+                        )
+                    }
                 ),
-                
                 m::rectangle(c,
                     {
                         .widget_params = {
@@ -182,6 +201,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	),
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),
 	bpm_value(this->get_widget_as<ruis::text>("bpm_value")),
+	heart(this->get_widget("heart")),
 	waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform"))
 {}
 
@@ -204,6 +224,8 @@ void spo2_parameter_window::set(const spo2_measurement& meas)
 	} else {
 		this->bpm_value.set_text(std::to_string(unsigned(meas.pulse_rate)));
 	}
+
+    this->heart.set_visible(meas.pulse_beat);
 
 	this->waveform.push(meas.waveform_point, meas.delta_time_ms);
 }

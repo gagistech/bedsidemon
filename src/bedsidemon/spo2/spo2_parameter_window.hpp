@@ -36,6 +36,7 @@ class spo2_parameter_window :
 {
 	ruis::text& spo2_value;
 	ruis::text& bpm_value;
+	ruis::widget& heart;
 
 	bedsidemon::waveform& waveform;
 
