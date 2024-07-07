@@ -66,7 +66,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: , labels: [arm64,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | ${{ matrix.labels[0] }}
+    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} - ${{ matrix.labels[0] }}
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
@@ -114,7 +114,7 @@ jobs:
           - {os: raspbian, codename: bookworm, image_owner: igagis/, labels: [arm32,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | ${{ matrix.labels[0] }}
+    name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} - ${{ matrix.labels[0] }}
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
