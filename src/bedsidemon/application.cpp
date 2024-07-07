@@ -55,8 +55,9 @@ application::application(bool window, std::string_view res_path) :
 	auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
 
 	auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
-	// this->spo2_sensor_v = std::make_unique<contec_cms50d_plus>(pw, "/dev/ttyUSB0");
-	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
+	// this->spo2_sensor_v = std::make_unique<contec_cms50d_plus>(pw,
+	// "/dev/ttyUSB0"); NOLINTNEXTLINE(bugprone-unused-return-value, "false
+	// positive")
 	this->spo2_sensor_v = std::make_unique<setocare_st_t130_u01>(pw, "/dev/ttyUSB0");
 
 	pw_container.push_back(pw);

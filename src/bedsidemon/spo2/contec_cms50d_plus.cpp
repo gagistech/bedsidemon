@@ -176,8 +176,10 @@ struct live_data {
 
 void contec_cms50d_plus::handle_packet()
 {
-	// std::cout << "handle packet, high bits = " << std::hex << "0x" << unsigned(this->packet_v.high_bits) <<
-	// std::endl; for(const auto& b : this->packet_v.buffer){ 	std::cout << "0x" << std::hex << unsigned(b) << " ";
+	// std::cout << "handle packet, high bits = " << std::hex << "0x" <<
+	// unsigned(this->packet_v.high_bits) << std::endl; for(const auto& b :
+	// this->packet_v.buffer){ 	std::cout << "0x" << std::hex << unsigned(b) <<
+	// " ";
 	// }
 	// std::cout << std::endl;
 
@@ -196,24 +198,24 @@ void contec_cms50d_plus::handle_packet()
 			.pi = utki::deserialize16le(&this->packet_v.buffer[5]), // NOLINT(cppcoreguidelines-avoid-magic-numbers)
 		};
 
-		// std::cout << "signal_strength = " << unsigned(data.signal_strength) << "\n";
-		// std::cout << "\t" << "searching_time_too_long = " << data.searching_time_too_long << "\n";
-		// std::cout << "\t" << "pulse_beep = " << data.pulse_beep << "\n";
-		// std::cout << "\t" << "finger_out = " << data.finger_out << "\n";
-		// std::cout << "\t" << "waveform_point = " << unsigned(data.waveform_point) << "\n";
-		// std::cout << "\t" << "searching_pulse = " << data.searching_pulse << "\n";
-		// std::cout << "\t" << "is_pi_data_valid = " << data.is_pi_data_valid << "\n";
-		// std::cout << "\t" << "pulse_rate = " << unsigned(data.pulse_rate) << "\n";
-		// std::cout << "\t" << "spo2 = " << unsigned(data.spo2) << "\n";
-		// std::cout << "\t" << "pi = " << unsigned(data.pi) << "\n";
-		// std::cout << std::endl;
+		// std::cout << "signal_strength = " << unsigned(data.signal_strength) <<
+		// "\n"; std::cout << "\t" << "searching_time_too_long = " <<
+		// data.searching_time_too_long << "\n"; std::cout << "\t" << "pulse_beep =
+		// " << data.pulse_beep << "\n"; std::cout << "\t" << "finger_out = " <<
+		// data.finger_out << "\n"; std::cout << "\t" << "waveform_point = " <<
+		// unsigned(data.waveform_point) << "\n"; std::cout << "\t" <<
+		// "searching_pulse = " << data.searching_pulse << "\n"; std::cout << "\t"
+		// << "is_pi_data_valid = " << data.is_pi_data_valid << "\n"; std::cout <<
+		// "\t" << "pulse_rate = " << unsigned(data.pulse_rate) << "\n"; std::cout
+		// << "\t" << "spo2 = " << unsigned(data.spo2) << "\n"; std::cout << "\t" <<
+		// "pi = " << unsigned(data.pi) << "\n"; std::cout << std::endl;
 
 		uint32_t cur_ticks = utki::get_ticks_ms();
 		auto delta_time = uint16_t(cur_ticks - this->last_ticks);
 		this->last_ticks = cur_ticks;
 
-		using std::min;
 		using std::max;
+		using std::min;
 
 		constexpr auto max_signal_strength = 10;
 		constexpr auto min_signal_strength = 4;
@@ -235,9 +237,10 @@ void contec_cms50d_plus::handle_packet()
 		constexpr auto sample_rate = 60;
 		constexpr auto acquisition_time_sec = 30;
 
-		// CMS50D+ has limitation of sending live data for only 30 seconds after it was requested.
-		// Workaround this limitation by requesting live data every ~15 seconds, assuming that it sends
-		// about 60 live data packets per second.
+		// CMS50D+ has limitation of sending live data for only 30 seconds after it
+		// was requested. Workaround this limitation by requesting live data every
+		// ~15 seconds, assuming that it sends about 60 live data packets per
+		// second.
 		++this->num_live_data_packages_received;
 		if (this->num_live_data_packages_received > sample_rate * (acquisition_time_sec / 2)) {
 			this->num_live_data_packages_received = 0;

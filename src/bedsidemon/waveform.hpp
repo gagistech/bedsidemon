@@ -53,7 +53,8 @@ class waveform :
 
 	ruis::real accumulated_dx = 0;
 	ruis::real accumulated_value = 0;
-	// assuming values are coming with same delta time on average, so just store number of values accumulated
+	// assuming values are coming with same delta time on average, so just store
+	// number of values accumulated
 	unsigned num_values_accumulated = 0;
 
 	void clear_accumulated_value();

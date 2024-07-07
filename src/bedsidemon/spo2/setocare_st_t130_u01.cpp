@@ -60,7 +60,8 @@ void setocare_st_t130_u01::on_data_received(utki::span<const uint8_t> data)
 
 void setocare_st_t130_u01::feed(uint8_t byte)
 {
-	// std::cout << "byte received, state = " << unsigned(this->state_v) << std::endl;
+	// std::cout << "byte received, state = " << unsigned(this->state_v) <<
+	// std::endl;
 	switch (this->state_v) {
 		case state::disconnected:
 			// ignore any data, it is not supposed to come from disconnected port
@@ -79,7 +80,8 @@ void setocare_st_t130_u01::feed(uint8_t byte)
 			break;
 		case state::read_packet:
 			if (byte & utki::bit_7_mask) {
-				std::cout << "unexpected packet start encountered, previous packet length was only "
+				std::cout << "unexpected packet start encountered, previous packet "
+							 "length was only "
 						  << this->packet_v.buffer.size() << " bytes" << std::endl;
 				this->packet_v.buffer.clear();
 				this->state_v = state::wait_packet_first_byte;

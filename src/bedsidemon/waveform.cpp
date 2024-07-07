@@ -44,7 +44,9 @@ waveform::waveform(utki::shared_ref<ruis::context> context, all_parameters param
 	value_max(default_max_value)
 {
 	constexpr auto default_sweep_speed_mm_per_sec = 100;
-	// this->px_per_ms = this->context.get().units.mm_to_px(default_sweep_speed_mm_per_sec / 1000.0);
+	// this->px_per_ms =
+	// this->context.get().units.mm_to_px(default_sweep_speed_mm_per_sec /
+	// 1000.0);
 	this->px_per_ms = ruis::real(default_sweep_speed_mm_per_sec) / std::milli::den;
 
 	constexpr auto default_gap_pp = 30;
@@ -96,7 +98,8 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 
 	this->clear_accumulated_value();
 
-	// dx can be 0 when it is a very first sample received from sensor, dt_ms == 0 in this case and => dx == 0
+	// dx can be 0 when it is a very first sample received from sensor, dt_ms == 0
+	// in this case and => dx == 0
 	ASSERT(dx > 0 || (dx == 0 && dt_ms == 0), [&](auto& o) {
 		o << "dx = " << dx << ", dt_ms = " << dt_ms << ", this->px_per_ms = " << this->px_per_ms;
 	})
@@ -107,8 +110,8 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 		return;
 	} else {
 		if (dx == 0) {
-			// if first sample received from sensor we don't know the delta time from previous sample,
-			// so just update the latest value
+			// if first sample received from sensor we don't know the delta time from
+			// previous sample, so just update the latest value
 			this->paths[0].points.back().y() = value;
 			return;
 		} else {
@@ -180,7 +183,8 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 
 				pop_path.points.front() += ruis::vector2{dx, dv1};
 
-				// it is possible that due to floating point calculation errors points coincide
+				// it is possible that due to floating point calculation errors points
+				// coincide
 				if (pop_path.points.front().x() >= std::next(pop_path.points.begin())->x()) {
 					pop_path.points.pop_front();
 				}
@@ -193,8 +197,8 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 		}
 	}
 
-	// std::cout << "num_left = " << this->paths[0].points.size() << ", num_right = " << this->paths[1].points.size() <<
-	// std::endl;
+	// std::cout << "num_left = " << this->paths[0].points.size() << ", num_right
+	// = " << this->paths[1].points.size() << std::endl;
 
 	this->make_vaos();
 }
@@ -219,6 +223,8 @@ void waveform::make_vaos()
 			path.line_to(point - pv.origin);
 		}
 
-		pv.vao.set(path.stroke());
+		constexpr auto waveform_line_halfwidth = 0.75;
+
+		pv.vao.set(path.stroke(waveform_line_halfwidth));
 	}
 }

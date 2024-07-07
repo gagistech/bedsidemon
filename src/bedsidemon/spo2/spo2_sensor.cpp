@@ -31,15 +31,17 @@ void spo2_sensor::push(const spo2_measurement& meas)
 {
 	this->param_window.get().context.get().run_from_ui_thread([pw = this->param_window, meas]() {
 		// std::cout << std::dec;
-		// std::cout << "\t" << "signal_strength = " << unsigned(meas.signal_strength) << "\n";
-		// std::cout << "\t" << "pulse_beep = " << meas.pulse_beat << "\n";
-		// std::cout << "\t" << "finger_out = " << meas.finger_out << "\n";
-		// std::cout << "\t" << "waveform_point = " << unsigned(meas.waveform_point) << "\n";
-		// std::cout << "\t" << "pulse_rate = " << unsigned(meas.pulse_rate) << "\n";
-		// std::cout << "\t" << "spo2 = " << unsigned(meas.spo2) << "\n";
-		// std::cout << "\t" << "perfusion_index = " << unsigned(meas.perfusion_index) << "\n";
-		// std::cout << "\t" << "delta_time = " << unsigned(meas.delta_time_ms) << "\n";
-		// std::cout << std::endl;
+		// std::cout << "\t" << "signal_strength = " <<
+		// unsigned(meas.signal_strength) << "\n"; std::cout << "\t" <<
+		// "pulse_beep = " << meas.pulse_beat << "\n"; std::cout << "\t" <<
+		// "finger_out = " << meas.finger_out << "\n"; std::cout << "\t" <<
+		// "waveform_point = " << unsigned(meas.waveform_point) << "\n";
+		// std::cout << "\t" << "pulse_rate = " << unsigned(meas.pulse_rate) <<
+		// "\n"; std::cout << "\t" << "spo2 = " << unsigned(meas.spo2) << "\n";
+		// std::cout << "\t" << "perfusion_index = " <<
+		// unsigned(meas.perfusion_index) << "\n"; std::cout << "\t" <<
+		// "delta_time = " << unsigned(meas.delta_time_ms) << "\n"; std::cout <<
+		// std::endl;
 
 		pw.get().set(meas);
 	});

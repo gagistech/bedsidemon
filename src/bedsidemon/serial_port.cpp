@@ -59,7 +59,8 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 		newtermios.c_cc[VMIN] = 0;
 		newtermios.c_cc[VTIME] = 0;
 
-		ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size)) speed_t br = baud_rate_map[size_t(baud_rate)];
+		ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size))
+		speed_t br = baud_rate_map[size_t(baud_rate)];
 		cfsetospeed(&newtermios, br);
 		cfsetispeed(&newtermios, br);
 
@@ -83,7 +84,8 @@ void serial_port::close()
 {
 	::close(this->handle);
 
-	// set invalid file descriptor because close() can be called again on closed serail port
+	// set invalid file descriptor because close() can be called again on closed
+	// serail port
 	this->handle = -1;
 }
 

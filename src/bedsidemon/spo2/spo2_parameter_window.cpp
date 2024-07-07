@@ -35,6 +35,10 @@ using namespace ruis::length_literals;
 using namespace bedsidemon;
 
 namespace {
+constexpr auto heart_blink_time_ms = 100;
+} // namespace
+
+namespace {
 namespace m {
 using namespace ruis::make;
 using namespace bedsidemon::make;
@@ -50,13 +54,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 	constexpr auto color_main_value = 0xffffff00;
 	constexpr auto color_secondary_value = 0xff00ffff;
 
-	constexpr auto font_size_label = 16;
+	constexpr auto font_size_label = 16_pp;
+	constexpr auto font_size_main_value = 60_pp;
+	constexpr auto font_size_secondary_value = 40_pp;
 
-	constexpr auto font_size_main_value_pp = 60;
-	auto font_size_main_value = c.get().units.pp_to_px(font_size_main_value_pp);
-
-	constexpr auto font_size_secondary_value_pp = 40;
-	auto font_secondary_main_value = c.get().units.pp_to_px(font_size_secondary_value_pp);
+    constexpr auto heart_size = 15_pp;
 
 	// clang-format off
     return {
@@ -138,7 +140,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                                     .color = color_secondary_value
                                 },
                                 .text_params = {
-                                    .font_size = font_secondary_main_value
+                                    .font_size = font_size_secondary_value
                                 }
                             },
                             U"---"s
@@ -148,7 +150,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                                 .widget_params = {
                                     .id = "heart"s,
                                     .lp = {
-                                        .dims = {15_pp, lp::min},
+                                        .dims = {heart_size, lp::min},
                                         .align = {lp::align::front, lp::align::front}
                                     },
                                     .visible = false
@@ -202,7 +204,10 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),
 	bpm_value(this->get_widget_as<ruis::text>("bpm_value")),
 	heart(this->get_widget("heart")),
-	waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform"))
+	waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform")),
+	heart_timer(utki::make_shared<ruis::timer>(this->context.get().updater, [this](uint32_t elapsed_ms) {
+		this->on_heart_timer_expired();
+	}))
 {}
 
 void spo2_parameter_window::set(const spo2_measurement& meas)
@@ -225,7 +230,22 @@ void spo2_parameter_window::set(const spo2_measurement& meas)
 		this->bpm_value.set_text(std::to_string(unsigned(meas.pulse_rate)));
 	}
 
-    this->heart.set_visible(meas.pulse_beat);
+	if (meas.pulse_beat) {
+		this->trigger_heart();
+	}
 
 	this->waveform.push(meas.waveform_point, meas.delta_time_ms);
+}
+
+void spo2_parameter_window::trigger_heart()
+{
+	this->heart.set_visible(true);
+	auto& timer = this->heart_timer.get();
+	timer.stop();
+	timer.start(heart_blink_time_ms);
+}
+
+void spo2_parameter_window::on_heart_timer_expired()
+{
+	this->heart.set_visible(false);
 }

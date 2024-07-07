@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <ruis/util/timer.hpp>
 #include <ruis/widgets/label/text.hpp>
 #include <ruis/widgets/widget.hpp>
 
@@ -39,6 +40,11 @@ class spo2_parameter_window :
 	ruis::widget& heart;
 
 	bedsidemon::waveform& waveform;
+
+	utki::shared_ref<ruis::timer> heart_timer;
+
+	void trigger_heart();
+	void on_heart_timer_expired();
 
 public:
 	spo2_parameter_window(utki::shared_ref<ruis::context> context);
