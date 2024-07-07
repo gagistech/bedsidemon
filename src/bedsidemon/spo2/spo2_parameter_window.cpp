@@ -58,7 +58,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 	constexpr auto font_size_main_value = 60_pp;
 	constexpr auto font_size_secondary_value = 40_pp;
 
-    constexpr auto heart_size = 15_pp;
+	constexpr auto heart_size = 15_pp;
 
 	// clang-format off
     return {
