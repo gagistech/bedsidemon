@@ -225,6 +225,6 @@ void waveform::make_vaos()
 
 		constexpr auto waveform_line_halfwidth = 0.75;
 
-		pv.vao.set(path.stroke(waveform_line_halfwidth));
+		pv.vao.set(path.stroke(this->context.get().units.pp_to_px(waveform_line_halfwidth)));
 	}
 }

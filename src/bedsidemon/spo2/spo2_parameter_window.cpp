@@ -27,6 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/layouts/layout.hpp>
 #include <ruis/widgets/label/image.hpp>
 #include <ruis/widgets/label/rectangle.hpp>
+#include <ruis/widgets/group/margins.hpp>
 
 using namespace std::string_literals;
 
@@ -126,18 +127,6 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
                     }
                 )
             }
-        ),
-        m::rectangle(c,
-            {
-                .widget_params = {
-                    .lp = {
-                        .dims = {lp::fill, 1_pp}
-                    }
-                },
-                .color_params = {
-                    .color = color_border
-                }
-            }
         )
     };
 	// clang-format on
@@ -182,7 +171,36 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                     }
                 }
             },
-            make_numeric_content(c)
+            {
+                m::margins(c,
+                    {
+                        .widget_params = {
+                            .lp = {
+                                .dims = {lp::fill, lp::min}
+                            }
+                        },
+                        .container_params = {
+                            .layout = ruis::layout::column
+                        },
+                        .frame_params = {
+                            .borders = {5_pp, 5_pp, 5_pp, 5_pp}
+                        }
+                    },
+                    make_numeric_content(c)
+                ),
+                m::rectangle(c,
+                    {
+                        .widget_params = {
+                            .lp = {
+                                .dims = {lp::fill, 1_pp}
+                            }
+                        },
+                        .color_params = {
+                            .color = color_border
+                        }
+                    }
+                )
+            }
         )
     };
 	// clang-format on
