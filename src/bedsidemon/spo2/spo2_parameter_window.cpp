@@ -44,22 +44,107 @@ using namespace ruis::make;
 using namespace bedsidemon::make;
 }; // namespace m
 
+using ruis::lp;
+using namespace ruis::length_literals;
+
+constexpr auto color_border = 0xff808080;
+constexpr auto color_info_text = 0xff808080;
+constexpr auto color_main_value = 0xffffff00;
+constexpr auto color_secondary_value = 0xff00ffff;
+
+constexpr auto font_size_label = 16_pp;
+constexpr auto font_size_main_value = 60_pp;
+constexpr auto font_size_secondary_value = 40_pp;
+
+constexpr auto heart_size = 15_pp;
+
+std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+    return {
+        m::text(c,
+            {
+                .widget_params = {
+                    .lp = {
+                        .align = {lp::align::front, lp::align::front}
+                    }
+                },
+                .color_params = {
+                    .color = color_info_text
+                },
+                .text_params = {
+                    .font_size = font_size_label
+                }
+            },
+            U"SpO2 %"s
+        ),
+        m::text(c,
+            {
+                .widget_params = {
+                    .id = "spo2_value"s
+                },
+                .color_params = {
+                    .color = color_main_value
+                },
+                .text_params = {
+                    .font_size = font_size_main_value
+                }
+            },
+            U"---"s
+        ),
+        m::row(c,
+            {},
+            {
+                m::text(c,
+                    {
+                        .widget_params = {
+                            .id = "bpm_value"s
+                        },
+                        .color_params = {
+                            .color = color_secondary_value
+                        },
+                        .text_params = {
+                            .font_size = font_size_secondary_value
+                        }
+                    },
+                    U"---"s
+                ),
+                m::image(c,
+                    {
+                        .widget_params = {
+                            .id = "heart"s,
+                            .lp = {
+                                .dims = {heart_size, lp::min},
+                                .align = {lp::align::front, lp::align::front}
+                            },
+                            .visible = false
+                        },
+                        .image_params = {
+                            .img = c.get().loader.load<ruis::res::image>("img_heart"),
+                            .keep_aspect_ratio = true
+                        }
+                    }
+                )
+            }
+        ),
+        m::rectangle(c,
+            {
+                .widget_params = {
+                    .lp = {
+                        .dims = {lp::fill, 1_pp}
+                    }
+                },
+                .color_params = {
+                    .color = color_border
+                }
+            }
+        )
+    };
+	// clang-format on
+}
+
 std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::context> c)
 {
-	using ruis::lp;
-	using namespace ruis::length_literals;
-
-	constexpr auto color_border = 0xff808080;
-	constexpr auto color_info_text = 0xff808080;
-	constexpr auto color_main_value = 0xffffff00;
-	constexpr auto color_secondary_value = 0xff00ffff;
-
-	constexpr auto font_size_label = 16_pp;
-	constexpr auto font_size_main_value = 60_pp;
-	constexpr auto font_size_secondary_value = 40_pp;
-
-	constexpr auto heart_size = 15_pp;
-
 	// clang-format off
     return {
         m::waveform(c,
@@ -97,85 +182,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                     }
                 }
             },
-            {
-                m::text(c,
-                    {
-                        .widget_params = {
-                            .lp = {
-                                .align = {lp::align::front, lp::align::front}
-                            }
-                        },
-                        .color_params = {
-                            .color = color_info_text
-                        },
-                        .text_params = {
-                            .font_size = font_size_label
-                        }
-                    },
-                    U"SpO2 %"s
-                ),
-                m::text(c,
-                    {
-                        .widget_params = {
-                            .id = "spo2_value"s
-                        },
-                        .color_params = {
-                            .color = color_main_value
-                        },
-                        .text_params = {
-                            .font_size = font_size_main_value
-                        }
-                    },
-                    U"---"s
-                ),
-                m::row(c,
-                    {},
-                    {
-                        m::text(c,
-                            {
-                                .widget_params = {
-                                    .id = "bpm_value"s
-                                },
-                                .color_params = {
-                                    .color = color_secondary_value
-                                },
-                                .text_params = {
-                                    .font_size = font_size_secondary_value
-                                }
-                            },
-                            U"---"s
-                        ),
-                        m::image(c,
-                            {
-                                .widget_params = {
-                                    .id = "heart"s,
-                                    .lp = {
-                                        .dims = {heart_size, lp::min},
-                                        .align = {lp::align::front, lp::align::front}
-                                    },
-                                    .visible = false
-                                },
-                                .image_params = {
-                                    .img = c.get().loader.load<ruis::res::image>("img_heart"),
-                                    .keep_aspect_ratio = true
-                                }
-                            }
-                        )
-                    }
-                ),
-                m::rectangle(c,
-                    {
-                        .widget_params = {
-                            .lp = {
-                                .dims = {lp::fill, 1_pp}
-                            }
-                        },
-                        .color_params = {
-                            .color = color_border
-                        }
-                    }
-                )
-            }
+            make_numeric_content(c)
         )
     };
 	// clang-format on
