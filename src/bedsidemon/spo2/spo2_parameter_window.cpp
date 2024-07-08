@@ -25,9 +25,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <vector>
 
 #include <ruis/layouts/layout.hpp>
+#include <ruis/widgets/group/margins.hpp>
 #include <ruis/widgets/label/image.hpp>
 #include <ruis/widgets/label/rectangle.hpp>
-#include <ruis/widgets/group/margins.hpp>
 
 using namespace std::string_literals;
 
@@ -52,6 +52,8 @@ constexpr auto color_border = 0xff808080;
 constexpr auto color_info_text = 0xff808080;
 constexpr auto color_main_value = 0xffffff00;
 constexpr auto color_secondary_value = 0xff00ffff;
+
+constexpr auto numeric_area_padding = 5_pp;
 
 constexpr auto font_size_label = 16_pp;
 constexpr auto font_size_main_value = 60_pp;
@@ -183,7 +185,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                             .layout = ruis::layout::column
                         },
                         .frame_params = {
-                            .borders = {5_pp, 5_pp, 5_pp, 5_pp}
+                            .borders = {numeric_area_padding, numeric_area_padding, numeric_area_padding, numeric_area_padding}
                         }
                     },
                     make_numeric_content(c)
