@@ -21,9 +21,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "gui.hpp"
 
-#include <ruis/widgets/label/rectangle.hpp>
 #include <ruis/widgets/button/nine_patch_push_button.hpp>
 #include <ruis/widgets/label/image.hpp>
+#include <ruis/widgets/label/rectangle.hpp>
 
 #include "style.hpp"
 
@@ -35,59 +35,39 @@ using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
-namespace{
-namespace m{
+namespace {
+namespace m {
 using namespace ruis::make;
-}
-}
+} // namespace m
+} // namespace
 
-namespace{
-std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::context> c){
+namespace {
+std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::context> c)
+{
 	return {
-		m::nine_patch_push_button(c,
-			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::min, lp::fill}
-					}
-				},
-				.nine_patch_button_params = {
-					.unpressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal"sv),
-					.pressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_pressed"sv)
-				}
-			},
-			{
-				m::image(c,
-					{
-						.widget_params = {
-							.lp = {
-								.dims = {lp::min, lp::fill}
-							}
-						},
-						.image_params = {
-							.img = c.get().loader.load<ruis::res::image>("img_home"sv),
-							.keep_aspect_ratio = true
-						}
-					}
-				)
-			}
+		m::nine_patch_push_button(
+			c,
+			{			  .widget_params = {.lp = {.dims = {lp::min, lp::fill}}},
+			  .nine_patch_button_params =
+              {.unpressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal"sv),
+              .pressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_pressed"sv)}},
+			{												   m::image(
+												   c,				 {.widget_params = {.lp = {.dims = {lp::min, lp::fill}}},
+				 .image_params = {.img = c.get().loader.load<ruis::res::image>("img_home"sv), .keep_aspect_ratio = true}
+				 }
+				 )					   }
 		),
-		m::rectangle(c,
-			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::fill, lp::fill},
-						.weight = 1
-					}
-				},
-				.color_params = {
-					.color = 0xff008080 // NOLINT
-				}
-			}
+		m::rectangle(
+			c,
+			{.widget_params = {.lp = {.dims = {lp::fill, lp::fill}, .weight = 1}},
+			  .color_params =
+              {
+              .color = 0xff008080 // NOLINT
+              }																							 }
 		)
 	};
 }
-}
+} // namespace
 
 utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ruis::context> c)
 {
