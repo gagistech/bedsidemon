@@ -44,28 +44,51 @@ using namespace ruis::make;
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::context> c)
 {
+	// clang-format off
 	return {
-		m::nine_patch_push_button(
-			c,
-			{			  .widget_params = {.lp = {.dims = {lp::min, lp::fill}}},
-			  .nine_patch_button_params =
-              {.unpressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal"sv),
-              .pressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_pressed"sv)}},
-			{												   m::image(
-												   c,				 {.widget_params = {.lp = {.dims = {lp::min, lp::fill}}},
-				 .image_params = {.img = c.get().loader.load<ruis::res::image>("img_home"sv), .keep_aspect_ratio = true}
-				 }
-				 )					   }
+		m::nine_patch_push_button(c,
+			{
+				.widget_params = {
+					.lp = {
+						.dims = {lp::min, lp::fill}
+					}
+				},
+			  	.nine_patch_button_params = {
+					.unpressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal"sv),
+              		.pressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_pressed"sv)
+				}
+			},
+			{
+				m::image(c,
+					{
+						.widget_params = {
+							.lp = {
+								.dims = {lp::min, lp::fill}
+							}
+						},
+				 		.image_params = {
+							.img = c.get().loader.load<ruis::res::image>("img_home"sv),
+							.keep_aspect_ratio = true
+						}
+				 	}
+				)
+			}
 		),
-		m::rectangle(
-			c,
-			{.widget_params = {.lp = {.dims = {lp::fill, lp::fill}, .weight = 1}},
-			  .color_params =
-              {
-              .color = 0xff008080 // NOLINT
-              }																							 }
+		m::rectangle(c,
+			{
+				.widget_params = {
+					.lp = {
+						.dims = {lp::fill, lp::fill},
+						.weight = 1
+					}
+				},
+			  	.color_params = {
+              		.color = 0xff008080 // NOLINT
+              	}
+			}
 		)
 	};
+	// clang-format on
 }
 } // namespace
 
