@@ -145,7 +145,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                     .lp = {
                         .dims = {lp::fill, lp::fill},
                         .weight = 3
-                    }
+                    },
+                    .clip = true
                 },
                 .color_params = {
                     .color = color_main_value
