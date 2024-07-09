@@ -21,6 +21,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "gui.hpp"
 
+#include <ruis/widgets/label/rectangle.hpp>
+
+#include "style.hpp"
+
 using namespace std::string_literals;
 
 using namespace bedsidemon;
@@ -29,20 +33,82 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 {
 	namespace m = ruis::make;
 	using ruis::lp;
+	using namespace ruis::length_literals;
 
 	return
 		// clang-format off
-		m::container(
-			c,
+		m::container(c,
 			{
-				.widget_params = {
-					.id = "pw_container"s
-				},
 				.container_params = {
 					.layout = ruis::layout::column
 				}
 			},
-			{}
+			{
+				m::container(c,
+					{
+						.widget_params = {
+							.id = "notification_area"s,
+							.lp = {
+								.dims = {lp::fill, 70_pp}
+							}
+						}
+					}
+				),
+				m::rectangle(c,
+					{
+						.widget_params = {
+							.lp = {
+								.dims = {lp::fill, 1_pp}
+							}
+						},
+						.color_params = {
+							.color = style::color_border
+						}
+					}
+				),
+				m::container(c,
+					{
+						.widget_params = {
+							.id = "pw_container"s,
+							.lp = {
+								.dims = {lp::fill, lp::fill},
+								.weight = 1
+							}
+						},
+						.container_params = {
+							.layout = ruis::layout::column
+						}
+					},
+					{}
+				),
+				m::container(c,
+					{
+						.widget_params = {
+							.id = "button_area"s,
+							.lp = {
+								.dims = {lp::fill, 50_pp}
+							}
+						},
+						.container_params = {
+							.layout = ruis::layout::pile
+						}
+					},
+					{
+						m::rectangle(c,
+							{
+								.widget_params = {
+									.lp = {
+										.dims = {lp::fill, lp::fill}
+									}
+								},
+								.color_params = {
+									.color = 0xff008080
+								}
+							}
+						)
+					}
+				)
+			}
 		);
 	// clang-format on
 }

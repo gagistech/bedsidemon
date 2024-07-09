@@ -29,6 +29,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widgets/label/image.hpp>
 #include <ruis/widgets/label/rectangle.hpp>
 
+#include "../style.hpp"
+
 using namespace std::string_literals;
 
 using namespace ruis::length_literals;
@@ -48,8 +50,6 @@ using namespace bedsidemon::make;
 using ruis::lp;
 using namespace ruis::length_literals;
 
-constexpr auto color_border = 0xff808080;
-constexpr auto color_info_text = 0xff808080;
 constexpr auto color_main_value = 0xffffff00;
 constexpr auto color_secondary_value = 0xff00ffff;
 
@@ -73,7 +73,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
                     }
                 },
                 .color_params = {
-                    .color = color_info_text
+                    .color = style::color_info_text
                 },
                 .text_params = {
                     .font_size = font_size_label
@@ -160,7 +160,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                     }
                 },
                 .color_params = {
-                    .color = color_border
+                    .color = style::color_border
                 }
             }
         ),
@@ -198,7 +198,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                             }
                         },
                         .color_params = {
-                            .color = color_border
+                            .color = style::color_border
                         }
                     }
                 )
