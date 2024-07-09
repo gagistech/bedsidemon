@@ -35,6 +35,9 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 	using ruis::lp;
 	using namespace ruis::length_literals;
 
+	constexpr auto alarms_area_height = 70_pp;
+	constexpr auto buttons_area_height = 50_pp;
+
 	return
 		// clang-format off
 		m::container(c,
@@ -49,7 +52,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						.widget_params = {
 							.id = "notification_area"s,
 							.lp = {
-								.dims = {lp::fill, 70_pp}
+								.dims = {lp::fill, alarms_area_height}
 							}
 						}
 					}
@@ -86,7 +89,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						.widget_params = {
 							.id = "button_area"s,
 							.lp = {
-								.dims = {lp::fill, 50_pp}
+								.dims = {lp::fill, buttons_area_height}
 							}
 						},
 						.container_params = {
@@ -102,7 +105,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 									}
 								},
 								.color_params = {
-									.color = 0xff008080
+									.color = 0xff008080 // NOLINT
 								}
 							}
 						)
