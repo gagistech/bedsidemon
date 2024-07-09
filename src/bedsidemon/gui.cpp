@@ -22,19 +22,75 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "gui.hpp"
 
 #include <ruis/widgets/label/rectangle.hpp>
+#include <ruis/widgets/button/nine_patch_push_button.hpp>
+#include <ruis/widgets/label/image.hpp>
 
 #include "style.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
+
+using ruis::lp;
+using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
+namespace{
+namespace m{
+using namespace ruis::make;
+}
+}
+
+namespace{
+std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::context> c){
+	return {
+		m::nine_patch_push_button(c,
+			{
+				.widget_params = {
+					.lp = {
+						.dims = {lp::min, lp::fill}
+					}
+				},
+				.nine_patch_button_params = {
+					.unpressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal"sv),
+					.pressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_pressed"sv)
+				}
+			},
+			{
+				m::image(c,
+					{
+						.widget_params = {
+							.lp = {
+								.dims = {lp::min, lp::fill}
+							}
+						},
+						.image_params = {
+							.img = c.get().loader.load<ruis::res::image>("img_home"sv),
+							.keep_aspect_ratio = true
+						}
+					}
+				)
+			}
+		),
+		m::rectangle(c,
+			{
+				.widget_params = {
+					.lp = {
+						.dims = {lp::fill, lp::fill},
+						.weight = 1
+					}
+				},
+				.color_params = {
+					.color = 0xff008080 // NOLINT
+				}
+			}
+		)
+	};
+}
+}
+
 utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ruis::context> c)
 {
-	namespace m = ruis::make;
-	using ruis::lp;
-	using namespace ruis::length_literals;
-
 	constexpr auto alarms_area_height = 70_pp;
 	constexpr auto buttons_area_height = 50_pp;
 
@@ -93,23 +149,10 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 							}
 						},
 						.container_params = {
-							.layout = ruis::layout::pile
+							.layout = ruis::layout::row
 						}
 					},
-					{
-						m::rectangle(c,
-							{
-								.widget_params = {
-									.lp = {
-										.dims = {lp::fill, lp::fill}
-									}
-								},
-								.color_params = {
-									.color = 0xff008080 // NOLINT
-								}
-							}
-						)
-					}
+					make_buttons(c)
 				)
 			}
 		);
