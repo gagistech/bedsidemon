@@ -22,8 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <ruis/util/timer.hpp>
-#include <ruis/widgets/label/text.hpp>
-#include <ruis/widgets/widget.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/widget.hpp>
 
 #include "../waveform.hpp"
 

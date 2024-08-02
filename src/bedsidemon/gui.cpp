@@ -21,9 +21,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "gui.hpp"
 
-#include <ruis/widgets/button/nine_patch_push_button.hpp>
-#include <ruis/widgets/label/image.hpp>
-#include <ruis/widgets/label/rectangle.hpp>
+#include <ruis/widget/button/nine_patch_push_button.hpp>
+#include <ruis/widget/label/image.hpp>
+#include <ruis/widget/label/rectangle.hpp>
 
 #include "style.hpp"
 
@@ -48,10 +48,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 	return {
 		m::nine_patch_push_button(c,
 			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::min, lp::fill}
-					}
+				.layout_params = {
+					.dims = {lp::min, lp::fill}
 				},
 			  	.nine_patch_button_params = {
 					.unpressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal"sv),
@@ -61,10 +59,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 			{
 				m::image(c,
 					{
-						.widget_params = {
-							.lp = {
-								.dims = {lp::min, lp::fill}
-							}
+						.layout_params = {
+							.dims = {lp::min, lp::fill}
 						},
 				 		.image_params = {
 							.img = c.get().loader.load<ruis::res::image>("img_home"sv),
@@ -76,11 +72,9 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 		),
 		m::rectangle(c,
 			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::fill, lp::fill},
-						.weight = 1
-					}
+				.layout_params = {
+					.dims = {lp::fill, lp::fill},
+					.weight = 1
 				},
 			  	.color_params = {
               		.color = 0xff008080 // NOLINT
@@ -108,20 +102,18 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 			{
 				m::container(c,
 					{
+						.layout_params = {
+							.dims = {lp::fill, alarms_area_height}
+						},
 						.widget_params = {
 							.id = "notification_area"s,
-							.lp = {
-								.dims = {lp::fill, alarms_area_height}
-							}
 						}
 					}
 				),
 				m::rectangle(c,
 					{
-						.widget_params = {
-							.lp = {
-								.dims = {lp::fill, 1_pp}
-							}
+						.layout_params = {
+							.dims = {lp::fill, 1_pp}
 						},
 						.color_params = {
 							.color = style::color_border
@@ -130,26 +122,26 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 				),
 				m::container(c,
 					{
+						.layout_params = {
+							.dims = {lp::fill, lp::fill},
+							.weight = 1
+						},
 						.widget_params = {
-							.id = "pw_container"s,
-							.lp = {
-								.dims = {lp::fill, lp::fill},
-								.weight = 1
-							}
+							.id = "pw_container"s
 						},
 						.container_params = {
 							.layout = ruis::layout::column
 						}
 					},
-					{}
+					{}	
 				),
 				m::container(c,
 					{
+						.layout_params = {
+							.dims = {lp::fill, buttons_area_height}
+						},
 						.widget_params = {
-							.id = "button_area"s,
-							.lp = {
-								.dims = {lp::fill, buttons_area_height}
-							}
+							.id = "button_area"s
 						},
 						.container_params = {
 							.layout = ruis::layout::row

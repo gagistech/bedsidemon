@@ -24,10 +24,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ratio>
 #include <vector>
 
-#include <ruis/layouts/layout.hpp>
-#include <ruis/widgets/group/margins.hpp>
-#include <ruis/widgets/label/image.hpp>
-#include <ruis/widgets/label/rectangle.hpp>
+#include <ruis/layout/layout.hpp>
+#include <ruis/widget/group/margins.hpp>
+#include <ruis/widget/label/image.hpp>
+#include <ruis/widget/label/rectangle.hpp>
 
 #include "../style.hpp"
 
@@ -67,10 +67,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
     return {
         m::text(c,
             {
-                .widget_params = {
-                    .lp = {
-                        .align = {lp::align::front, lp::align::front}
-                    }
+                .layout_params = {
+                    .align = {lp::align::front, lp::align::front}
                 },
                 .color_params = {
                     .color = style::color_info_text
@@ -114,12 +112,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
                 ),
                 m::image(c,
                     {
+                        .layout_params = {
+                            .dims = {heart_size, lp::min},
+                            .align = {lp::align::front, lp::align::front}
+                        },
                         .widget_params = {
                             .id = "heart"s,
-                            .lp = {
-                                .dims = {heart_size, lp::min},
-                                .align = {lp::align::front, lp::align::front}
-                            },
                             .visible = false
                         },
                         .image_params = {
@@ -140,12 +138,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
     return {
         m::waveform(c,
             {
+                .layout_params = {
+                    .dims = {lp::fill, lp::fill},
+                    .weight = 3
+                },
                 .widget_params = {
                     .id = "pw_waveform"s,
-                    .lp = {
-                        .dims = {lp::fill, lp::fill},
-                        .weight = 3
-                    },
                     .clip = true
                 },
                 .color_params = {
@@ -155,10 +153,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
         ),
         m::rectangle(c,
             {
-                .widget_params = {
-                    .lp = {
-                        .dims = {1_pp, lp::fill}
-                    }
+                .layout_params = {
+                    .dims = {1_pp, lp::fill}
                 },
                 .color_params = {
                     .color = style::color_border
@@ -167,20 +163,16 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
         ),
         m::column(c,
             {
-                .widget_params = {
-                    .lp = {
-                        .dims = {lp::fill, lp::min},
-                        .weight = 1
-                    }
+                .layout_params = {
+                    .dims = {lp::fill, lp::min},
+                    .weight = 1
                 }
             },
             {
                 m::margins(c,
                     {
-                        .widget_params = {
-                            .lp = {
-                                .dims = {lp::fill, lp::min}
-                            }
+                        .layout_params = {
+                            .dims = {lp::fill, lp::min}
                         },
                         .container_params = {
                             .layout = ruis::layout::column
@@ -193,10 +185,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 ),
                 m::rectangle(c,
                     {
-                        .widget_params = {
-                            .lp = {
-                                .dims = {lp::fill, 1_pp}
-                            }
+                        .layout_params = {
+                            .dims = {lp::fill, 1_pp}
                         },
                         .color_params = {
                             .color = style::color_border
@@ -214,12 +204,9 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	ruis::widget( //
 		std::move(context),
 		{//
-		 .widget_params =
-			 {.lp =
-				  {//
-				   .dims = {ruis::lp::fill, ruis::lp::min}
-				  }}
-		}
+            .dims = {ruis::lp::fill, ruis::lp::min}
+        },
+        {}
 	),
 	ruis::container( //
 		this->context,
@@ -233,9 +220,12 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	bpm_value(this->get_widget_as<ruis::text>("bpm_value")),
 	heart(this->get_widget("heart")),
 	waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform")),
-	heart_timer(utki::make_shared<ruis::timer>(this->context.get().updater, [this](uint32_t elapsed_ms) {
-		this->on_heart_timer_expired();
-	}))
+	heart_timer(utki::make_shared<ruis::timer>(//
+        this->context.get().updater,
+        [this](uint32_t elapsed_ms) {
+		    this->on_heart_timer_expired();
+	    }
+    ))
 {}
 
 void spo2_parameter_window::set(const spo2_measurement& meas)

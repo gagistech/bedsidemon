@@ -29,12 +29,12 @@ namespace {
 constexpr auto default_max_value = 100;
 } // namespace
 
-waveform::waveform(utki::shared_ref<ruis::context> context, all_parameters params) :
-	ruis::widget(
+waveform::waveform(//
+utki::shared_ref<ruis::context> context, all_parameters params) :
+	ruis::widget( //
 		std::move(context),
-		{
-			.widget_params = std::move(params.widget_params)
-}
+		std::move(params.layout_params),
+		std::move(params.widget_params)
 	),
 	ruis::color_widget(this->context, std::move(params.color_params)),
 	paths{{//

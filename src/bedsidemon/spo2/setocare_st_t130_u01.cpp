@@ -151,14 +151,16 @@ void setocare_st_t130_u01::handle_packet()
 	constexpr uint8_t max_signal_strength = 8;
 	constexpr auto max_pleth_value = 100;
 
-	this->push(spo2_measurement{
-		.signal_strength = min(signal_strength, max_signal_strength),
-		.pulse_beat = pulse_beep,
-		.finger_out = no_finger,
-		.waveform_point = float(pleth > max_pleth_value ? max_pleth_value / 2 : pleth),
-		.pulse_rate = pulse_rate,
-		.spo2 = spo2,
-		.perfusion_index = 0,
-		.delta_time_ms = delta_time
-	});
+	this->push(
+		spo2_measurement{
+			.signal_strength = min(signal_strength, max_signal_strength),
+			.pulse_beat = pulse_beep,
+			.finger_out = no_finger,
+			.waveform_point = float(pleth > max_pleth_value ? max_pleth_value / 2 : pleth),
+			.pulse_rate = pulse_rate,
+			.spo2 = spo2,
+			.perfusion_index = 0,
+			.delta_time_ms = delta_time
+		}
+	);
 }

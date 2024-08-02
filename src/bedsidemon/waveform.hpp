@@ -24,8 +24,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <deque>
 
 #include <ruis/paint/path_vao.hpp>
-#include <ruis/widgets/base/color_widget.hpp>
-#include <ruis/widgets/widget.hpp>
+#include <ruis/widget/base/color_widget.hpp>
+#include <ruis/widget/widget.hpp>
 
 namespace bedsidemon {
 
@@ -61,6 +61,7 @@ class waveform :
 
 public:
 	struct all_parameters {
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
 		ruis::color_widget::parameters color_params;
 	};
