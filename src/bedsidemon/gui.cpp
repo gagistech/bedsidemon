@@ -50,6 +50,9 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 			{
 				.layout_params = {
 					.dims = {lp::min, lp::fill}
+				},
+				.container_params = {
+					.layout = ruis::layout::pile // TODO: remove when ruis is updated
 				}
 			},
 			{
