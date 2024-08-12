@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "gui.hpp"
 
-#include <ruis/widget/button/nine_patch_push_button.hpp>
+#include <ruis/widget/button/base/push_button.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 
@@ -46,14 +46,10 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 {
 	// clang-format off
 	return {
-		m::nine_patch_push_button(c,
+		m::push_button(c,
 			{
 				.layout_params = {
 					.dims = {lp::min, lp::fill}
-				},
-			  	.nine_patch_button_params = {
-					.unpressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal"sv),
-              		.pressed_nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_pressed"sv)
 				}
 			},
 			{
