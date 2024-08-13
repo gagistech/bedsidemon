@@ -5,3 +5,7 @@ img_heart{
 img_home{
     file{home.svg}
 }
+
+img_cog{
+    file{cog.svg}
+}

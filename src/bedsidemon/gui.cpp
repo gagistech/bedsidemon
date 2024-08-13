@@ -44,15 +44,11 @@ using namespace ruis::make;
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::context> c)
 {
-	// clang-format off
-	return {
-		m::push_button(c,
+	auto make_button = [&c](std::string_view icon_res_id){
+		return m::push_button(c,
 			{
 				.layout_params = {
 					.dims = {lp::min, lp::fill}
-				},
-				.container_params = {
-					.layout = ruis::layout::pile // TODO: remove when ruis is updated
 				}
 			},
 			{
@@ -62,13 +58,19 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 							.dims = {lp::min, lp::fill}
 						},
 				 		.image_params = {
-							.img = c.get().loader.load<ruis::res::image>("img_home"sv),
+							.img = c.get().loader.load<ruis::res::image>(icon_res_id),
 							.keep_aspect_ratio = true
 						}
 				 	}
 				)
 			}
-		),
+		);
+	};
+
+	// clang-format off
+	return {
+		make_button("img_home"sv),
+		make_button("img_cog"sv),
 		m::rectangle(c,
 			{
 				.layout_params = {
