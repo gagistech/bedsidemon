@@ -22,9 +22,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "gui.hpp"
 
 #include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
-#include <ruis/widget/group/margins.hpp>
 
 #include "style.hpp"
 
@@ -47,7 +47,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 {
 	constexpr const auto button_icon_padding = 5_pp;
 
-	auto make_button = [&](std::string_view icon_res_id){
+	auto make_button = [&](std::string_view icon_res_id) {
 		// clang-format off
 		return m::push_button(c,
 			{
