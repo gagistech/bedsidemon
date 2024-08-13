@@ -24,6 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/button/base/push_button.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
+#include <ruis/widget/group/margins.hpp>
 
 #include "style.hpp"
 
@@ -44,7 +45,10 @@ using namespace ruis::make;
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::context> c)
 {
-	auto make_button = [&c](std::string_view icon_res_id){
+	constexpr const auto button_icon_padding = 5_pp;
+
+	auto make_button = [&](std::string_view icon_res_id){
+		// clang-format off
 		return m::push_button(c,
 			{
 				.layout_params = {
@@ -52,19 +56,35 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 				}
 			},
 			{
-				m::image(c,
-					{
-						.layout_params = {
-							.dims = {lp::min, lp::fill}
-						},
-				 		.image_params = {
-							.img = c.get().loader.load<ruis::res::image>(icon_res_id),
-							.keep_aspect_ratio = true
-						}
-				 	}
-				)
+				m::margins(c,
+                    {
+                        .layout_params = {
+                            .dims = {lp::min, lp::fill}
+                        },
+                        .container_params = {
+                            .layout = ruis::layout::pile
+                        },
+                        .frame_params = {
+                            .borders = {button_icon_padding, button_icon_padding, button_icon_padding, button_icon_padding}
+                        }
+                    },
+                    {
+						m::image(c,
+							{
+								.layout_params = {
+									.dims = {lp::min, lp::fill}
+								},
+								.image_params = {
+									.img = c.get().loader.load<ruis::res::image>(icon_res_id),
+									.keep_aspect_ratio = true
+								}
+							}
+						)
+					}
+                )
 			}
 		);
+		// clang-format on
 	};
 
 	// clang-format off
