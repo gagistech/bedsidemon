@@ -156,6 +156,7 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 	auto& pop_path = [&]() -> path& {
 		if (pop_pos >= this->rect().d.x()) {
 			pop_pos -= this->rect().d.x();
+			this->paths[1].points.clear();
 			return this->paths[0];
 		}
 		return this->paths[1];
