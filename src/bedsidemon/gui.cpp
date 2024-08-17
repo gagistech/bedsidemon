@@ -90,19 +90,27 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 	// clang-format off
 	return {
 		make_button("img_home"sv),
-		make_button("img_cog"sv),
-		m::rectangle(c,
-			{
-				.layout_params = {
-					.dims = {lp::fill, lp::fill},
-					.weight = 1
-				},
-			  	.color_params = {
-              		.color = 0xff008080 // NOLINT
-              	}
-			}
-		)
+		make_button("img_cog"sv)
 	};
+	// clang-format on
+}
+} // namespace
+
+namespace {
+utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return m::rectangle(
+		std::move(c),
+		{
+			.layout_params = {
+				.dims = {lp::fill, 1_pp}
+			},
+			.color_params = {
+				.color = style::color_border
+			}
+		}
+	);
 	// clang-format on
 }
 } // namespace
@@ -131,16 +139,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						}
 					}
 				),
-				m::rectangle(c,
-					{
-						.layout_params = {
-							.dims = {lp::fill, 1_pp}
-						},
-						.color_params = {
-							.color = style::color_border
-						}
-					}
-				),
+				make_separator(c),
 				m::container(c,
 					{
 						.layout_params = {
@@ -156,6 +155,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 					},
 					{}	
 				),
+				make_separator(c),
 				m::container(c,
 					{
 						.layout_params = {
