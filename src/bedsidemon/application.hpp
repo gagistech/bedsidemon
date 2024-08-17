@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <ruis/util/timer.hpp>
 #include <ruisapp/application.hpp>
 
 #include "spo2/spo2_sensor.hpp"
@@ -30,6 +31,9 @@ namespace bedsidemon {
 class application : public ruisapp::application
 {
 	std::unique_ptr<spo2_sensor> spo2_sensor_v;
+
+	// timer for updating clock view once a second
+	std::shared_ptr<ruis::timer> clock_timer;
 
 public:
 	application(bool window, std::string_view res_path);

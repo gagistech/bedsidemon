@@ -50,6 +50,25 @@ application::application(bool window, std::string_view res_path) :
 	this->gui.context.get().loader.mount_res_pack(*this->get_res_file(papki::as_dir(res_path)));
 
 	auto c = make_root_widgets(this->gui.context);
+
+	// set up clock update
+	{
+		constexpr auto clock_update_interval_ms = 1000;
+
+		this->clock_timer = utki::make_shared<ruis::timer>( //
+			this->gui.context.get().updater,
+			[this](uint32_t elapsed_ms) {
+				// TODO: update time
+				std::cout << "timeout" << std::endl;
+				this->clock_timer->stop();
+				this->clock_timer->start(clock_update_interval_ms);
+				std::cout << "timeout exit" << std::endl;
+				ASSERT(this->clock_timer->is_running())
+			}
+		);
+		this->clock_timer->start(0);
+	}
+
 	this->gui.set_root(c);
 
 	auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");

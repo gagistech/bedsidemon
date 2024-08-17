@@ -23,8 +23,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruis/widget/button/base/push_button.hpp>
 #include <ruis/widget/group/margins.hpp>
+#include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
+#include <ruis/widget/label/text.hpp>
 
 #include "style.hpp"
 
@@ -97,14 +99,17 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context> c, bool vertical = false)
 {
 	// clang-format off
 	return m::rectangle(
 		std::move(c),
 		{
 			.layout_params = {
-				.dims = {lp::fill, 1_pp}
+				.dims = {
+					vertical ? 1_pp : lp::fill,
+					vertical ? lp::fill : 1_pp
+				}
 			},
 			.color_params = {
 				.color = style::color_border
@@ -112,6 +117,16 @@ utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context>
 		}
 	);
 	// clang-format on
+}
+
+auto make_horizontal_separator(utki::shared_ref<ruis::context> c)
+{
+	return make_separator(c);
+}
+
+auto make_vertical_separator(utki::shared_ref<ruis::context> c)
+{
+	return make_separator(c, true);
 }
 } // namespace
 
@@ -129,18 +144,60 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 				}
 			},
 			{
-				m::container(c,
+				m::row(c,
 					{
 						.layout_params = {
 							.dims = {lp::fill, alarms_area_height}
-						},
-						.widget_params = {
-							.id = "notification_area"s,
 						}
+					},
+					{
+						m::row(c,
+							{
+								.layout_params = {
+									.dims = {lp::fill, lp::fill},
+									.weight = 1
+								},
+								.widget_params = {
+									.id = "notification_area"s,
+								}
+							}
+						),
+						make_vertical_separator(c),
+						m::gap(c,
+							{
+								.layout_params = {
+									.dims = {style::clock_padding, 0_pp}
+								}
+							}
+						),
+						m::text(c,
+							{
+								.layout_params = {
+									.dims = {lp::min, lp::min}
+								},
+								.widget_params = {
+									.id = "clock_text"s
+								},
+								.color_params = {
+									.color = style::color_info_text
+								},
+								.text_params = {
+									.font_size = style::font_size_label
+								}
+							},
+							U"10:23"s
+						),
+						m::gap(c,
+							{
+								.layout_params = {
+									.dims = {style::clock_padding, 0_pp}
+								}
+							}
+						)
 					}
 				),
-				make_separator(c),
-				m::container(c,
+				make_horizontal_separator(c),
+				m::column(c,
 					{
 						.layout_params = {
 							.dims = {lp::fill, lp::fill},
@@ -148,24 +205,18 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						},
 						.widget_params = {
 							.id = "pw_container"s
-						},
-						.container_params = {
-							.layout = ruis::layout::column
 						}
 					},
 					{}	
 				),
-				make_separator(c),
-				m::container(c,
+				make_horizontal_separator(c),
+				m::row(c,
 					{
 						.layout_params = {
 							.dims = {lp::fill, buttons_area_height}
 						},
 						.widget_params = {
 							.id = "button_area"s
-						},
-						.container_params = {
-							.layout = ruis::layout::row
 						}
 					},
 					make_buttons(c)

@@ -53,8 +53,6 @@ using namespace ruis::length_literals;
 constexpr auto color_main_value = 0xffffff00;
 constexpr auto color_secondary_value = 0xff00ffff;
 
-constexpr auto numeric_area_padding = 5_pp;
-
 constexpr auto font_size_label = 16_pp;
 constexpr auto font_size_main_value = 60_pp;
 constexpr auto font_size_secondary_value = 40_pp;
@@ -178,7 +176,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                             .layout = ruis::layout::column
                         },
                         .frame_params = {
-                            .borders = {numeric_area_padding, numeric_area_padding, numeric_area_padding, numeric_area_padding}
+                            .borders = {style::pw_padding, style::pw_padding, style::pw_padding, style::pw_padding}
                         }
                     },
                     make_numeric_content(c)
@@ -266,4 +264,5 @@ void spo2_parameter_window::trigger_heart()
 void spo2_parameter_window::on_heart_timer_expired()
 {
 	this->heart.set_visible(false);
+	std::cout << "heart" << std::endl;
 }

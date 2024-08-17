@@ -21,9 +21,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <ruis/util/length.hpp>
+
 namespace bedsidemon::style {
 
 constexpr auto color_border = 0xff808080;
 constexpr auto color_info_text = 0xff808080;
+
+constexpr auto font_size_label = ruis::length::make_pp(16);
+constexpr auto pw_padding = ruis::length::make_pp(5);
+constexpr auto clock_padding = ruis::length::make_pp(10);
 
 } // namespace bedsidemon::style
