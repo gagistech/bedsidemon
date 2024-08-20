@@ -170,22 +170,30 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 								}
 							}
 						),
-						m::text(c,
+						m::pile(c,
 							{
 								.layout_params = {
-									.dims = {lp::min, lp::min}
-								},
-								.widget_params = {
-									.id = "clock_text"s
-								},
-								.color_params = {
-									.color = style::color_info_text
-								},
-								.text_params = {
-									.font_size = style::font_size_label
+									.dims = {100_pp, lp::min},
+									.align = {lp::align::center, lp::align::center}
+
 								}
 							},
-							U"10:23"s
+							{
+								m::text(c,
+									{
+										.widget_params = {
+											.id = "clock_text"s
+										},
+										.color_params = {
+											.color = style::color_info_text
+										},
+										.text_params = {
+											.font_size = style::font_size_label
+										}
+									},
+									{}
+								)
+							}
 						),
 						m::gap(c,
 							{

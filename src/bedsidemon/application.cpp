@@ -21,6 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "application.hpp"
 
+#include <iomanip>
+
 #include <clargs/parser.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
@@ -30,6 +32,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "gui.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace bedsidemon;
 
@@ -55,14 +58,22 @@ application::application(bool window, std::string_view res_path) :
 	{
 		constexpr auto clock_update_interval_ms = 1000;
 
+		auto& time_text_widget = c.get().get_widget_as<ruis::text>("clock_text"sv);
+
 		this->clock_timer = utki::make_shared<ruis::timer>( //
 			this->gui.context.get().updater,
-			[this](uint32_t elapsed_ms) {
-				// TODO: update time
-				std::cout << "timeout" << std::endl;
+			[this, time_text_widget = utki::make_shared_from(time_text_widget)](uint32_t elapsed_ms) {
+				auto now = std::chrono::system_clock::now();
+				auto time = std::chrono::system_clock::to_time_t(now);
+				auto tm = *std::localtime(&time);
+
+				std::stringstream ss;
+				ss << std::put_time(&tm, "%T");
+
+				time_text_widget.get().set_text(ss.str());
+
 				this->clock_timer->stop();
 				this->clock_timer->start(clock_update_interval_ms);
-				std::cout << "timeout exit" << std::endl;
 				ASSERT(this->clock_timer->is_running())
 			}
 		);
