@@ -38,7 +38,7 @@ using namespace ruis::length_literals;
 using namespace bedsidemon;
 
 namespace {
-constexpr auto heart_blink_time_ms = 100;
+constexpr auto heart_blink_time_ms = 150;
 } // namespace
 
 namespace {
@@ -264,5 +264,5 @@ void spo2_parameter_window::trigger_heart()
 void spo2_parameter_window::on_heart_timer_expired()
 {
 	this->heart.set_visible(false);
-	std::cout << "heart" << std::endl;
+	// std::cout << "heart" << std::endl;
 }
