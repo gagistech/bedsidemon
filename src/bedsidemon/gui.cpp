@@ -134,6 +134,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 {
 	constexpr auto alarms_area_height = 70_pp;
 	constexpr auto buttons_area_height = 50_pp;
+	constexpr auto clock_area_width = 100_pp;
 
 	return
 		// clang-format off
@@ -173,7 +174,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						m::pile(c,
 							{
 								.layout_params = {
-									.dims = {100_pp, lp::min},
+									.dims = {clock_area_width, lp::min},
 									.align = {lp::align::center, lp::align::center}
 
 								}
