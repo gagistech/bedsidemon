@@ -27,7 +27,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
-#include <ruis/widget/label/nine_patch.hpp>
 
 #include "style.hpp"
 
