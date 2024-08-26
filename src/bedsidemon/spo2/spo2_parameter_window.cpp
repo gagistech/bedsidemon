@@ -149,17 +149,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 }
             }
         ),
-        m::rectangle(c,
-            {
-                .layout_params = {
-                    .dims = {1_pp, lp::fill}
-                },
-                .color_params = {
-                    .color = style::color_border
-                }
-            }
-        ),
-        m::column(c,
+        m::row(c,
             {
                 .layout_params = {
                     .dims = {lp::fill, lp::min},
@@ -167,28 +157,48 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 }
             },
             {
-                m::margins(c,
-                    {
-                        .layout_params = {
-                            .dims = {lp::fill, lp::min}
-                        },
-                        .container_params = {
-                            .layout = ruis::layout::column
-                        },
-                        .frame_params = {
-                            .borders = {style::pw_padding, style::pw_padding, style::pw_padding, style::pw_padding}
-                        }
-                    },
-                    make_numeric_content(c)
-                ),
                 m::rectangle(c,
                     {
                         .layout_params = {
-                            .dims = {lp::fill, 1_pp}
+                            .dims = {1_pp, lp::fill}
                         },
                         .color_params = {
                             .color = style::color_border
                         }
+                    }
+                ),
+                m::column(c,
+                    {
+                        .layout_params = {
+                            .dims = {lp::fill, lp::min},
+                            .weight = 1
+                        }
+                    },
+                    {
+                        m::margins(c,
+                            {
+                                .layout_params = {
+                                    .dims = {lp::fill, lp::min}
+                                },
+                                .container_params = {
+                                    .layout = ruis::layout::column
+                                },
+                                .frame_params = {
+                                    .borders = {style::pw_padding, style::pw_padding, style::pw_padding, style::pw_padding}
+                                }
+                            },
+                            make_numeric_content(c)
+                        ),
+                        m::rectangle(c,
+                            {
+                                .layout_params = {
+                                    .dims = {lp::fill, 1_pp}
+                                },
+                                .color_params = {
+                                    .color = style::color_border
+                                }
+                            }
+                        )
                     }
                 )
             }

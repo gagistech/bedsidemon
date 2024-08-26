@@ -27,6 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <ruis/widget/label/nine_patch.hpp>
 
 #include "style.hpp"
 
@@ -206,17 +207,67 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 					}
 				),
 				make_horizontal_separator(c),
-				m::column(c,
+				m::pile(c,
 					{
 						.layout_params = {
 							.dims = {lp::fill, lp::fill},
 							.weight = 1
-						},
-						.widget_params = {
-							.id = "pw_container"s
 						}
 					},
-					{}	
+					{
+						m::column(c,
+							{
+								.layout_params = {
+									.dims = {lp::fill, lp::fill}
+								},
+								.widget_params = {
+									.id = "pw_container"s
+								}
+							}
+						),
+						m::row(c,
+							{
+								.layout_params = {
+									.dims = {lp::fill, lp::fill}
+								}
+							},
+							{
+								m::pile(c,
+									{
+										.layout_params = {
+											.dims = {lp::fill, lp::fill},
+											.weight = 3
+										},
+										.widget_params = {
+											.id = "menu_area"s
+										}
+									},
+									{
+										// m::nine_patch(c,
+										// 	{
+										// 		.layout_params = {
+										// 			.dims = {lp::fill, lp::fill}
+										// 		},
+										// 		.widget_params = {
+										// 			.visible = true
+										// 		},
+										// 		.nine_patch_params = {
+										// 			.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+										// 		}
+										// 	}
+										// )
+									}
+								),
+								m::gap(c,
+									{
+										.layout_params = {
+											.weight = 1
+										}
+									}
+								)
+							}
+						)
+					}
 				),
 				make_horizontal_separator(c),
 				m::row(c,
