@@ -30,6 +30,9 @@ namespace bedsidemon {
 
 class application : public ruisapp::application
 {
+	std::shared_ptr<ruis::container> menu_area;
+	std::shared_ptr<ruis::widget> menu;
+
 	std::unique_ptr<spo2_sensor> spo2_sensor_v;
 
 	// timer for updating clock view once a second
@@ -37,6 +40,14 @@ class application : public ruisapp::application
 
 public:
 	application(bool window, std::string_view res_path);
+
+	static application& inst()
+	{
+		return static_cast<application&>(ruisapp::application::inst());
+	}
+
+	void open_menu(utki::shared_ref<ruis::widget> menu);
+	void close_menu();
 };
 
 std::unique_ptr<application> create_application(std::string_view executable, utki::span<const char*> args);

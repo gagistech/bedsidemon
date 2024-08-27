@@ -49,12 +49,15 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 {
 	constexpr const auto button_icon_padding = 5_pp;
 
-	auto make_button = [&](std::string_view icon_res_id) {
+	auto make_button = [&](std::string_view icon_res_id, std::string id) {
 		// clang-format off
 		return m::push_button(c,
 			{
 				.layout_params = {
 					.dims = {lp::min, lp::fill}
+				},
+				.widget_params = {
+					.id = std::move(id)
 				}
 			},
 			{
@@ -91,8 +94,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 
 	// clang-format off
 	return {
-		make_button("img_home"sv),
-		make_button("img_cog"sv)
+		make_button("img_home"sv, "home_button"),
+		make_button("img_cog"sv, "settings_button")
 	};
 	// clang-format on
 }
