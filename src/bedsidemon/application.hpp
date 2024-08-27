@@ -43,6 +43,7 @@ public:
 
 	static application& inst()
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast, "here we are 100% sure the cast is safe")
 		return static_cast<application&>(ruisapp::application::inst());
 	}
 
