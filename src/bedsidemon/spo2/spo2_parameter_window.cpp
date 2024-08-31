@@ -47,7 +47,6 @@ using namespace ruis::make;
 using namespace bedsidemon::make;
 }; // namespace m
 
-using ruis::lp;
 using namespace ruis::length_literals;
 
 constexpr auto color_main_value = 0xffffff00;
@@ -66,7 +65,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
         m::text(c,
             {
                 .layout_params = {
-                    .align = {lp::align::front, lp::align::front}
+                    .align = {ruis::align::front, ruis::align::front}
                 },
                 .color_params = {
                     .color = style::color_info_text
@@ -111,8 +110,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
                 m::image(c,
                     {
                         .layout_params = {
-                            .dims = {heart_size, lp::min},
-                            .align = {lp::align::front, lp::align::front}
+                            .dims = {heart_size, ruis::dim::min},
+                            .align = {ruis::align::front, ruis::align::front}
                         },
                         .widget_params = {
                             .id = "heart"s,
@@ -137,7 +136,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
         m::waveform(c,
             {
                 .layout_params = {
-                    .dims = {lp::fill, lp::fill},
+                    .dims = {ruis::dim::fill, ruis::dim::fill},
                     .weight = 3
                 },
                 .widget_params = {
@@ -152,7 +151,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
         m::row(c,
             {
                 .layout_params = {
-                    .dims = {lp::fill, lp::min},
+                    .dims = {ruis::dim::fill, ruis::dim::min},
                     .weight = 1
                 }
             },
@@ -160,7 +159,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 m::rectangle(c,
                     {
                         .layout_params = {
-                            .dims = {1_pp, lp::fill}
+                            .dims = {1_pp, ruis::dim::fill}
                         },
                         .color_params = {
                             .color = style::color_border
@@ -170,7 +169,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 m::column(c,
                     {
                         .layout_params = {
-                            .dims = {lp::fill, lp::min},
+                            .dims = {ruis::dim::fill, ruis::dim::min},
                             .weight = 1
                         }
                     },
@@ -178,7 +177,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                         m::margins(c,
                             {
                                 .layout_params = {
-                                    .dims = {lp::fill, lp::min}
+                                    .dims = {ruis::dim::fill, ruis::dim::min}
                                 },
                                 .container_params = {
                                     .layout = ruis::layout::column
@@ -192,7 +191,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                         m::rectangle(c,
                             {
                                 .layout_params = {
-                                    .dims = {lp::fill, 1_pp}
+                                    .dims = {ruis::dim::fill, 1_pp}
                                 },
                                 .color_params = {
                                     .color = style::color_border
@@ -212,7 +211,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	ruis::widget( //
 		std::move(context),
 		{//
-            .dims = {ruis::lp::fill, ruis::lp::min}
+            .dims = {ruis::dim::fill, ruis::dim::min}
         },
         {}
 	),

@@ -33,7 +33,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
-using ruis::lp;
 using namespace ruis::length_literals;
 
 using namespace bedsidemon;
@@ -54,7 +53,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 		return m::push_button(c,
 			{
 				.layout_params = {
-					.dims = {lp::min, lp::fill}
+					.dims = {ruis::dim::min, ruis::dim::fill}
 				},
 				.widget_params = {
 					.id = std::move(id)
@@ -64,7 +63,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 				m::margins(c,
                     {
                         .layout_params = {
-                            .dims = {lp::min, lp::fill}
+                            .dims = {ruis::dim::min, ruis::dim::fill}
                         },
                         .container_params = {
                             .layout = ruis::layout::pile
@@ -77,7 +76,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 						m::image(c,
 							{
 								.layout_params = {
-									.dims = {lp::min, lp::fill}
+									.dims = {ruis::dim::min, ruis::dim::fill}
 								},
 								.image_params = {
 									.img = c.get().loader.load<ruis::res::image>(icon_res_id),
@@ -110,8 +109,8 @@ utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context>
 		{
 			.layout_params = {
 				.dims = {
-					vertical ? 1_pp : lp::fill,
-					vertical ? lp::fill : 1_pp
+					vertical ? ruis::dimension(1_pp) : ruis::dimension(ruis::dim::fill),
+					vertical ? ruis::dimension(ruis::dim::fill) : ruis::dimension(1_pp)
 				}
 			},
 			.color_params = {
@@ -151,14 +150,14 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 				m::row(c,
 					{
 						.layout_params = {
-							.dims = {lp::fill, alarms_area_height}
+							.dims = {ruis::dim::fill, alarms_area_height}
 						}
 					},
 					{
 						m::row(c,
 							{
 								.layout_params = {
-									.dims = {lp::fill, lp::fill},
+									.dims = {ruis::dim::fill, ruis::dim::fill},
 									.weight = 1
 								},
 								.widget_params = {
@@ -177,8 +176,8 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						m::pile(c,
 							{
 								.layout_params = {
-									.dims = {clock_area_width, lp::min},
-									.align = {lp::align::center, lp::align::center}
+									.dims = {clock_area_width, ruis::dim::min},
+									.align = {ruis::align::center, ruis::align::center}
 
 								}
 							},
@@ -212,7 +211,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 				m::pile(c,
 					{
 						.layout_params = {
-							.dims = {lp::fill, lp::fill},
+							.dims = {ruis::dim::fill, ruis::dim::fill},
 							.weight = 1
 						}
 					},
@@ -220,7 +219,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						m::column(c,
 							{
 								.layout_params = {
-									.dims = {lp::fill, lp::fill}
+									.dims = {ruis::dim::fill, ruis::dim::fill}
 								},
 								.widget_params = {
 									.id = "pw_container"s
@@ -230,14 +229,14 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 						m::row(c,
 							{
 								.layout_params = {
-									.dims = {lp::fill, lp::fill}
+									.dims = {ruis::dim::fill, ruis::dim::fill}
 								}
 							},
 							{
 								m::pile(c,
 									{
 										.layout_params = {
-											.dims = {lp::fill, lp::fill},
+											.dims = {ruis::dim::fill, ruis::dim::fill},
 											.weight = 3
 										},
 										.widget_params = {
@@ -275,7 +274,7 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 				m::row(c,
 					{
 						.layout_params = {
-							.dims = {lp::fill, buttons_area_height}
+							.dims = {ruis::dim::fill, buttons_area_height}
 						},
 						.widget_params = {
 							.id = "button_area"s

@@ -27,7 +27,7 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	ruis::widget(
 		std::move(context), //
 		{
-			.dims = {ruis::lp::fill, ruis::lp::fill}
+			.dims = {ruis::dim::fill, ruis::dim::fill}
 },
 		{}
 	),
