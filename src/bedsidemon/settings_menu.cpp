@@ -21,7 +21,34 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "settings_menu.hpp"
 
+#include <ruis/widget/label/text.hpp>
+
+using namespace std::string_literals;
+
 using namespace bedsidemon;
+
+namespace m{
+using namespace ruis::make;
+}
+
+namespace{
+std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c){
+	return {
+		m::text(c,
+			{
+				.layout_params{
+					.align = {ruis::align::front, ruis::align::center}
+				}
+			},
+			U"Sweep speed:"s
+		),
+		// m::drop_down_box(c,
+		// 	{},
+		// 	{}
+		// )
+	};
+}
+}
 
 settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	ruis::widget(
@@ -34,11 +61,14 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	ruis::nine_patch(
 		this->context, //
 		{
+			.container_params = {
+				.layout = ruis::layout::column
+			},
 			.nine_patch_params =
 				{
 					.nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg") //
 				} //
 		},
-		{}
+		make_menu_contents(this->context)
 	)
 {}
