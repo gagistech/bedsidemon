@@ -133,163 +133,172 @@ auto make_vertical_separator(utki::shared_ref<ruis::context> c)
 }
 } // namespace
 
-utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ruis::context> c)
+namespace{
+utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis::context> c)
 {
 	constexpr auto alarms_area_height = 70_pp;
 	constexpr auto buttons_area_height = 50_pp;
 	constexpr auto clock_area_width = 100_pp;
 
 	// clang-format off
-	return m::overlay(c,
-		{},
+	return m::container(c,
 		{
-			m::container(c,
+			.layout_params = {
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			},
+			.container_params = {
+				.layout = ruis::layout::column
+			}
+		},
+		{
+			m::row(c,
 				{
 					.layout_params = {
-						.dims = {ruis::dim::fill, ruis::dim::fill}
-					},
-					.container_params = {
-						.layout = ruis::layout::column
+						.dims = {ruis::dim::fill, alarms_area_height}
 					}
 				},
 				{
 					m::row(c,
 						{
 							.layout_params = {
-								.dims = {ruis::dim::fill, alarms_area_height}
+								.dims = {ruis::dim::fill, ruis::dim::fill},
+								.weight = 1
+							},
+							.widget_params = {
+								.id = "notification_area"s,
 							}
-						},
-						{
-							m::row(c,
-								{
-									.layout_params = {
-										.dims = {ruis::dim::fill, ruis::dim::fill},
-										.weight = 1
-									},
-									.widget_params = {
-										.id = "notification_area"s,
-									}
-								}
-							),
-							make_vertical_separator(c),
-							m::gap(c,
-								{
-									.layout_params = {
-										.dims = {style::clock_padding, 0_pp}
-									}
-								}
-							),
-							m::pile(c,
-								{
-									.layout_params = {
-										.dims = {clock_area_width, ruis::dim::min},
-										.align = {ruis::align::center, ruis::align::center}
-
-									}
-								},
-								{
-									m::text(c,
-										{
-											.widget_params = {
-												.id = "clock_text"s
-											},
-											.color_params = {
-												.color = style::color_info_text
-											},
-											.text_params = {
-												.font_size = style::font_size_label
-											}
-										},
-										{}
-									)
-								}
-							),
-							m::gap(c,
-								{
-									.layout_params = {
-										.dims = {style::clock_padding, 0_pp}
-									}
-								}
-							)
 						}
 					),
-					make_horizontal_separator(c),
+					make_vertical_separator(c),
+					m::gap(c,
+						{
+							.layout_params = {
+								.dims = {style::clock_padding, 0_pp}
+							}
+						}
+					),
 					m::pile(c,
 						{
 							.layout_params = {
-								.dims = {ruis::dim::fill, ruis::dim::fill},
-								.weight = 1
+								.dims = {clock_area_width, ruis::dim::min},
+								.align = {ruis::align::center, ruis::align::center}
+
 							}
 						},
 						{
-							m::column(c,
+							m::text(c,
 								{
-									.layout_params = {
-										.dims = {ruis::dim::fill, ruis::dim::fill}
-									},
 									.widget_params = {
-										.id = "pw_container"s
-									}
-								}
-							),
-							m::row(c,
-								{
-									.layout_params = {
-										.dims = {ruis::dim::fill, ruis::dim::fill}
+										.id = "clock_text"s
+									},
+									.color_params = {
+										.color = style::color_info_text
+									},
+									.text_params = {
+										.font_size = style::font_size_label
 									}
 								},
-								{
-									m::pile(c,
-										{
-											.layout_params = {
-												.dims = {ruis::dim::fill, ruis::dim::fill},
-												.weight = 3
-											},
-											.widget_params = {
-												.id = "menu_area"s
-											}
-										},
-										{
-											// m::nine_patch(c,
-											// 	{
-											// 		.layout_params = {
-											// 			.dims = {lp::fill, lp::fill}
-											// 		},
-											// 		.widget_params = {
-											// 			.visible = true
-											// 		},
-											// 		.nine_patch_params = {
-											// 			.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
-											// 		}
-											// 	}
-											// )
-										}
-									),
-									m::gap(c,
-										{
-											.layout_params = {
-												.weight = 1
-											}
-										}
-									)
-								}
+								{}
 							)
 						}
 					),
-					make_horizontal_separator(c),
+					m::gap(c,
+						{
+							.layout_params = {
+								.dims = {style::clock_padding, 0_pp}
+							}
+						}
+					)
+				}
+			),
+			make_horizontal_separator(c),
+			m::pile(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::fill},
+						.weight = 1
+					}
+				},
+				{
+					m::column(c,
+						{
+							.layout_params = {
+								.dims = {ruis::dim::fill, ruis::dim::fill}
+							},
+							.widget_params = {
+								.id = "pw_container"s
+							}
+						}
+					),
 					m::row(c,
 						{
 							.layout_params = {
-								.dims = {ruis::dim::fill, buttons_area_height}
-							},
-							.widget_params = {
-								.id = "button_area"s
+								.dims = {ruis::dim::fill, ruis::dim::fill}
 							}
 						},
-						make_buttons(c)
+						{
+							m::pile(c,
+								{
+									.layout_params = {
+										.dims = {ruis::dim::fill, ruis::dim::fill},
+										.weight = 3
+									},
+									.widget_params = {
+										.id = "menu_area"s
+									}
+								},
+								{
+									// m::nine_patch(c,
+									// 	{
+									// 		.layout_params = {
+									// 			.dims = {lp::fill, lp::fill}
+									// 		},
+									// 		.widget_params = {
+									// 			.visible = true
+									// 		},
+									// 		.nine_patch_params = {
+									// 			.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+									// 		}
+									// 	}
+									// )
+								}
+							),
+							m::gap(c,
+								{
+									.layout_params = {
+										.weight = 1
+									}
+								}
+							)
+						}
 					)
 				}
+			),
+			make_horizontal_separator(c),
+			m::row(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, buttons_area_height}
+					},
+					.widget_params = {
+						.id = "button_area"s
+					}
+				},
+				make_buttons(c)
 			)
+		}
+	);
+	// clang-format on
+}
+}
+
+utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return m::overlay(c,
+		{},
+		{
+			make_root_widget_structure(c)
 		}
 	);
 	// clang-format on
