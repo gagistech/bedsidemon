@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruis/widget/button/base/push_button.hpp>
 #include <ruis/widget/group/margins.hpp>
+#include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
@@ -138,151 +139,158 @@ utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ru
 	constexpr auto buttons_area_height = 50_pp;
 	constexpr auto clock_area_width = 100_pp;
 
-	return
-		// clang-format off
-		m::container(c,
-			{
-				.container_params = {
-					.layout = ruis::layout::column
-				}
-			},
-			{
-				m::row(c,
-					{
-						.layout_params = {
-							.dims = {ruis::dim::fill, alarms_area_height}
-						}
+	// clang-format off
+	return m::overlay(c,
+		{},
+		{
+			m::container(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
-					{
-						m::row(c,
-							{
-								.layout_params = {
-									.dims = {ruis::dim::fill, ruis::dim::fill},
-									.weight = 1
-								},
-								.widget_params = {
-									.id = "notification_area"s,
-								}
-							}
-						),
-						make_vertical_separator(c),
-						m::gap(c,
-							{
-								.layout_params = {
-									.dims = {style::clock_padding, 0_pp}
-								}
-							}
-						),
-						m::pile(c,
-							{
-								.layout_params = {
-									.dims = {clock_area_width, ruis::dim::min},
-									.align = {ruis::align::center, ruis::align::center}
-
-								}
-							},
-							{
-								m::text(c,
-									{
-										.widget_params = {
-											.id = "clock_text"s
-										},
-										.color_params = {
-											.color = style::color_info_text
-										},
-										.text_params = {
-											.font_size = style::font_size_label
-										}
-									},
-									{}
-								)
-							}
-						),
-						m::gap(c,
-							{
-								.layout_params = {
-									.dims = {style::clock_padding, 0_pp}
-								}
-							}
-						)
+					.container_params = {
+						.layout = ruis::layout::column
 					}
-				),
-				make_horizontal_separator(c),
-				m::pile(c,
-					{
-						.layout_params = {
-							.dims = {ruis::dim::fill, ruis::dim::fill},
-							.weight = 1
-						}
-					},
-					{
-						m::column(c,
-							{
-								.layout_params = {
-									.dims = {ruis::dim::fill, ruis::dim::fill}
-								},
-								.widget_params = {
-									.id = "pw_container"s
-								}
+				},
+				{
+					m::row(c,
+						{
+							.layout_params = {
+								.dims = {ruis::dim::fill, alarms_area_height}
 							}
-						),
-						m::row(c,
-							{
-								.layout_params = {
-									.dims = {ruis::dim::fill, ruis::dim::fill}
-								}
-							},
-							{
-								m::pile(c,
-									{
-										.layout_params = {
-											.dims = {ruis::dim::fill, ruis::dim::fill},
-											.weight = 3
-										},
-										.widget_params = {
-											.id = "menu_area"s
-										}
-									},
-									{
-										// m::nine_patch(c,
-										// 	{
-										// 		.layout_params = {
-										// 			.dims = {lp::fill, lp::fill}
-										// 		},
-										// 		.widget_params = {
-										// 			.visible = true
-										// 		},
-										// 		.nine_patch_params = {
-										// 			.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
-										// 		}
-										// 	}
-										// )
-									}
-								),
-								m::gap(c,
-									{
-										.layout_params = {
-											.weight = 1
-										}
-									}
-								)
-							}
-						)
-					}
-				),
-				make_horizontal_separator(c),
-				m::row(c,
-					{
-						.layout_params = {
-							.dims = {ruis::dim::fill, buttons_area_height}
 						},
-						.widget_params = {
-							.id = "button_area"s
+						{
+							m::row(c,
+								{
+									.layout_params = {
+										.dims = {ruis::dim::fill, ruis::dim::fill},
+										.weight = 1
+									},
+									.widget_params = {
+										.id = "notification_area"s,
+									}
+								}
+							),
+							make_vertical_separator(c),
+							m::gap(c,
+								{
+									.layout_params = {
+										.dims = {style::clock_padding, 0_pp}
+									}
+								}
+							),
+							m::pile(c,
+								{
+									.layout_params = {
+										.dims = {clock_area_width, ruis::dim::min},
+										.align = {ruis::align::center, ruis::align::center}
+
+									}
+								},
+								{
+									m::text(c,
+										{
+											.widget_params = {
+												.id = "clock_text"s
+											},
+											.color_params = {
+												.color = style::color_info_text
+											},
+											.text_params = {
+												.font_size = style::font_size_label
+											}
+										},
+										{}
+									)
+								}
+							),
+							m::gap(c,
+								{
+									.layout_params = {
+										.dims = {style::clock_padding, 0_pp}
+									}
+								}
+							)
 						}
-					},
-					make_buttons(c)
-				)
-			}
-		);
+					),
+					make_horizontal_separator(c),
+					m::pile(c,
+						{
+							.layout_params = {
+								.dims = {ruis::dim::fill, ruis::dim::fill},
+								.weight = 1
+							}
+						},
+						{
+							m::column(c,
+								{
+									.layout_params = {
+										.dims = {ruis::dim::fill, ruis::dim::fill}
+									},
+									.widget_params = {
+										.id = "pw_container"s
+									}
+								}
+							),
+							m::row(c,
+								{
+									.layout_params = {
+										.dims = {ruis::dim::fill, ruis::dim::fill}
+									}
+								},
+								{
+									m::pile(c,
+										{
+											.layout_params = {
+												.dims = {ruis::dim::fill, ruis::dim::fill},
+												.weight = 3
+											},
+											.widget_params = {
+												.id = "menu_area"s
+											}
+										},
+										{
+											// m::nine_patch(c,
+											// 	{
+											// 		.layout_params = {
+											// 			.dims = {lp::fill, lp::fill}
+											// 		},
+											// 		.widget_params = {
+											// 			.visible = true
+											// 		},
+											// 		.nine_patch_params = {
+											// 			.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+											// 		}
+											// 	}
+											// )
+										}
+									),
+									m::gap(c,
+										{
+											.layout_params = {
+												.weight = 1
+											}
+										}
+									)
+								}
+							)
+						}
+					),
+					make_horizontal_separator(c),
+					m::row(c,
+						{
+							.layout_params = {
+								.dims = {ruis::dim::fill, buttons_area_height}
+							},
+							.widget_params = {
+								.id = "button_area"s
+							}
+						},
+						make_buttons(c)
+					)
+				}
+			)
+		}
+	);
 	// clang-format on
 }
