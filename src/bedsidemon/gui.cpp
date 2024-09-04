@@ -133,7 +133,7 @@ auto make_vertical_separator(utki::shared_ref<ruis::context> c)
 }
 } // namespace
 
-namespace{
+namespace {
 utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis::context> c)
 {
 	constexpr auto alarms_area_height = 70_pp;
@@ -246,21 +246,6 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 									.widget_params = {
 										.id = "menu_area"s
 									}
-								},
-								{
-									// m::nine_patch(c,
-									// 	{
-									// 		.layout_params = {
-									// 			.dims = {lp::fill, lp::fill}
-									// 		},
-									// 		.widget_params = {
-									// 			.visible = true
-									// 		},
-									// 		.nine_patch_params = {
-									// 			.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
-									// 		}
-									// 	}
-									// )
 								}
 							),
 							m::gap(c,
@@ -290,7 +275,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 	);
 	// clang-format on
 }
-}
+} // namespace
 
 utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ruis::context> c)
 {

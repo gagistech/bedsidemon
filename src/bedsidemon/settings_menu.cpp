@@ -27,12 +27,14 @@ using namespace std::string_literals;
 
 using namespace bedsidemon;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-namespace{
-std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c){
+namespace {
+std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
 	return {
 		m::text(c,
 			{
@@ -47,8 +49,9 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		// 	{}
 		// )
 	};
+	// clang-format on
 }
-}
+} // namespace
 
 settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	ruis::widget(
@@ -61,9 +64,10 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	ruis::nine_patch(
 		this->context, //
 		{
-			.container_params = {
-				.layout = ruis::layout::column
-			},
+			.container_params =
+				{
+					.layout = ruis::layout::column //
+				},
 			.nine_patch_params =
 				{
 					.nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg") //
