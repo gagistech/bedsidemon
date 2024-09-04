@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <iomanip>
 
 #include <clargs/parser.hpp>
-#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/button/push_button.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
 #include "spo2/setocare_st_t130_u01.hpp"

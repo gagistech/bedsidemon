@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "gui.hpp"
 
-#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/gap.hpp>
