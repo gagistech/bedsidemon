@@ -107,6 +107,11 @@ application::application(bool window, std::string_view res_path) :
 			auto& app = bedsidemon::application::inst();
 			app.open_menu(utki::make_shared<settings_menu>(app.gui.context));
 		};
+
+		c.get().get_widget_as<ruis::push_button>("exit_button"sv).click_handler = [](ruis::push_button& b) {
+			auto& app = bedsidemon::application::inst();
+			app.quit();
+		};
 	}
 }
 
