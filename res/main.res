@@ -9,3 +9,7 @@ img_home{
 img_cog{
     file{cog.svg}
 }
+
+img_exit{
+    file{exit.svg}
+}
