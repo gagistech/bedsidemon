@@ -96,6 +96,13 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 	return {
 		make_button("img_home"sv, "home_button"),
 		make_button("img_cog"sv, "settings_button"),
+		m::gap(c,
+			{
+				.layout_params = {
+					.weight = 1
+				}
+			}
+		),
 		make_button("img_exit"sv, "exit_button"),
 	};
 	// clang-format on
