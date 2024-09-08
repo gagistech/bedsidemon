@@ -183,7 +183,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                                     .layout = ruis::layout::column
                                 },
                                 .frame_params = {
-                                    .borders = {style::pw_padding, style::pw_padding, style::pw_padding, style::pw_padding}
+                                    .borders = {style::pw_padding}
                                 }
                             },
                             make_numeric_content(c)

@@ -24,9 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/util/timer.hpp>
 #include <ruisapp/application.hpp>
 
-#include "settings.hpp"
-
 #include "spo2/spo2_sensor.hpp"
+
+#include "settings.hpp"
 
 namespace bedsidemon {
 

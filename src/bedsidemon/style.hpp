@@ -31,5 +31,10 @@ constexpr auto color_info_text = 0xff808080;
 constexpr auto font_size_label = ruis::length::make_pp(16);
 constexpr auto pw_padding = ruis::length::make_pp(5);
 constexpr auto clock_padding = ruis::length::make_pp(10);
+constexpr auto menu_padding = ruis::length::make_pp(20);
+constexpr auto font_size_menu_title = ruis::length::make_pp(26);
+
+constexpr auto font_size_setting = ruis::length::make_pp(14);
+constexpr auto gap_size_setting_label_value = ruis::length::make_pp(5);
 
 } // namespace bedsidemon::style
