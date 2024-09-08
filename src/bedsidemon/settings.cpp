@@ -37,7 +37,9 @@ settings settings_storage::read(std::string_view filename)
 
 	for (const auto& t : tml) {
 		if (t.value.to_string() == sweep_speed_key) {
-			// TODO:
+			if (!t.children.empty()) {
+				ret.sweep_speed_um_per_sec = t.children.front().value.to_uint32();
+			}
 		}
 	}
 
@@ -62,10 +64,6 @@ void settings_storage::write()
 
 	if (this->settings_v.sweep_speed_um_per_sec != default_values.sweep_speed_um_per_sec) {
 		add_setting(sweep_speed_key, tml::leaf(this->settings_v.sweep_speed_um_per_sec));
-	}
-
-	if (tml.empty()) {
-		return;
 	}
 
 	std::filesystem::create_directories(ruisapp::application::inst().directory.config);
