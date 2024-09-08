@@ -29,6 +29,7 @@ namespace {
 constexpr auto default_max_value = 100;
 } // namespace
 
+// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, "TODO: fix")
 waveform::waveform(//
 utki::shared_ref<ruis::context> context, all_parameters params) :
 	ruis::widget( //
@@ -43,14 +44,22 @@ utki::shared_ref<ruis::context> context, all_parameters params) :
 	}},
 	value_max(default_max_value)
 {
-	constexpr auto default_sweep_speed_mm_per_sec = 100;
-	// this->px_per_ms =
-	// this->context.get().units.mm_to_px(default_sweep_speed_mm_per_sec /
-	// 1000.0);
-	this->px_per_ms = ruis::real(default_sweep_speed_mm_per_sec) / std::milli::den;
+	constexpr auto default_sweep_speed_mm_per_sec = 25;
+	this->set_sweep_speed(default_sweep_speed_mm_per_sec);
 
 	constexpr auto default_gap_pp = 30;
 	this->gap_px = this->context.get().units.pp_to_px(default_gap_pp);
+}
+
+void waveform::set_sweep_speed(ruis::real mm_per_sec)
+{
+	// TODO: use mm_to_px unit conversion
+	constexpr auto px_per_mm = 6.65;
+
+	// this->px_per_ms = this->context.get().units.mm_to_px(default_sweep_speed_mm_per_sec /
+	// ruis::real(std::milli::den));
+	this->px_per_ms = ruis::real(mm_per_sec * px_per_mm) / std::milli::den;
+	// std::cout << "px per ms = " << this->px_per_ms << std::endl;
 }
 
 void waveform::render(const ruis::matrix4& matrix) const

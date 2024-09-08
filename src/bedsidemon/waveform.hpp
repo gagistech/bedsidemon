@@ -76,6 +76,8 @@ public:
 
 	void clear();
 
+	void set_sweep_speed(ruis::real mm_per_sec);
+
 private:
 	void make_vaos();
 };

@@ -29,6 +29,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 
+#include "../application.hpp"
 #include "../style.hpp"
 
 using namespace std::string_literals;
@@ -233,7 +234,22 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 		    this->on_heart_timer_expired();
 	    }
     ))
-{}
+{
+	auto& ss = bedsidemon::application::inst().settings_storage;
+	std::function<void()> settings_change_handler = [&pw = *this, &ss]() {
+		pw.waveform.set_sweep_speed(ruis::real(ss.get().sweep_speed_um_per_sec) / ruis::real(std::milli::den));
+	};
+	settings_change_handler();
+	this->settings_change_signal_connection = ss.settings_changed_signal.connect(std::move(settings_change_handler));
+}
+
+spo2_parameter_window::~spo2_parameter_window() = default;
+
+// {
+// TODO: disconnect settings change observer
+// auto& ss = bedsidemon::application::inst().settings_storage;
+// ss.settings_changed_signal.disconnect(this->settings_change_signal_connection);
+// }
 
 void spo2_parameter_window::set(const spo2_measurement& meas)
 {

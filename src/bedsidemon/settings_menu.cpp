@@ -55,7 +55,7 @@ namespace {
 class selection_box_provider : public ruis::selection_box::provider
 {
 public:
-	selection_box_provider() {}
+	selection_box_provider() = default;
 
 	size_t count() const noexcept override
 	{
@@ -66,7 +66,7 @@ public:
 	{
 		ASSERT(index < sweep_speeds_um_per_sec.size())
 
-		auto speed_um_per_sec = *std::next(sweep_speeds_um_per_sec.begin(), index);
+		auto speed_um_per_sec = *utki::next(sweep_speeds_um_per_sec.begin(), index);
 
 		float speed_mm_per_sec = float(speed_um_per_sec) / float(std::kilo::num);
 
@@ -79,7 +79,7 @@ public:
 					.layout = ruis::layout::pile
 				},
 				.frame_params = {
-					.borders = {10_pp}
+					.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 				}
 			},
 			{
@@ -124,7 +124,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		m::selection_box(c,
 			{
 				.layout_params = {
-					.dims = {200_pp, ruis::dim::min},
+					.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 					.align = {ruis::align::front, ruis::align::center}
 				},
 				.widget_params = {

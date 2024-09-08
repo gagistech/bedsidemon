@@ -25,6 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/widget.hpp>
 
+#include "../signal.hpp"
 #include "../waveform.hpp"
 
 #include "spo2_measurement.hpp"
@@ -46,8 +47,17 @@ class spo2_parameter_window :
 	void trigger_heart();
 	void on_heart_timer_expired();
 
+	utki::signal::connection settings_change_signal_connection;
+
 public:
 	spo2_parameter_window(utki::shared_ref<ruis::context> context);
+	~spo2_parameter_window() override;
+
+	spo2_parameter_window(const spo2_parameter_window&) = delete;
+	spo2_parameter_window& operator=(const spo2_parameter_window&) = delete;
+
+	spo2_parameter_window(spo2_parameter_window&&) = delete;
+	spo2_parameter_window& operator=(spo2_parameter_window&&) = delete;
 
 	void set(const spo2_measurement& meas);
 };
