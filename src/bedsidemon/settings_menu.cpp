@@ -205,7 +205,11 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 
 		auto& ss = bedsidemon::application::inst().settings_storage;
 		const auto& s = ss.get();
-		auto i = std::ranges::find(sweep_speeds_um_per_sec, s.sweep_speed_um_per_sec);
+		auto i = std::find(
+			sweep_speeds_um_per_sec.begin(), //
+			sweep_speeds_um_per_sec.end(),
+			s.sweep_speed_um_per_sec
+		);
 		if (i != sweep_speeds_um_per_sec.end()) {
 			sb.set_selection(std::distance(sweep_speeds_um_per_sec.begin(), i));
 		} else {
