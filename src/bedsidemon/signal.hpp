@@ -26,6 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace utki {
 
+// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, "false positive")
 class signal
 {
 public:

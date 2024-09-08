@@ -33,6 +33,7 @@ class waveform :
 	virtual public ruis::widget, //
 	public ruis::color_widget
 {
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, "false positive")
 	struct path {
 		ruis::path_vao vao;
 		ruis::vector2 origin;
