@@ -40,7 +40,7 @@ using namespace bedsidemon;
 
 application::application(bool window, std::string_view res_path) :
 	ruisapp::application( //
-		"ruis-tests",
+		"bedsidemon"s,
 		[]() {
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 			ruisapp::window_params wp(r4::vector2<unsigned>(1024, 600));

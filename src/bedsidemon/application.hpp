@@ -24,6 +24,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/util/timer.hpp>
 #include <ruisapp/application.hpp>
 
+#include "settings.hpp"
+
 #include "spo2/spo2_sensor.hpp"
 
 namespace bedsidemon {
@@ -39,6 +41,8 @@ class application : public ruisapp::application
 	std::shared_ptr<ruis::timer> clock_timer;
 
 public:
+	bedsidemon::settings_storage settings_storage;
+
 	application(bool window, std::string_view res_path);
 
 	static application& inst()
