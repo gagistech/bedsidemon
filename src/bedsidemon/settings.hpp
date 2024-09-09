@@ -42,7 +42,7 @@ class settings_storage
 	void write();
 
 public:
-	utki::signal settings_changed_signal;
+	utki::signal<const settings&> settings_changed_signal;
 
 	settings_storage();
 

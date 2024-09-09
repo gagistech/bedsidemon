@@ -71,7 +71,7 @@ void settings_storage::set(const settings& s)
 {
 	this->settings_v = s;
 	this->write();
-	this->settings_changed_signal.emit();
+	this->settings_changed_signal.emit(this->settings_v);
 }
 
 void settings_storage::write()

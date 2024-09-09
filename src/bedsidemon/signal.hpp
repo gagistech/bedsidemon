@@ -26,17 +26,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace utki {
 
-// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, "false positive")
+template <typename... args_type>
 class signal
 {
 public:
-	using callback_type = std::function<void()>;
+	using callback_type = std::function<void(args_type...)>;
 
 private:
 	std::list<callback_type> callbacks;
 
 public:
-	using connection = decltype(callbacks)::iterator;
+	using connection = typename decltype(callbacks)::iterator;
 
 	connection connect(callback_type callback)
 	{
@@ -49,11 +49,21 @@ public:
 		this->callbacks.erase(conn);
 	}
 
-	void emit()
+	void emit(args_type... a)
 	{
 		for (const auto& c : this->callbacks) {
-			c();
+			c(a...);
 		}
+	}
+
+	size_t size() const noexcept
+	{
+		return this->callbacks.size();
+	}
+
+	bool empty() const noexcept
+	{
+		return this->size() == 0;
 	}
 };
 
