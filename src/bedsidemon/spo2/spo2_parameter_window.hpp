@@ -26,7 +26,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/widget.hpp>
 
 #include "../settings.hpp"
-#include "../signal.hpp"
 #include "../waveform.hpp"
 
 #include "spo2_measurement.hpp"

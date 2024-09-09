@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <tml/tree.hpp>
 
-#include "signal.hpp"
+#include <utki/signal.hpp>
 
 namespace bedsidemon {
 
