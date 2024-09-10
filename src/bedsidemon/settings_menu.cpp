@@ -196,14 +196,14 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 			ASSERT(sb.get_selection() < sweep_speeds_um_per_sec.size())
 			auto speed = sweep_speeds_um_per_sec[sb.get_selection()];
 
-			auto& ss = bedsidemon::application::inst().settings_storage;
+			auto& ss = settings_storage::inst();
 
 			auto s = ss.get();
 			s.sweep_speed_um_per_sec = speed;
 			ss.set(s);
 		};
 
-		auto& ss = bedsidemon::application::inst().settings_storage;
+		auto& ss = settings_storage::inst();
 		const auto& s = ss.get();
 		auto i = std::find(
 			sweep_speeds_um_per_sec.begin(), //

@@ -235,7 +235,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	    }
     ))
 {
-	auto& ss = bedsidemon::application::inst().settings_storage;
+	auto& ss = settings_storage::inst();
 	decltype(settings_storage::settings_changed_signal
 	)::callback_type settings_change_handler = [&pw = *this](const settings& s) {
 		pw.waveform.set_sweep_speed(ruis::real(s.sweep_speed_um_per_sec) / ruis::real(std::milli::den));
@@ -244,13 +244,17 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	this->settings_change_signal_connection = ss.settings_changed_signal.connect(std::move(settings_change_handler));
 }
 
-spo2_parameter_window::~spo2_parameter_window() = default;
-
-// {
-// TODO: disconnect settings change observer
-// auto& ss = bedsidemon::application::inst().settings_storage;
-// ss.settings_changed_signal.disconnect(this->settings_change_signal_connection);
-// }
+spo2_parameter_window::~spo2_parameter_window()
+{
+	// in case of application exit, the parameter window widgets will be destroyed by
+	// ruisapp::application::gui destructor, which is after the settings_storage,
+	// so we need to check if the settings_storage object still exists before
+	// disconnecting from its signal
+	if (settings_storage::is_created()) {
+		auto& ss = settings_storage::inst();
+		ss.settings_changed_signal.disconnect(this->settings_change_signal_connection);
+	}
+}
 
 void spo2_parameter_window::set(const spo2_measurement& meas)
 {

@@ -22,8 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <tml/tree.hpp>
-
 #include <utki/signal.hpp>
+#include <utki/singleton.hpp>
 
 namespace bedsidemon {
 
@@ -32,7 +32,7 @@ struct settings {
 	uint32_t sweep_speed_um_per_sec = default_sweep_speed_um_per_sec;
 };
 
-class settings_storage
+class settings_storage : public utki::singleton<settings_storage>
 {
 	std::string filename;
 
