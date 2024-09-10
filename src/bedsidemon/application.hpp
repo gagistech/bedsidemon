@@ -35,7 +35,8 @@ class application : public ruisapp::application
 	std::shared_ptr<ruis::container> menu_area;
 	std::shared_ptr<ruis::widget> menu;
 
-	std::unique_ptr<spo2_sensor> spo2_sensor_v;
+	std::unique_ptr<spo2_sensor> fake_spo2_sensor_v;
+	std::unique_ptr<spo2_sensor> real_spo2_sensor_v;
 
 	// timer for updating clock view once a second
 	std::shared_ptr<ruis::timer> clock_timer;

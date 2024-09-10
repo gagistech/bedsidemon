@@ -27,6 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/button/push_button.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
+#include "spo2/fake_spo2_sensor.hpp"
 #include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
 
@@ -89,13 +90,25 @@ application::application(bool window, std::string_view res_path) :
 
 	auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
 
-	auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
-	// this->spo2_sensor_v = std::make_unique<contec_cms50d_plus>(pw,
-	// "/dev/ttyUSB0"); NOLINTNEXTLINE(bugprone-unused-return-value, "false
-	// positive")
-	this->spo2_sensor_v = std::make_unique<setocare_st_t130_u01>(pw, "/dev/ttyUSB0");
+	// add fake sensor
+	{
+		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context, U"SpO2 %, simulated");
+		this->fake_spo2_sensor_v =
+			std::make_unique<fake_spo2_sensor>(pw, utki::cat(papki::as_dir(res_path), "spo2_measurements.tml"));
 
-	pw_container.push_back(pw);
+		pw_container.push_back(pw);
+	}
+
+	// add real sensor
+	{
+		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
+		// this->real_spo2_sensor_v = std::make_unique<contec_cms50d_plus>(pw,
+		// "/dev/ttyUSB0"); NOLINTNEXTLINE(bugprone-unused-return-value, "false
+		// positive")
+		this->real_spo2_sensor_v = std::make_unique<setocare_st_t130_u01>(pw, "/dev/ttyUSB0");
+
+		pw_container.push_back(pw);
+	}
 
 	// set up buttons
 	{

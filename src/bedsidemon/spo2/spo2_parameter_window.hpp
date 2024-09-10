@@ -50,7 +50,7 @@ class spo2_parameter_window :
 	utki::signal<const settings&>::connection settings_change_signal_connection;
 
 public:
-	spo2_parameter_window(utki::shared_ref<ruis::context> context);
+	spo2_parameter_window(utki::shared_ref<ruis::context> context, std::u32string title = std::u32string(U"SpO2 %"));
 	~spo2_parameter_window() override;
 
 	spo2_parameter_window(const spo2_parameter_window&) = delete;

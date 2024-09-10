@@ -6,7 +6,7 @@ frame{
 	pulse{53}
 	spo2{99}
 	perf{0}
-	dt_ms{23973}
+	dt_ms{1}
 }
 frame{
 	strength{3}
