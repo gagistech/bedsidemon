@@ -33,7 +33,7 @@ const tml::leaf& get_prop_val(const tml::tree& t)
 
 spo2_measurement spo2_measurement::from_tml(const tml::forest& f)
 {
-	spo2_measurement meas;
+	spo2_measurement meas{};
 
 	unsigned checksum = 0;
 
