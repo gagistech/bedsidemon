@@ -45,17 +45,13 @@ public:
 	utki::signal<const settings&> settings_changed_signal;
 
 	settings_storage();
+	~settings_storage() override = default;
 
 	settings_storage(const settings_storage&) = delete;
 	settings_storage& operator=(const settings_storage&) = delete;
 
 	settings_storage(settings_storage&&) = delete;
 	settings_storage& operator=(settings_storage&&) = delete;
-
-	~settings_storage()
-	{
-		this->write(); // TODO: remove?
-	}
 
 	const settings& get() const noexcept
 	{
