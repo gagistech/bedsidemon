@@ -21,6 +21,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "spo2_sensor.hpp"
 
+#ifdef BEDSIDEMON_RECORD_SPO2_MEASUREMENTS
+#	include <tml/tree.hpp>
+#	include <papki/fs_file.hpp>
+#endif
+
+using namespace std::string_view_literals;
+
 using namespace bedsidemon;
 
 spo2_sensor::spo2_sensor(utki::shared_ref<spo2_parameter_window> pw) :
@@ -29,6 +36,10 @@ spo2_sensor::spo2_sensor(utki::shared_ref<spo2_parameter_window> pw) :
 
 void spo2_sensor::push(const spo2_measurement& meas)
 {
+#ifdef BEDSIDEMON_RECORD_SPO2_MEASUREMENTS
+	this->record.push_back(meas);
+#endif
+
 	this->param_window.get().context.get().run_from_ui_thread([pw = this->param_window, meas]() {
 		// std::cout << std::dec;
 		// std::cout << "\t" << "signal_strength = " <<
@@ -46,3 +57,32 @@ void spo2_sensor::push(const spo2_measurement& meas)
 		pw.get().set(meas);
 	});
 }
+
+spo2_sensor::~spo2_sensor()
+#ifdef BEDSIDEMON_RECORD_SPO2_MEASUREMENTS
+{
+	tml::forest rec;
+
+	for(const auto& m : this->record){
+		tml::tree f("frame", {});
+
+		auto& c = f.children;
+
+		c.push_back(tml::tree("strength"sv, {tml::leaf(m.signal_strength)}));
+		c.push_back(tml::tree("beat"sv, {tml::leaf(m.pulse_beat)}));
+		c.push_back(tml::tree("finger_out"sv, {tml::leaf(m.finger_out)}));
+		c.push_back(tml::tree("wf_value"sv, {tml::leaf(m.waveform_point)}));
+		c.push_back(tml::tree("pulse"sv, {tml::leaf(m.pulse_rate)}));
+		c.push_back(tml::tree("spo2"sv, {tml::leaf(m.spo2)}));
+		c.push_back(tml::tree("perf"sv, {tml::leaf(m.perfusion_index)}));
+		c.push_back(tml::tree("dt_ms"sv, {tml::leaf(m.delta_time_ms)}));
+
+		rec.push_back(std::move(f));
+	}
+
+	papki::fs_file fi("spo2_measurements.tml");
+	tml::write(rec, fi);
+}
+#else
+= default;
+#endif

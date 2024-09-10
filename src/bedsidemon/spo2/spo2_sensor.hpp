@@ -32,6 +32,9 @@ class spo2_sensor
 {
 	utki::shared_ref<spo2_parameter_window> param_window;
 
+#ifdef BEDSIDEMON_RECORD_SPO2_MEASUREMENTS
+	std::vector<spo2_measurement> record;
+#endif
 public:
 	spo2_sensor(utki::shared_ref<spo2_parameter_window> pw);
 
@@ -41,7 +44,7 @@ public:
 	spo2_sensor(spo2_sensor&&) = delete;
 	spo2_sensor& operator=(spo2_sensor&&) = delete;
 
-	virtual ~spo2_sensor() = default;
+	virtual ~spo2_sensor();
 
 protected:
 	// thread safe
