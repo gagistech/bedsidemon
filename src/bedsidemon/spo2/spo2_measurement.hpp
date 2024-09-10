@@ -23,6 +23,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <cstdint>
 
+#include <tml/tree.hpp>
+
 namespace bedsidemon {
 
 struct spo2_measurement {
@@ -42,6 +44,10 @@ struct spo2_measurement {
 
 	// time from previous sample
 	uint16_t delta_time_ms;
+
+	tml::forest to_tml() const;
+
+	static spo2_measurement from_tml(const tml::forest& f);
 };
 
 } // namespace bedsidemon

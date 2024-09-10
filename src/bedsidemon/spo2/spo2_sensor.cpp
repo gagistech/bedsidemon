@@ -63,26 +63,13 @@ spo2_sensor::~spo2_sensor()
 {
 	tml::forest rec;
 
-	for(const auto& m : this->record){
-		tml::tree f("frame", {});
-
-		auto& c = f.children;
-
-		c.push_back(tml::tree("strength"sv, {tml::leaf(m.signal_strength)}));
-		c.push_back(tml::tree("beat"sv, {tml::leaf(m.pulse_beat)}));
-		c.push_back(tml::tree("finger_out"sv, {tml::leaf(m.finger_out)}));
-		c.push_back(tml::tree("wf_value"sv, {tml::leaf(m.waveform_point)}));
-		c.push_back(tml::tree("pulse"sv, {tml::leaf(m.pulse_rate)}));
-		c.push_back(tml::tree("spo2"sv, {tml::leaf(m.spo2)}));
-		c.push_back(tml::tree("perf"sv, {tml::leaf(m.perfusion_index)}));
-		c.push_back(tml::tree("dt_ms"sv, {tml::leaf(m.delta_time_ms)}));
-
-		rec.push_back(std::move(f));
+	for (const auto& m : this->record) {
+		rec.push_back(tml::tree frame("frame", m.to_tml()));
 	}
 
 	papki::fs_file fi("spo2_measurements.tml");
 	tml::write(rec, fi);
 }
 #else
-= default;
+	= default;
 #endif

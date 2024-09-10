@@ -35,6 +35,7 @@ class spo2_sensor
 #ifdef BEDSIDEMON_RECORD_SPO2_MEASUREMENTS
 	std::vector<spo2_measurement> record;
 #endif
+
 public:
 	spo2_sensor(utki::shared_ref<spo2_parameter_window> pw);
 
