@@ -50,7 +50,9 @@ void serial_port_thread::send(std::vector<uint8_t> data)
 	if (this->send_buffer.empty()) {
 		this->send_buffer = std::move(data);
 	} else {
-		this->send_buffer.insert(this->send_buffer.end(), data.begin(), data.end());
+		using std::begin;
+		using std::end;
+		this->send_buffer.insert(end(this->send_buffer), begin(data), end(data));
 	}
 
 	this->wait_set.change(this->port, opros::ready::read | opros::ready::write, &this->port);
