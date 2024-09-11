@@ -62,26 +62,38 @@ fake_spo2_sensor::fake_spo2_sensor(utki::shared_ref<spo2_parameter_window> pw, s
 		utki::make_shared<ruis::timer>(
 			pw.get().context.get().updater,
 			[this](uint32_t elapsed_ms) {
-				this->on_timer_expired();
+				this->on_timer_expired(elapsed_ms);
 			}
 		)
 	),
-	cur_frame(std::prev(this->record.end()))
+	cur_frame(this->record.begin())
 {
-	this->on_timer_expired();
+	this->timer.get().start(this->cur_frame->delta_time_ms);
 }
 
-void fake_spo2_sensor::on_timer_expired()
+void fake_spo2_sensor::on_timer_expired(uint32_t elapsed_ms)
 {
-	++this->cur_frame;
+	auto dt_ms = this->time_since_frame_start_ms + elapsed_ms;
 
-	if (this->cur_frame == this->record.end()) {
-		this->cur_frame = this->record.begin();
+	while (dt_ms >= this->cur_frame->delta_time_ms) {
+		this->push(*this->cur_frame);
+
+		dt_ms -= this->cur_frame->delta_time_ms;
+
+		++this->cur_frame;
+
+		if (this->cur_frame == this->record.end()) {
+			this->cur_frame = this->record.begin();
+		}
 	}
 
-	this->push(*this->cur_frame);
+	ASSERT(dt_ms < this->cur_frame->delta_time_ms)
+
+	this->time_since_frame_start_ms = dt_ms;
+
+	auto time_to_wait_ms = this->cur_frame->delta_time_ms - dt_ms;
 
 	auto& t = timer.get();
 	t.stop();
-	t.start(this->cur_frame->delta_time_ms);
+	t.start(time_to_wait_ms);
 }

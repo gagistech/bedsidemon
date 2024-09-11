@@ -33,9 +33,10 @@ class fake_spo2_sensor : public spo2_sensor
 
 	utki::shared_ref<ruis::timer> timer;
 
-	void on_timer_expired();
-
 	decltype(record)::const_iterator cur_frame;
+
+	void on_timer_expired(uint32_t elapsed_ms);
+	uint32_t time_since_frame_start_ms = 0;
 
 public:
 	fake_spo2_sensor(utki::shared_ref<spo2_parameter_window> pw, std::string_view data_filename);
