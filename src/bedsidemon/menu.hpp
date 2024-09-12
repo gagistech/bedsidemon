@@ -21,14 +21,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "menu.hpp"
+#include <ruis/widget/label/nine_patch.hpp>
 
 namespace bedsidemon {
 
-class settings_menu : public menu
+class menu : public ruis::nine_patch
 {
 public:
-	settings_menu(utki::shared_ref<ruis::context> context);
+	menu(
+		utki::shared_ref<ruis::context> context, //
+		std::u32string title,
+		utki::span<const utki::shared_ref<ruis::widget>> contents
+	);
 };
 
 } // namespace bedsidemon

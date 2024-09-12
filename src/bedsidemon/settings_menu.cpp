@@ -141,54 +141,18 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 } // namespace
 
 settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
-	// clang-format off
 	ruis::widget(
 		std::move(context),
 		{
-			.dims = {ruis::dim::fill, ruis::dim::fill}
-		},
+			.dims = {ruis::dim::fill, ruis::dim::fill}  //
+},
 		{}
 	),
-	ruis::nine_patch(
-		this->context,
-		{
-			.container_params = {
-				.layout = ruis::layout::column
-			},
-			.nine_patch_params = {
-				.nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
-			}
-		},
-		{
-			m::text(this->context,
-				{
-					.layout_params = {
-						.align = {ruis::align::front, ruis::align::center}
-					},
-					.text_params = {
-						.font_size = style::font_size_menu_title
-					}
-				},
-				U"Settings"s
-			),
-			m::margins(this->context,
-				{
-					.layout_params{
-						.dims{ruis::dim::fill, ruis::dim::fill},
-						.weight = 1
-					},
-					.container_params{
-						.layout = ruis::layout::column
-					},
-					.frame_params{
-						.borders = {style::menu_padding}
-					}
-				},
-				make_menu_contents(this->context)
-			)
-		}
+	menu(
+		this->context, //
+		U"Settings"s,
+		make_menu_contents(this->context)
 	)
-// clang-format on
 {
 	{
 		auto& sb = this->get_widget_as<ruis::selection_box>("sweep_speed_selection_box"sv);

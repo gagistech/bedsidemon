@@ -103,6 +103,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 				}
 			}
 		),
+		make_button("img_questionmark"sv, "about_button"),
 		make_button("img_exit"sv, "exit_button"),
 	};
 	// clang-format on

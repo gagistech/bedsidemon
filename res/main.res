@@ -13,3 +13,7 @@ img_cog{
 img_exit{
     file{exit.svg}
 }
+
+img_questionmark{
+    file{questionmark.svg}
+}
