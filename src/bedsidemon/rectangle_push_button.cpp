@@ -28,3 +28,30 @@ void rectangle_push_button::on_pressed_change()
 	this->rectangle_button::on_pressed_change();
 	this->push_button::on_pressed_change();
 }
+
+rectangle_push_button::rectangle_push_button(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		utki::span<const utki::shared_ref<ruis::widget>> contents
+	) :
+    widget( //
+		std::move(context),
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button( //
+		this->context,
+		std::move(params.button_params)
+	),
+	push_button( //
+		this->context,
+		button::parameters{}
+	),
+	rectangle_button( //
+		this->context,
+		std::move(params.container_params),
+		std::move(params.frame_params),
+		std::move(params.rectangle_button_params),
+		contents
+	)
+{}

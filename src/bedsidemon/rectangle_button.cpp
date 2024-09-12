@@ -43,3 +43,29 @@ void rectangle_button::update_color()
 		this->set_color(this->params.unpressed_color);
 	}
 }
+
+rectangle_button::rectangle_button( //
+		utki::shared_ref<ruis::context> context,
+        ruis::container::parameters container_params,
+		ruis::frame_widget::parameters frame_params,
+		parameters params,
+        utki::span<const utki::shared_ref<ruis::widget>> contents
+	):
+    widget(std::move(context), {}, {}),
+	button(this->context, button::parameters{}),
+	rectangle(
+		this->context,
+		rectangle::all_parameters{}
+	),
+    margins(
+        this->context,
+        {
+            .container_params = std::move(container_params), //
+            .frame_params = std::move(frame_params)
+        },
+        contents
+    ),
+	params(std::move(params))
+{
+	this->update_color();
+}

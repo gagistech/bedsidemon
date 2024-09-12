@@ -35,10 +35,10 @@ class rectangle_button :
 {
 public:
 	struct parameters {
-		constexpr static const auto default_pressed_color = 0xffffffff;
+		constexpr static const auto default_pressed_color = 0xffaaaaaa;
 		uint32_t pressed_color = default_pressed_color;
 
-		constexpr static const auto default_unpressed_color = 0xff808080;
+		constexpr static const auto default_unpressed_color = 0xff666666;
 		uint32_t unpressed_color = default_unpressed_color;
 
 		// TODO: add disabled_color ?

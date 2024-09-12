@@ -60,4 +60,19 @@ public:
 	}
 };
 
+namespace make {
+inline utki::shared_ref<ruis::rectangle_push_button> rectangle_push_button(
+	utki::shared_ref<ruis::context> context,
+	ruis::rectangle_push_button::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> contents
+)
+{
+	return utki::make_shared<ruis::rectangle_push_button>(
+		std::move(context), //
+		std::move(params),
+		contents
+	);
+}
+} // namespace make
+
 } // namespace ruis

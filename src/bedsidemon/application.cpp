@@ -156,7 +156,7 @@ std::unique_ptr<application> bedsidemon::create_application(std::string_view exe
 	return std::make_unique<application>(window, res_path);
 }
 
-void bedsidemon::application::open_menu(utki::shared_ref<ruis::widget> menu)
+void bedsidemon::application::open_menu(utki::shared_ref<bedsidemon::menu> menu)
 {
 	this->close_menu();
 

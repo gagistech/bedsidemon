@@ -26,6 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "spo2/spo2_sensor.hpp"
 
+#include "menu.hpp"
 #include "settings.hpp"
 
 namespace bedsidemon {
@@ -33,7 +34,7 @@ namespace bedsidemon {
 class application : public ruisapp::application
 {
 	std::shared_ptr<ruis::container> menu_area;
-	std::shared_ptr<ruis::widget> menu;
+	std::shared_ptr<bedsidemon::menu> menu;
 
 	std::unique_ptr<spo2_sensor> fake_spo2_sensor_v;
 	std::unique_ptr<spo2_sensor> real_spo2_sensor_v;
@@ -52,7 +53,7 @@ public:
 		return static_cast<application&>(ruisapp::application::inst());
 	}
 
-	void open_menu(utki::shared_ref<ruis::widget> menu);
+	void open_menu(utki::shared_ref<bedsidemon::menu> menu);
 	void close_menu();
 };
 

@@ -22,17 +22,26 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "menu.hpp"
 
 #include <ruis/widget/group/margins.hpp>
+#include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/text.hpp>
 
+#include "application.hpp"
+#include "rectangle_push_button.hpp"
 #include "style.hpp"
 
 using namespace std::string_literals;
+
+using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
 namespace m {
 using namespace ruis::make;
 } // namespace m
+
+namespace {
+constexpr auto size_close_button = 40_pp;
+} // namespace
 
 menu::menu(
 	utki::shared_ref<ruis::context> context, //
@@ -61,6 +70,7 @@ menu::menu(
 			m::row(this->context,
 				{
 					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::min},
 						.align{ruis::align::front, ruis::align::center}
 					}
 				},
@@ -76,7 +86,38 @@ menu::menu(
 						},
 						std::move(title)
 					),
-					
+					m::gap(this->context,
+						{
+							.layout_params = {
+								.weight = 1
+							}
+						}
+					),
+					m::rectangle_push_button(this->context,
+						{
+							.layout_params{
+								.dims{size_close_button, size_close_button}
+							},
+							.widget_params{
+								.id = "close_button"s
+							},
+							.container_params{
+								.layout = ruis::layout::pile
+							}
+						},
+						{
+							m::image(this->context,
+								{
+									.layout_params{
+										.dims{ruis::dim::fill, ruis::dim::fill}
+									},
+									.image_params{
+										.img = this->context.get().loader.load<ruis::res::image>("img_close")
+									}
+								}
+							)
+						}
+					)
 				}
 			),
 			m::margins(this->context,
@@ -97,4 +138,10 @@ menu::menu(
 		}
 	)
 // clang-format on
-{}
+{
+	this->get_widget_as<ruis::push_button>("close_button").click_handler = [](ruis::push_button& b) {
+		b.context.get().post_to_ui_thread([]() {
+			bedsidemon::application::inst().close_menu();
+		});
+	};
+}
