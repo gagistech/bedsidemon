@@ -31,6 +31,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
 
+#include "about_menu.hpp"
 #include "gui.hpp"
 #include "settings_menu.hpp"
 
@@ -119,6 +120,11 @@ application::application(bool window, std::string_view res_path) :
 		c.get().get_widget_as<ruis::push_button>("settings_button"sv).click_handler = [](ruis::push_button& b) {
 			auto& app = bedsidemon::application::inst();
 			app.open_menu(utki::make_shared<settings_menu>(app.gui.context));
+		};
+
+		c.get().get_widget_as<ruis::push_button>("about_button"sv).click_handler = [](ruis::push_button& b) {
+			auto& app = bedsidemon::application::inst();
+			app.open_menu(utki::make_shared<about_menu>(app.gui.context));
 		};
 
 		c.get().get_widget_as<ruis::push_button>("exit_button"sv).click_handler = [](ruis::push_button& b) {

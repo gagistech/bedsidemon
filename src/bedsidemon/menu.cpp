@@ -67,7 +67,7 @@ menu::menu(
 						.font_size = style::font_size_menu_title
 					}
 				},
-				U"Settings"s
+				std::move(title)
 			),
 			m::margins(this->context,
 				{

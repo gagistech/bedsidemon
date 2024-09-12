@@ -21,4 +21,41 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "about_menu.hpp"
 
+#include <ruis/widget/label/text.hpp>
+
+using namespace std::string_literals;
+
 using namespace bedsidemon;
+
+namespace m {
+using namespace ruis::make;
+} // namespace m
+
+namespace {
+std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return {
+        m::text(c,
+            {},
+            U"TODO:"s
+        )
+    };
+	// clang-format on
+}
+} // namespace
+
+about_menu::about_menu(utki::shared_ref<ruis::context> context) :
+	ruis::widget(
+		std::move(context),
+		{
+			.dims = {ruis::dim::fill, ruis::dim::fill}
+},
+		{}
+	),
+	menu(
+		this->context, //
+		U"About"s,
+		make_contents(this->context)
+	)
+{}

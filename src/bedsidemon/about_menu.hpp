@@ -21,9 +21,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "menu.hpp"
+
 namespace bedsidemon {
 
-class about_menu
-{};
+class about_menu : public menu
+{
+public:
+	about_menu(utki::shared_ref<ruis::context> context);
+};
 
 } // namespace bedsidemon
