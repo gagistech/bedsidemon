@@ -22,8 +22,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "about_menu.hpp"
 
 #include <ruis/widget/label/text.hpp>
+#include <ruis/widget/label/gap.hpp>
 
 using namespace std::string_literals;
+
+using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
@@ -34,11 +37,45 @@ using namespace ruis::make;
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis::context> c)
 {
+    constexpr auto font_size_program_title = 20_pp;
+    constexpr auto color_program_title = 0xff00ffff;
+
+    constexpr auto gap_paragraph = 20_pp;
+
 	// clang-format off
 	return {
         m::text(c,
+            {
+                .color_params{
+                    .color = color_program_title
+                },
+                .text_params{
+                    .font_size = font_size_program_title
+                }
+            },
+            U"Bedside Patient Monitor DEMO program"s
+        ),
+        m::gap(c,
+            {
+                .layout_params{
+                    .dims = {0_px, gap_paragraph}
+                }
+            }
+        ),
+        m::text(c,
             {},
-            U"TODO:"s
+            U"Version: TODO"s
+        ),
+        m::gap(c,
+            {
+                .layout_params{
+                    .dims = {0_px, gap_paragraph}
+                }
+            }
+        ),
+        m::text(c,
+            {},
+            U"Copyright (C) 2024 Gagistech Oy <gagistechoy@gmail.com>"s
         )
     };
 	// clang-format on
