@@ -17,3 +17,7 @@ img_exit{
 img_questionmark{
     file{questionmark.svg}
 }
+
+img_close{
+    file{close.svg}
+}

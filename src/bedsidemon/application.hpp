@@ -1,5 +1,5 @@
 /*
-bedsidemon - Bed-side monitor example GUI project
+bedsidemon - Bedside monitor example GUI project
 
 Copyright (C) 2024 Gagistech Oy <gagistechoy@gmail.com>
 

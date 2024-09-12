@@ -21,18 +21,43 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <ruis/widget/label/nine_patch.hpp>
+#include <ruis/widget/button/push_button.hpp>
 
-namespace bedsidemon {
+#include "rectangle_button.hpp"
 
-class menu : public ruis::nine_patch
+namespace ruis {
+
+class rectangle_push_button :
+	virtual public ruis::push_button, //
+	public rectangle_button
 {
 public:
-	menu(
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		ruis::container::parameters container_params;
+		ruis::frame_widget::parameters frame_params;
+		button::parameters button_params;
+		rectangle_button::parameters rectangle_button_params;
+	};
+
+	rectangle_push_button(
 		utki::shared_ref<ruis::context> context, //
-		std::u32string title,
+		all_parameters params,
 		utki::span<const utki::shared_ref<ruis::widget>> contents
 	);
+
+	void on_pressed_change() override;
+
+	bool on_mouse_button(const mouse_button_event& e) override
+	{
+		return this->push_button::on_mouse_button(e);
+	}
+
+	void on_hovered_change(unsigned pointer_id) override
+	{
+		this->push_button::on_hovered_change(pointer_id);
+	}
 };
 
-} // namespace bedsidemon
+} // namespace ruis

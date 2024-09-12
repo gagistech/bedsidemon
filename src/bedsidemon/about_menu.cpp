@@ -1,5 +1,5 @@
 /*
-bedsidemon - Bed-side monitor example GUI project
+bedsidemon - Bedside monitor example GUI project
 
 Copyright (C) 2024 Gagistech Oy <gagistechoy@gmail.com>
 
@@ -21,8 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "about_menu.hpp"
 
-#include <ruis/widget/label/text.hpp>
 #include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/text.hpp>
 
 using namespace std::string_literals;
 
@@ -37,10 +37,10 @@ using namespace ruis::make;
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis::context> c)
 {
-    constexpr auto font_size_program_title = 20_pp;
-    constexpr auto color_program_title = 0xff00ffff;
+	constexpr auto font_size_program_title = 20_pp;
+	constexpr auto color_program_title = 0xff00ffff;
 
-    constexpr auto gap_paragraph = 20_pp;
+	constexpr auto gap_paragraph = 20_pp;
 
 	// clang-format off
 	return {

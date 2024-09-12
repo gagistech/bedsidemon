@@ -1,5 +1,5 @@
 /*
-bedsidemon - Bed-side monitor example GUI project
+bedsidemon - Bedside monitor example GUI project
 
 Copyright (C) 2024 Gagistech Oy <gagistechoy@gmail.com>
 
@@ -58,16 +58,26 @@ menu::menu(
 			}
 		},
 		{
-			m::text(this->context,
+			m::row(this->context,
 				{
-					.layout_params = {
-						.align = {ruis::align::front, ruis::align::center}
-					},
-					.text_params = {
-						.font_size = style::font_size_menu_title
+					.layout_params{
+						.align{ruis::align::front, ruis::align::center}
 					}
 				},
-				std::move(title)
+				{
+					m::text(this->context,
+						{
+							.layout_params = {
+								.align = {ruis::align::front, ruis::align::center}
+							},
+							.text_params = {
+								.font_size = style::font_size_menu_title
+							}
+						},
+						std::move(title)
+					),
+					
+				}
 			),
 			m::margins(this->context,
 				{
