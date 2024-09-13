@@ -1,6 +1,7 @@
 include $(config_dir)base/base.mk
 
-this_cxxflags += -O3
+# TODO: use -O3 when GCC is fixed (clang works)
+this_cxxflags += -O2
 
 this_lint_cmd = $(prorab_lint_cmd_clang_tidy)
 
