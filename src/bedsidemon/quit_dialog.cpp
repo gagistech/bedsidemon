@@ -1,29 +1,42 @@
 #include "quit_dialog.hpp"
 
-#include <ruis/widget/label/text.hpp>
-#include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/text.hpp>
+
+#include "application.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-namespace{
-constexpr auto dimension_buttons_gap = 10_pp;
-}
+namespace {
+constexpr auto dimension_gap = 10_pp;
+constexpr auto dimension_button_width = 100_pp;
+constexpr auto dimension_button_height = 40_pp;
+} // namespace
 
-namespace{
-std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::shared_ref<ruis::context> c){
-    auto make_button = [&](std::string id, std::u32string text){
-        // clang-format off
+namespace {
+std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::shared_ref<ruis::context> c)
+{
+	auto make_button = [&](std::string id, std::u32string text) {
+		// clang-format off
         return m::push_button(c,
-            {},
+            {
+                .layout_params{
+                    .dims = {dimension_button_width, dimension_button_height}
+                },
+                .widget_params{
+                    .id = std::move(id)
+                }
+            },
             {
                 m::text(c,
                     {},
@@ -31,33 +44,47 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                 )
             }
         );
-        // clang-format on
-    };
+		// clang-format on
+	};
 
-    // clang-format off
+	// clang-format off
     return {
         m::text(c,
             {},
             U"Quit program?"s
         ),
+        m::gap(c,
+            {
+                .layout_params{
+                    .dims = {0_px, dimension_gap}
+                }
+            }
+        ),
         m::row(c,
             {},
             {
-                make_button("yet_button", U"Yes"s),
+                make_button("yes_button"s, U"Yes"s),
                 m::gap(c,
                     {
                         .layout_params{
-                            .dims = {dimension_buttons_gap, 0_px}
+                            .dims = {dimension_gap, 0_px}
                         }
                     }
                 ),
-                make_button("no_button", U"No"s),
+                make_button("no_button"s, U"No"s),
+            }
+        ),
+        m::gap(c,
+            {
+                .layout_params{
+                    .dims = {0_px, dimension_gap}
+                }
             }
         )
     };
-    // clang-format on
+	// clang-format on
 }
-}
+} // namespace
 
 quit_dialog::quit_dialog(utki::shared_ref<ruis::context> context) :
 	ruis::widget(
@@ -69,11 +96,21 @@ quit_dialog::quit_dialog(utki::shared_ref<ruis::context> context) :
 	),
 	ruis::dialog(
 		this->context, //
-		{
-            .container_params{
-                .layout = ruis::layout::column
-            }
-        },
+		{.container_params{.layout = ruis::layout::column}},
 		make_root_widget_structure(this->context)
 	)
-{}
+{
+	{
+		auto& b = this->get_widget_as<ruis::push_button>("yes_button"sv);
+		b.click_handler = [](ruis::push_button& b) {
+			bedsidemon::application::inst().quit();
+		};
+	}
+
+	{
+		auto& b = this->get_widget_as<ruis::push_button>("no_button"sv);
+		b.click_handler = [this](ruis::push_button& b) {
+			this->close();
+		};
+	}
+}

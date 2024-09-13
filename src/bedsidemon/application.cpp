@@ -25,6 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <clargs/parser.hpp>
 #include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/group/overlay.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
 #include "spo2/fake_spo2_sensor.hpp"
@@ -33,6 +34,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "about_menu.hpp"
 #include "gui.hpp"
+#include "quit_dialog.hpp"
 #include "settings_menu.hpp"
 
 using namespace std::string_literals;
@@ -129,7 +131,10 @@ application::application(bool window, std::string_view res_path) :
 
 		c.get().get_widget_as<ruis::push_button>("exit_button"sv).click_handler = [](ruis::push_button& b) {
 			auto& app = bedsidemon::application::inst();
-			app.quit();
+			auto& o = app.gui.get_root().get_widget<ruis::overlay>();
+			o.context.get().post_to_ui_thread([&o]() {
+				o.push_back(utki::make_shared<quit_dialog>(o.context));
+			});
 		};
 	}
 }

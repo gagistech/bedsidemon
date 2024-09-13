@@ -35,7 +35,7 @@ using namespace ruis::make;
 } // namespace m
 
 namespace {
-constexpr auto color_dialog_surroundings = 0xa0000000;
+constexpr auto color_dialog_surroundings = 0xb0000000;
 } // namespace
 
 namespace {
@@ -67,17 +67,35 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
                 }
             }
         ),
-        m::nine_patch(c,
+        m::pile(c,
+            {},
             {
-                .widget_params{
-                    .id = "ruis_nine_patch"s
-                },
-                .container_params = std::move(container_params),
-                .nine_patch_params{
-                    .nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
-                }
-            },
-            contents
+                [&](){
+                    auto mp = m::mouse_proxy(c,
+                        {
+                            .layout_params{
+                                .dims{ruis::dim::fill, ruis::dim::fill}
+                            }
+                        }
+                    );
+                    mp.get().mouse_button_handler = [](mouse_proxy& w, const mouse_button_event&){return true;};
+                    mp.get().mouse_move_handler = [](mouse_proxy& w, const mouse_move_event&){return true;};
+                    mp.get().hovered_change_handler = [](mouse_proxy& w, unsigned pointer_id){return true;};
+                    return mp;
+                }(),
+                m::nine_patch(c,
+                    {
+                        .widget_params{
+                            .id = "ruis_nine_patch"s
+                        },
+                        .container_params = std::move(container_params),
+                        .nine_patch_params{
+                            .nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+                        }
+                    },
+                    contents
+                )
+            }
         )
     };
 	// clang-format on
