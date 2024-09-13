@@ -1,3 +1,9 @@
+bedsidemon (0.0.13) unstable; urgency=medium
+
+  * quit dialog
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 13 Sep 2024 17:36:00 +0300
+
 bedsidemon (0.0.12) unstable; urgency=medium
 
   * fix fake spo2 sweep speed
