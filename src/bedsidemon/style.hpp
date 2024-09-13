@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace bedsidemon::style {
 
-constexpr auto color_border = 0xff808080;
+constexpr auto color_border = 0xff404040;
 constexpr auto color_info_text = 0xff808080;
 
 constexpr auto font_size_label = ruis::length::make_pp(16);
