@@ -10,12 +10,23 @@ this_name := bedsidemon
 
 $(eval $(call prorab-config, ../config))
 
-this_srcs += $(filter-out main.cpp,$(call prorab-src-dir, bedsidemon))
+this__root_dir_rel := ../
+
+this__version_cpp := $(this_out_dir)version.cpp
+
+this_srcs += $(this__version_cpp) $(filter-out main.cpp,$(call prorab-src-dir, bedsidemon))
 
 this_no_install := true
 this_static_lib_only := true
 
 $(eval $(prorab-build-lib))
+
+define this__rules
+$(abspath $(d)$(this__version_cpp)): $(abspath $(d)$(this__root_dir_rel)debian/changelog)
+$(.RECIPEPREFIX)$(a)mkdir -p $$(dir $$@)
+$(.RECIPEPREFIX)$(a)(cd $(d)$(this__root_dir_rel); echo "extern const char* const program_version = \"$$$$(myci-deb-version.sh)\";" > $$@)
+endef
+$(eval $(this__rules))
 
 # ================================================
 # ============== format and license ==============

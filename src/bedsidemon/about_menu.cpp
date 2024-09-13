@@ -30,6 +30,8 @@ using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
+extern const char* const program_version;
+
 namespace m {
 using namespace ruis::make;
 } // namespace m
@@ -64,7 +66,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
         ),
         m::text(c,
             {},
-            U"Version: TODO"s
+            (U"Version: "s).append(utki::to_utf32(program_version))
         ),
         m::gap(c,
             {
