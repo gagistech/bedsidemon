@@ -31,7 +31,6 @@ class dialog :
 {
 public:
 	struct all_parameters {
-		widget::parameters widget_params;
 		container::parameters container_params;
 	};
 
@@ -43,6 +42,11 @@ public:
 
 	void close();
 
+	/**
+	 * @brief On dismiss callback.
+	 * This virtual function is called when the dialog is dismissed. For example when user clicks outside of the dialog.
+	 * Default implementation just closes the dialog by calling its close() function.
+	 */
 	virtual void on_dismiss();
 };
 

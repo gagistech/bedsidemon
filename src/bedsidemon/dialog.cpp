@@ -89,13 +89,7 @@ dialog::dialog(
 	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> contents
 ) :
-	widget(
-		std::move(context), //
-		{
-			.dims{ruis::dim::max, ruis::dim::max}  //
-},
-		std::move(params.widget_params)
-	),
+	widget(std::move(context), {}, {}),
 	container(
 		this->context, //
 		{
