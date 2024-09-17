@@ -28,8 +28,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../settings.hpp"
 #include "../waveform.hpp"
 
-#include "spo2_parameter_window_menu.hpp"
 #include "spo2_measurement.hpp"
+#include "spo2_parameter_window_menu.hpp"
 
 namespace bedsidemon {
 

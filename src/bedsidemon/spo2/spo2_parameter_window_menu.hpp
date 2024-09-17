@@ -23,11 +23,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "../menu.hpp"
 
-namespace bedsidemon{
+namespace bedsidemon {
 
-class spo2_parameter_window_menu : public menu{
+class spo2_parameter_window_menu : public menu
+{
 public:
-    spo2_parameter_window_menu(utki::shared_ref<ruis::context> context);
+	spo2_parameter_window_menu(utki::shared_ref<ruis::context> context);
 };
 
-}
+} // namespace bedsidemon

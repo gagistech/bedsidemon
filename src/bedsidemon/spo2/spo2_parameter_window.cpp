@@ -259,18 +259,18 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	    }
     ))
 {
-    {
-        auto& cp = this->get_widget_as<ruis::click_proxy>("click_proxy"sv);
-        cp.click_handler = [this](ruis::click_proxy& cp){
-            if(this->pw_menu){
-                // menu is already open
-                return;
-            }
-            auto pwm = utki::make_shared<spo2_parameter_window_menu>(this->context);
-            this->pw_menu = pwm;
-            application::inst().open_menu(pwm);
-        };
-    }
+	{
+		auto& cp = this->get_widget_as<ruis::click_proxy>("click_proxy"sv);
+		cp.click_handler = [this](ruis::click_proxy& cp) {
+			if (this->pw_menu) {
+				// menu is already open
+				return;
+			}
+			auto pwm = utki::make_shared<spo2_parameter_window_menu>(this->context);
+			this->pw_menu = pwm;
+			application::inst().open_menu(pwm);
+		};
+	}
 
 	auto& ss = settings_storage::inst();
 	decltype(settings_storage::settings_changed_signal

@@ -25,18 +25,19 @@ using namespace std::string_literals;
 
 using namespace bedsidemon;
 
-namespace{
-std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c){
-    // clang-format off
+namespace {
+std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
     return {
         // TODO:
     };
-    // clang-format on
+	// clang-format on
 }
-}
+} // namespace
 
 spo2_parameter_window_menu::spo2_parameter_window_menu(utki::shared_ref<ruis::context> context) :
-    // clang-format off
+	// clang-format off
     ruis::widget(
         std::move(context),
         {
@@ -45,9 +46,9 @@ spo2_parameter_window_menu::spo2_parameter_window_menu(utki::shared_ref<ruis::co
         {}
     ),
     menu(
-		this->context, //
-		U"SpO2"s,
-		make_menu_contents(this->context)
-	)
-    // clang-format on
+        this->context, //
+        U"SpO2"s,
+        make_menu_contents(this->context)
+    )
+// clang-format on
 {}
