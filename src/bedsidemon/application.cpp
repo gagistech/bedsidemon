@@ -176,5 +176,6 @@ void bedsidemon::application::close_menu()
 		return;
 	}
 	this->menu->remove_from_parent();
+	this->menu->on_close();
 	this->menu.reset();
 }

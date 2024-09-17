@@ -266,7 +266,7 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 				// menu is already open
 				return;
 			}
-			auto pwm = utki::make_shared<spo2_parameter_window_menu>(this->context);
+			auto pwm = utki::make_shared<spo2_parameter_window_menu>(this->context, utki::make_weak_from(*this));
 			this->pw_menu = pwm;
 			application::inst().open_menu(pwm);
 		};

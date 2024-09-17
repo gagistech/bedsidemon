@@ -37,6 +37,8 @@ class spo2_parameter_window :
 	virtual public ruis::widget, //
 	private ruis::container
 {
+	friend class spo2_parameter_window_menu;
+
 	ruis::text& spo2_value;
 	ruis::text& bpm_value;
 	ruis::widget& heart;

@@ -24,11 +24,19 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../menu.hpp"
 
 namespace bedsidemon {
+class spo2_parameter_window;
 
 class spo2_parameter_window_menu : public menu
 {
+	std::weak_ptr<spo2_parameter_window> spo2_pw;
+
 public:
-	spo2_parameter_window_menu(utki::shared_ref<ruis::context> context);
+	spo2_parameter_window_menu(
+		utki::shared_ref<ruis::context> context, //
+		std::weak_ptr<spo2_parameter_window> spo2_pw
+	);
+
+	void on_close() override;
 };
 
 } // namespace bedsidemon

@@ -33,6 +33,8 @@ public:
 		std::u32string title,
 		utki::span<const utki::shared_ref<ruis::widget>> contents
 	);
+
+	virtual void on_close() {}
 };
 
 } // namespace bedsidemon
