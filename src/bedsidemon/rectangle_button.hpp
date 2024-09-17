@@ -22,7 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <ruis/widget/button/base/button.hpp>
-#include <ruis/widget/group/margins.hpp> // TODO: should be moved into rectangle
+#include <ruis/widget/label/margins.hpp> // TODO: should be moved into rectangle
 #include <ruis/widget/label/rectangle.hpp>
 
 namespace ruis {

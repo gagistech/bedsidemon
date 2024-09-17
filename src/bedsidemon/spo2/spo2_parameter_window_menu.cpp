@@ -22,8 +22,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "spo2_parameter_window_menu.hpp"
 
 #include <ruis/widget/button/selection_box.hpp>
-#include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/margins.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 
 #include "../style.hpp"

@@ -77,7 +77,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
         m::gap(c,
             {
                 .layout_params{
-                    .dims = {0_px, dimension_gap}
+                    .dims = {1_px, dimension_gap}
                 }
             }
         ),
@@ -88,7 +88,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                 m::gap(c,
                     {
                         .layout_params{
-                            .dims = {dimension_gap, 0_px}
+                            .dims = {dimension_gap, 1_px}
                         }
                     }
                 ),
@@ -98,7 +98,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
         m::gap(c,
             {
                 .layout_params{
-                    .dims = {0_px, dimension_gap}
+                    .dims = {1_px, dimension_gap}
                 }
             }
         )
@@ -111,7 +111,7 @@ quit_dialog::quit_dialog(utki::shared_ref<ruis::context> context) :
 	ruis::widget(
 		std::move(context), //
 		{
-			.dims{ruis::dim::max, ruis::dim::max}
+			.dims{ruis::dim::fill, ruis::dim::fill}
 },
 		{}
 	),
