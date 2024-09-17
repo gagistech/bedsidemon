@@ -28,11 +28,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/rectangle.hpp>
+#include <ruis/widget/proxy/click_proxy.hpp>
 
 #include "../application.hpp"
 #include "../style.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
@@ -178,19 +180,38 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                         }
                     },
                     {
-                        m::margins(c,
+                        m::pile(c,
                             {
-                                .layout_params = {
+                                .layout_params{
                                     .dims = {ruis::dim::fill, ruis::dim::min}
-                                },
-                                .container_params = {
-                                    .layout = ruis::layout::column
-                                },
-                                .frame_params = {
-                                    .borders = {style::pw_padding}
                                 }
                             },
-                            make_numeric_content(c, title)
+                            {
+                                m::click_proxy(c,
+                                    {
+                                        .layout_params{
+                                            .dims{ruis::dim::fill, ruis::dim::fill}
+                                        },
+                                        .widget_params{
+                                            .id = "click_proxy"s
+                                        }
+                                    }
+                                ),
+                                m::margins(c,
+                                    {
+                                        .layout_params = {
+                                            .dims = {ruis::dim::fill, ruis::dim::min}
+                                        },
+                                        .container_params = {
+                                            .layout = ruis::layout::column
+                                        },
+                                        .frame_params = {
+                                            .borders = {style::pw_padding}
+                                        }
+                                    },
+                                    make_numeric_content(c, title)
+                                )
+                            }
                         ),
                         m::rectangle(c,
                             {
@@ -238,6 +259,19 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	    }
     ))
 {
+    {
+        auto& cp = this->get_widget_as<ruis::click_proxy>("click_proxy"sv);
+        cp.click_handler = [this](ruis::click_proxy& cp){
+            if(this->pw_menu){
+                // menu is already open
+                return;
+            }
+            auto pwm = utki::make_shared<spo2_parameter_window_menu>(this->context);
+            this->pw_menu = pwm;
+            application::inst().open_menu(pwm);
+        };
+    }
+
 	auto& ss = settings_storage::inst();
 	decltype(settings_storage::settings_changed_signal
 	)::callback_type settings_change_handler = [&pw = *this](const settings& s) {

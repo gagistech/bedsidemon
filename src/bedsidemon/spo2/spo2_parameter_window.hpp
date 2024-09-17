@@ -28,6 +28,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../settings.hpp"
 #include "../waveform.hpp"
 
+#include "spo2_parameter_window_menu.hpp"
 #include "spo2_measurement.hpp"
 
 namespace bedsidemon {
@@ -48,6 +49,8 @@ class spo2_parameter_window :
 	void on_heart_timer_expired();
 
 	utki::signal<const settings&>::connection settings_change_signal_connection;
+
+	std::shared_ptr<spo2_parameter_window_menu> pw_menu;
 
 public:
 	spo2_parameter_window(utki::shared_ref<ruis::context> context, std::u32string title = std::u32string(U"SpO2 %"));
