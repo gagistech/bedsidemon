@@ -148,9 +148,6 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 .widget_params = {
                     .id = "pw_waveform"s,
                     .clip = true
-                },
-                .color_params = {
-                    .color = color_main_value
                 }
             }
         ),
@@ -240,6 +237,12 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
         },
         {}
 	),
+    ruis::color_widget(
+        this->context,
+        ruis::color_widget::parameters{
+            .color = color_main_value
+        }
+    ),
 	ruis::container( //
 		this->context,
 		{.container_params =

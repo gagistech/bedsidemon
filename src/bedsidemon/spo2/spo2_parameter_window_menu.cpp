@@ -21,18 +21,107 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "spo2_parameter_window_menu.hpp"
 
+#include <ruis/widget/button/selection_box.hpp>
+#include <ruis/widget/group/margins.hpp>
+#include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/rectangle.hpp>
+
+#include "../style.hpp"
+
 #include "spo2_parameter_window.hpp"
 
 using namespace std::string_literals;
 
+using namespace ruis::length_literals;
+
 using namespace bedsidemon;
+
+namespace {
+namespace m {
+using namespace ruis::make;
+} // namespace m
+} // namespace
+
+namespace {
+class selection_box_provider : public ruis::selection_box::provider
+{
+public:
+	selection_box_provider() = default;
+
+	size_t count() const noexcept override
+	{
+		return spo2_parameter_window::possible_colors.size();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		auto& c = this->get_selection_box()->context;
+
+		// clang-format off
+		return m::margins(c,
+			{
+				.container_params = {
+					.layout = ruis::layout::pile
+				},
+				.frame_params = {
+					.borders = {3_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+				}
+			},
+			{
+				m::rectangle(c,
+					{
+                        .layout_params{
+                            .dims{40_pp, 30_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+                        },
+						.color_params{
+							.color = spo2_parameter_window::possible_colors.at(index)
+						}
+					}
+				)
+			}
+		);
+		// clang-format on
+	}
+};
+} // namespace
 
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
     return {
-        // TODO:
+        m::text(c,
+			{
+				.layout_params = {
+					.align = {ruis::align::front, ruis::align::center}
+				},
+                .text_params = {
+                    .font_size = style::font_size_setting
+                }
+			},
+			U"Color:"s
+		),
+		m::gap(c,
+			{
+				.layout_params = {
+					.dims{0_px, style::gap_size_setting_label_value}
+				}
+			}
+		),
+		m::selection_box(c,
+			{
+				.layout_params = {
+					.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+					.align = {ruis::align::front, ruis::align::center}
+				},
+				.widget_params = {
+					.id = "color_selection_box"s
+				},
+				.selection_params = {
+					.provider = std::make_shared<selection_box_provider>()
+				}
+			}
+		)
     };
 	// clang-format on
 }

@@ -64,7 +64,9 @@ public:
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
-		ruis::color_widget::parameters color_params;
+
+		constexpr static const auto default_waveform_color = 0xffffff00;
+		ruis::color_widget::parameters color_params = {.color = default_waveform_color};
 	};
 
 	waveform(utki::shared_ref<ruis::context> context, all_parameters params);

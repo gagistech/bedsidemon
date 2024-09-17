@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <ruis/util/timer.hpp>
+#include <ruis/widget/base/color_widget.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/widget.hpp>
 
@@ -35,6 +36,7 @@ namespace bedsidemon {
 
 class spo2_parameter_window :
 	virtual public ruis::widget, //
+	public ruis::color_widget,
 	private ruis::container
 {
 	friend class spo2_parameter_window_menu;
@@ -65,6 +67,15 @@ public:
 	spo2_parameter_window& operator=(spo2_parameter_window&&) = delete;
 
 	void set(const spo2_measurement& meas);
+
+	// clang-format off
+	constexpr static const std::array<uint32_t, 4> possible_colors = {{
+		 0xffffffff,
+		 0xffffff00,
+		 0xff00ff00,
+		 0xff00ffff
+	}};
+	// clang-format on
 };
 
 } // namespace bedsidemon
