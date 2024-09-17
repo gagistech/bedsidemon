@@ -2,46 +2,6 @@ frame{
 	strength{3}
 	beat{false}
 	finger_out{false}
-	wf_value{28}
-	pulse{53}
-	spo2{99}
-	perf{0}
-	dt_ms{1}
-}
-frame{
-	strength{3}
-	beat{false}
-	finger_out{false}
-	wf_value{35}
-	pulse{53}
-	spo2{99}
-	perf{0}
-	dt_ms{17}
-}
-frame{
-	strength{3}
-	beat{false}
-	finger_out{false}
-	wf_value{39}
-	pulse{53}
-	spo2{99}
-	perf{0}
-	dt_ms{17}
-}
-frame{
-	strength{3}
-	beat{false}
-	finger_out{false}
-	wf_value{42}
-	pulse{53}
-	spo2{99}
-	perf{0}
-	dt_ms{16}
-}
-frame{
-	strength{3}
-	beat{false}
-	finger_out{false}
 	wf_value{44}
 	pulse{53}
 	spo2{99}
