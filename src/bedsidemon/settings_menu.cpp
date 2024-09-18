@@ -165,9 +165,8 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 
 		auto& ss = settings_storage::inst();
 		const auto& s = ss.get();
-		auto i = std::find(
-			sweep_speeds_um_per_sec.begin(), //
-			sweep_speeds_um_per_sec.end(),
+		auto i = std::ranges::find(
+			sweep_speeds_um_per_sec, //
 			s.sweep_speed_um_per_sec
 		);
 		if (i != sweep_speeds_um_per_sec.end()) {

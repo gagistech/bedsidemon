@@ -81,7 +81,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                 m::text(c,
                     {
                         .text_params{
-                            .font_size = 20_pp
+                            .font_size = 20_pp // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
                         }
                     },
                     U"Quit program?"s

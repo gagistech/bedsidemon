@@ -88,7 +88,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
                 m::text(c,
                     {
                         .color_params{
-                            .color = 0xff8080ff
+                            .color = 0xff8080ff // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
                         },
                         .text_params{
                             .font_size = font_size
