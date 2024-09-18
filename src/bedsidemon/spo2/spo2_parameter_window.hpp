@@ -71,11 +71,14 @@ public:
 	void on_color_change() override;
 
 	// clang-format off
-	constexpr static const std::array<uint32_t, 4> possible_colors = {{
+	constexpr static const std::array<uint32_t, 7> possible_colors = {{
 		 0xffffffff,
 		 0xffffff00,
 		 0xff00ff00,
-		 0xff00ffff
+		 0xff00ffff,
+		 0xffff00ff,
+		 0xff0000ff,
+		 0xffff0000,
 	}};
 	// clang-format on
 };
