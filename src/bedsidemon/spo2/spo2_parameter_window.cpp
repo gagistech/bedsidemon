@@ -337,7 +337,8 @@ void spo2_parameter_window::on_heart_timer_expired()
 	// std::cout << "heart" << std::endl;
 }
 
-void spo2_parameter_window::on_color_change(){
-    this->spo2_value.set_color(this->get_color());
-    this->waveform.set_color(this->get_color());
+void spo2_parameter_window::on_color_change()
+{
+	this->spo2_value.set_color(this->get_color());
+	this->waveform.set_color(this->get_color());
 }

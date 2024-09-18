@@ -21,6 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "spo2_parameter_window_menu.hpp"
 
+#include <algorithm>
+
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/margins.hpp>
@@ -31,6 +33,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "spo2_parameter_window.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
@@ -146,7 +149,25 @@ spo2_parameter_window_menu::spo2_parameter_window_menu(
     ),
     spo2_pw(std::move(spo2_pw))
 // clang-format on
-{}
+{
+	{
+		auto& sb = this->get_widget_as<ruis::selection_box>("color_selection_box"sv);
+
+		if (auto pw = this->spo2_pw.lock()) {
+			const auto& colors = spo2_parameter_window::possible_colors;
+			auto i = std::ranges::find(colors, pw->get_color());
+			sb.set_selection(std::distance(colors.begin(), i));
+		}
+
+		sb.selection_handler = [this](ruis::selection_box& sb) {
+			auto pw = this->spo2_pw.lock();
+			if (!pw) {
+				return;
+			}
+			pw->set_color(spo2_parameter_window::possible_colors.at(sb.get_selection()));
+		};
+	}
+}
 
 void spo2_parameter_window_menu::on_close()
 {
