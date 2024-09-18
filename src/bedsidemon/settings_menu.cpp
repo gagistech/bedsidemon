@@ -28,6 +28,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/margins.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <utki/debug.hpp>
 
 #include "application.hpp"
 #include "style.hpp"
@@ -165,8 +166,9 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 
 		auto& ss = settings_storage::inst();
 		const auto& s = ss.get();
-		auto i = std::ranges::find(
-			sweep_speeds_um_per_sec, //
+		auto i = std::find(
+			sweep_speeds_um_per_sec.begin(), //
+			sweep_speeds_um_per_sec.end(),
 			s.sweep_speed_um_per_sec
 		);
 		if (i != sweep_speeds_um_per_sec.end()) {

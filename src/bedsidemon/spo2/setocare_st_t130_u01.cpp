@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "setocare_st_t130_u01.hpp"
 
+#include <utki/debug.hpp>
 #include <utki/time.hpp>
 
 using namespace bedsidemon;

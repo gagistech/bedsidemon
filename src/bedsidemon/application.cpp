@@ -26,6 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <clargs/parser.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>
+#include <utki/debug.hpp>
 
 #include "spo2/contec_cms50d_plus.hpp"
 #include "spo2/fake_spo2_sensor.hpp"

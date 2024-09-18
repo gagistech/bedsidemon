@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "fake_spo2_sensor.hpp"
 
 #include <tml/tree.hpp>
+#include <utki/debug.hpp>
 
 #include "../application.hpp"
 

@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "contec_cms50d_plus.hpp"
 
+#include <utki/debug.hpp>
 #include <utki/time.hpp>
 #include <utki/util.hpp>
 

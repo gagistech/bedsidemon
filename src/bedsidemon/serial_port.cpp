@@ -24,6 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <fcntl.h>
 #include <termios.h>
 #include <unistd.h>
+#include <utki/debug.hpp>
 #include <utki/string.hpp>
 #include <utki/util.hpp>
 

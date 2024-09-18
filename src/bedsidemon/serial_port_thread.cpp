@@ -21,6 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "serial_port_thread.hpp"
 
+#include <utki/debug.hpp>
 #include <utki/util.hpp>
 
 using namespace bedsidemon;
