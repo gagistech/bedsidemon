@@ -68,6 +68,8 @@ public:
 
 	void set(const spo2_measurement& meas);
 
+	void on_color_change()override;
+
 	// clang-format off
 	constexpr static const std::array<uint32_t, 4> possible_colors = {{
 		 0xffffffff,
