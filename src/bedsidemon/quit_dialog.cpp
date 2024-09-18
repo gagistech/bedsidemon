@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/margins.hpp>
 #include <ruis/widget/label/text.hpp>
 
 #include "application.hpp"
@@ -39,7 +40,7 @@ using namespace ruis::make;
 } // namespace m
 
 namespace {
-constexpr auto dimension_gap = 10_pp;
+constexpr auto dimension_gap = 30_pp;
 constexpr auto dimension_button_width = 100_pp;
 constexpr auto dimension_button_height = 40_pp;
 } // namespace
@@ -70,36 +71,45 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
 
 	// clang-format off
     return {
-        m::text(c,
-            {},
-            U"Quit program?"s
-        ),
-        m::gap(c,
+        m::margins(c,
             {
-                .layout_params{
-                    .dims = {1_px, dimension_gap}
+                .container_params{
+                    .layout = ruis::layout::column
+                },
+                .frame_params{
+                    .borders{dimension_gap}
                 }
-            }
-        ),
-        m::row(c,
-            {},
+            },
             {
-                make_button("yes_button"s, U"Yes"s),
+                m::text(c,
+                    {
+                        .text_params{
+                            .font_size = 20_pp
+                        }
+                    },
+                    U"Quit program?"s
+                ),
                 m::gap(c,
                     {
                         .layout_params{
-                            .dims = {dimension_gap, 1_px}
+                            .dims = {1_px, dimension_gap}
                         }
                     }
                 ),
-                make_button("no_button"s, U"No"s),
-            }
-        ),
-        m::gap(c,
-            {
-                .layout_params{
-                    .dims = {1_px, dimension_gap}
-                }
+                m::row(c,
+                    {},
+                    {
+                        make_button("yes_button"s, U"Yes"s),
+                        m::gap(c,
+                            {
+                                .layout_params{
+                                    .dims = {dimension_gap, 1_px}
+                                }
+                            }
+                        ),
+                        make_button("no_button"s, U"No"s),
+                    }
+                )
             }
         )
     };
@@ -117,7 +127,7 @@ quit_dialog::quit_dialog(utki::shared_ref<ruis::context> context) :
 	),
 	ruis::dialog(
 		this->context, //
-		{.container_params{.layout = ruis::layout::column}},
+		{.container_params{.layout = ruis::layout::pile}},
 		make_root_widget_structure(this->context)
 	)
 {
