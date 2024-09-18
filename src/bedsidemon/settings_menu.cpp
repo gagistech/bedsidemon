@@ -39,10 +39,6 @@ using namespace std::string_view_literals;
 
 using namespace bedsidemon;
 
-namespace m {
-using namespace ruis::make;
-} // namespace m
-
 namespace {
 constexpr const std::array<uint32_t, 3> sweep_speeds_um_per_sec = {
 	12500, //

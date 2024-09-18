@@ -40,17 +40,15 @@ using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
+namespace bedsidemon::m {
+using namespace bedsidemon::make;
+}; // namespace bedsidemon::m
+
 namespace {
 constexpr auto heart_blink_time_ms = 150;
 } // namespace
 
 namespace {
-namespace m {
-using namespace ruis::make;
-using namespace bedsidemon::make;
-}; // namespace m
-
-using namespace ruis::length_literals;
 
 constexpr auto color_main_value = 0xffffff00;
 constexpr auto color_secondary_value = 0xff00ffff;

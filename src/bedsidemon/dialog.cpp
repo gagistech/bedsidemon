@@ -30,9 +30,11 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
+namespace {
 namespace m {
 using namespace ruis::make;
 } // namespace m
+} // namespace
 
 namespace {
 constexpr auto color_dialog_surroundings = 0xb0000000;

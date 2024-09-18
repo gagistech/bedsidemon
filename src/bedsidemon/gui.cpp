@@ -39,12 +39,6 @@ using namespace ruis::length_literals;
 using namespace bedsidemon;
 
 namespace {
-namespace m {
-using namespace ruis::make;
-} // namespace m
-} // namespace
-
-namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::context> c)
 {
 	constexpr const auto button_icon_padding = 5_pp;

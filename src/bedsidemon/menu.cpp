@@ -35,10 +35,6 @@ using namespace ruis::length_literals;
 
 using namespace bedsidemon;
 
-namespace m {
-using namespace ruis::make;
-} // namespace m
-
 namespace {
 constexpr auto size_close_button = 40_pp;
 } // namespace

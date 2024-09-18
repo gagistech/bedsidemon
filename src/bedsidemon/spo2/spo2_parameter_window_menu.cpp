@@ -40,12 +40,6 @@ using namespace ruis::length_literals;
 using namespace bedsidemon;
 
 namespace {
-namespace m {
-using namespace ruis::make;
-} // namespace m
-} // namespace
-
-namespace {
 class selection_box_provider : public ruis::selection_box::provider
 {
 public:

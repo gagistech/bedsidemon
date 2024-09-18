@@ -24,6 +24,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/text.hpp>
 
+#include "style.hpp"
+
 using namespace std::string_literals;
 
 using namespace ruis::length_literals;
@@ -32,14 +34,11 @@ using namespace bedsidemon;
 
 extern const char* const program_version;
 
-namespace m {
-using namespace ruis::make;
-} // namespace m
-
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis::context> c)
 {
 	constexpr auto font_size_program_title = 20_pp;
+	constexpr auto font_size = 16_pp;
 	constexpr auto color_program_title = 0xff00ffff;
 
 	constexpr auto gap_paragraph = 20_pp;
@@ -67,6 +66,45 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
         m::text(c,
             {},
             (U"Version: "s).append(utki::to_utf32(program_version))
+        ),
+        m::gap(c,
+            {
+                .layout_params{
+                    .dims = {0_px, gap_paragraph}
+                }
+            }
+        ),
+        m::row(c,
+            {},
+            {
+                m::text(c,
+                    {
+                        .text_params{
+                            .font_size = font_size
+                        }
+                    },
+                    U"Powered by"s
+                ),
+                m::text(c,
+                    {
+                        .color_params{
+                            .color = 0xff8080ff
+                        },
+                        .text_params{
+                            .font_size = font_size
+                        }
+                    },
+                    U" ruis"s
+                ),
+                m::text(c,
+                    {
+                        .text_params{
+                            .font_size = font_size
+                        }
+                    },
+                    U" GUI"s
+                )
+            }
         ),
         m::gap(c,
             {

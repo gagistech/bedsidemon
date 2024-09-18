@@ -38,3 +38,7 @@ constexpr auto font_size_setting = ruis::length::make_pp(14);
 constexpr auto gap_size_setting_label_value = ruis::length::make_pp(5);
 
 } // namespace bedsidemon::style
+
+namespace bedsidemon::m {
+using namespace ruis::make;
+} // namespace bedsidemon::m

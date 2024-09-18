@@ -27,6 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/text.hpp>
 
 #include "application.hpp"
+#include "style.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -34,10 +35,6 @@ using namespace std::string_view_literals;
 using namespace ruis::length_literals;
 
 using namespace bedsidemon;
-
-namespace m {
-using namespace ruis::make;
-} // namespace m
 
 namespace {
 constexpr auto dimension_gap = 30_pp;
