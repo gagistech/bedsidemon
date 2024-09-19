@@ -24,6 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <iomanip>
 
 #include <clargs/parser.hpp>
+#include <papki/fs_file.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <utki/debug.hpp>
@@ -144,8 +145,15 @@ std::unique_ptr<application> bedsidemon::create_application(std::string_view exe
 {
 	bool window = false;
 
-	// TODO: look in /usr/local/share/bedsidemon first?
-	std::string res_path = "/usr/share/bedsidemon"s;
+	std::string res_path = []() {
+		papki::fs_file local_share("/usr/local/share/bedsidemon/"sv);
+
+		if (local_share.exists()) {
+			return local_share.path();
+		}
+
+		return "/usr/share/bedsidemon/"s;
+	}();
 
 	clargs::parser p;
 
@@ -153,7 +161,7 @@ std::unique_ptr<application> bedsidemon::create_application(std::string_view exe
 		window = true;
 	});
 
-	p.add("res-path", "resources path, default = /usr/share/bedsidemon", [&](std::string_view v) {
+	p.add("res-path", "resources path, default = /usr/share/bedsidemon/", [&](std::string_view v) {
 		res_path = v;
 	});
 
