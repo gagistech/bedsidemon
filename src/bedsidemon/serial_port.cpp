@@ -55,7 +55,7 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 			.c_iflag = IGNPAR | IGNBRK, //
 			.c_oflag = 0,
 			.c_cflag = CBAUD | CS8 | CLOCAL | CREAD,
-			.c_lflag = 0
+			.c_lflag = 0 // noncanonical mode
 		};
 		newtermios.c_cc[VMIN] = 0;
 		newtermios.c_cc[VTIME] = 0;

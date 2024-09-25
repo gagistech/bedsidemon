@@ -87,9 +87,9 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 
 				auto received_span = utki::make_span(buffer.data(), num_received);
 
-				// std::cout << "received = ";
+				// std::cout << "received " << num_received << " bytes: " << std::hex;
 				// for (const auto& c : received_span) {
-				// 	std::cout << c;
+				// 		std::cout << unsigned(c) << " ";
 				// }
 				// std::cout << std::endl;
 
