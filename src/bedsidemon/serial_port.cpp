@@ -72,6 +72,11 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 		if (tcsetattr(fd, TCSANOW, &newtermios) == -1) {
 			throw std::runtime_error("serial_port(): could not set serial port config");
 		}
+
+		if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1) {
+			throw std::runtime_error("serial_port(): could not set non-blocking mode on the serial port");
+		}
+
 		scope_exit.release();
 		return fd;
 	}())
