@@ -60,7 +60,7 @@ define bedsidemon_rules
     this_ldlibs += -pthread
     this_ldflags += -rdynamic
 
-    this_ldlibs += out/$$(c)/libbedsidemon.a
+    this_ldlibs += $$(this_out_dir)libbedsidemon.a
 
     this_ldlibs += -l papki
     this_ldlibs += -l clargs
