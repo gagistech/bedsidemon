@@ -41,7 +41,7 @@ const std::array<speed_t, size_t(baud_rate::enum_size)> baud_rate_map = {
 serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 	opros::waitable([&]() {
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg)
-		int fd = open(utki::make_string(port_filename).c_str(), O_RDWR | O_NOCTTY);
+		int fd = open(utki::make_string(port_filename).c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
 		if (fd < 0) {
 			throw std::runtime_error("serial_port(): could not open serial port");
 		}
@@ -71,10 +71,6 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 		}
 		if (tcsetattr(fd, TCSANOW, &newtermios) == -1) {
 			throw std::runtime_error("serial_port(): could not set serial port config");
-		}
-
-		if (fcntl(fd, F_SETFL, O_NONBLOCK) == -1) {
-			throw std::runtime_error("serial_port(): could not set non-blocking mode on the serial port");
 		}
 
 		scope_exit.release();
