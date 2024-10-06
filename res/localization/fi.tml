@@ -1,10 +1,10 @@
 vocabulary{
     settings_menu_title{
-        str{Settings}
+        str{Asetukset}
     }
     
     sweep_speed_setting_title{
-        str{"Sweep speed:"}
+        str{"Lakaisunopeus:"}
     }
 
     mm_per_sec{
@@ -12,50 +12,50 @@ vocabulary{
     }
     
     language_setting_title{
-        str{"Language:"}
+        str{"Kieli (Language):"}
     }
 
     spo2_settings_menu_title{
-        str{"SpO2 settings"}
+        str{"SpO2 asetukset"}
     }
 
     waveform_color_setting_title{
-        str{"Color:"}
+        str{"Väri:"}
     }
 
     about_menu_title{
-        str{"About"}
+        str{"Tietoja ohjelmasta"}
     }
 
     about_menu:program_title{
-        str{"Bedside Patient Monitor DEMO program"}
+        str{"Potilasmonitorin DEMO-ohjelma"}
     }
 
     about_menu:version{
-        str{"Version"}
+        str{"Versio"}
     }
 
     about_menu:powered_by{
-        str{"Powered by"}
+        str{"Tehty käyttäen"}
     }
 
     about_menu:copyright{
-        str{"Copyright"}
+        str{"Tekijänoikeus"}
     }
 
     spo2_simulation{
-        str{"SpO2 %, SIMULATION"}
+        str{"SpO2 %, SIMULAATIO"}
     }
 
     quit_dialog:title{
-        str{"Quit program?"}
+        str{"Lopeta ohjelmaa?"}
     }
 
     quit_dialog:yes{
-        str{"Yes"}
+        str{"Kyllä"}
     }
 
     quit_dialog:no{
-        str{"No"}
+        str{"Ei"}
     }
 }
