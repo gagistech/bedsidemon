@@ -1,3 +1,9 @@
+bedsidemon (0.0.16) unstable; urgency=medium
+
+  * localization
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 06 Oct 2024 21:16:46 +0300
+
 bedsidemon (0.0.15) unstable; urgency=medium
 
   * add more waveform colors
