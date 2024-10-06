@@ -86,7 +86,7 @@ public:
 							.font_size = style::font_size_setting
 						}
 					},
-					utki::to_utf32(utki::cat(speed_mm_per_sec, " mm/s"sv))
+					utki::to_utf32(utki::cat(speed_mm_per_sec, ' ')).append(c.get().localization.get("mm_per_sec").string())
 				)
 			}
 		);
@@ -95,7 +95,7 @@ public:
 };
 } // namespace
 
-namespace{
+namespace {
 class language_selection_box_provider : public ruis::selection_box::provider
 {
 public:
@@ -140,7 +140,7 @@ public:
 		// clang-format on
 	}
 };
-}
+} // namespace
 
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c)
@@ -163,13 +163,26 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		constexpr const auto& lang_mapping = settings::language_id_to_name_mapping;
 
 		language_selection_box.get().selection_handler = [](ruis::selection_box& sb) {
-			auto& ss = settings_storage::inst();
-			auto s = ss.get();
+			auto sel = sb.get_selection();
 
-			ASSERT(sb.get_selection() < lang_mapping.size())
-			s.cur_language_index = sb.get_selection();
+			// save the language to settings storage
+			{
+				auto& ss = settings_storage::inst();
+				auto s = ss.get();
 
-			ss.set(s);
+				ASSERT(sel < lang_mapping.size())
+				s.cur_language_index = sel;
+
+				ss.set(s);
+			}
+
+			// reload the ui
+			{
+				sb.context.get().post_to_ui_thread([sel]() {
+					auto& app = bedsidemon::application::inst();
+					app.load_language(sel);
+				});
+			}
 		};
 
 		auto& ss = settings_storage::inst();
@@ -190,7 +203,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
                     .font_size = style::font_size_setting
                 }
 			},
-			U"Sweep speed:"s
+			c.get().localization.get("sweep_speed_setting_title")
 		),
 		m::gap(c,
 			{
@@ -229,7 +242,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
                     .font_size = style::font_size_setting
                 }
 			},
-			U"Language:"s
+			c.get().localization.get("language_setting_title")
 		),
 		m::gap(c,
 			{
@@ -254,7 +267,7 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	),
 	menu(
 		this->context, //
-		U"Settings"s,
+		this->context.get().localization.get("settings_menu_title"),
 		make_menu_contents(this->context)
 	)
 {

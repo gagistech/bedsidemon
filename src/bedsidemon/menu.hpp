@@ -30,7 +30,7 @@ class menu : public ruis::nine_patch
 public:
 	menu(
 		utki::shared_ref<ruis::context> context, //
-		std::u32string title,
+		ruis::string title,
 		utki::span<const utki::shared_ref<ruis::widget>> contents
 	);
 

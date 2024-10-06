@@ -27,6 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "style.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
@@ -54,7 +55,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
                     .font_size = font_size_program_title
                 }
             },
-            U"Bedside Patient Monitor DEMO program"s
+            c.get().localization.get("about_menu:program_title")
         ),
         m::gap(c,
             {
@@ -65,7 +66,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
         ),
         m::text(c,
             {},
-            (U"Version: "s).append(utki::to_utf32(program_version))
+            std::u32string(c.get().localization.get("about_menu:version").string()).append(U": "sv).append(utki::to_utf32(program_version))
         ),
         m::gap(c,
             {
@@ -83,7 +84,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
                             .font_size = font_size
                         }
                     },
-                    U"Powered by"s
+                    c.get().localization.get("about_menu:powered_by")
                 ),
                 m::text(c,
                     {
@@ -115,7 +116,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
         ),
         m::text(c,
             {},
-            U"Copyright (C) 2024 Gagistech Oy <gagistechoy@gmail.com>"s
+            std::u32string(c.get().localization.get("about_menu:copyright").string()).append(U" © 2024 Gagistech Oy <gagistechoy@gmail.com>"sv)
         )
     };
 	// clang-format on
@@ -132,7 +133,7 @@ about_menu::about_menu(utki::shared_ref<ruis::context> context) :
 	),
 	menu(
 		this->context, //
-		U"About"s,
+		this->context.get().localization.get("about_menu_title"),
 		make_contents(this->context)
 	)
 {}

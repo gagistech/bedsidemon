@@ -96,7 +96,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
                     .font_size = style::font_size_setting
                 }
 			},
-			U"Color:"s
+			c.get().localization.get("waveform_color_setting_title")
 		),
 		m::gap(c,
 			{
@@ -138,7 +138,7 @@ spo2_parameter_window_menu::spo2_parameter_window_menu(
     ),
     menu(
         this->context, //
-        U"SpO2"s,
+        this->context.get().localization.get("spo2_settings_menu_title"),
         make_menu_contents(this->context)
     ),
     spo2_pw(std::move(spo2_pw))

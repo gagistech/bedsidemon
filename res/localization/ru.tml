@@ -1,0 +1,20 @@
+vocabulary{
+    sliders{
+        str{ползунки}
+    }
+    image{
+        str{изображение}
+    }
+    selection_box{
+        str{"выпадающее меню выбора"}
+    }
+    hello_world{
+        str{"Превед медвед!"}
+    }
+    some_checkbox{
+        str{"какая-то галочка"}
+    }
+    language{
+        str{"Язык (Language):"}
+    }
+}

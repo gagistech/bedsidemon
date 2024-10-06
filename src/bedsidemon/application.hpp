@@ -45,6 +45,8 @@ class application : public ruisapp::application
 public:
 	bedsidemon::settings_storage settings_storage;
 
+	const std::string res_path;
+
 	application(bool window, std::string_view res_path);
 
 	static application& inst()
@@ -55,6 +57,8 @@ public:
 
 	void open_menu(utki::shared_ref<bedsidemon::menu> menu);
 	void close_menu();
+
+	void load_language(size_t index);
 };
 
 std::unique_ptr<application> create_application(std::string_view executable, utki::span<const char*> args);

@@ -52,13 +52,16 @@ application::application(bool window, std::string_view res_path) :
 			ruisapp::window_params wp(r4::vector2<unsigned>(1024, 600));
 			return wp;
 		}()
-	)
+	),
+	res_path(papki::as_dir(res_path))
 {
 	this->set_fullscreen(!window);
 
 	this->gui.init_standard_widgets(*this->get_res_file());
 
-	this->gui.context.get().loader.mount_res_pack(*this->get_res_file(papki::as_dir(res_path)));
+	this->gui.context.get().loader.mount_res_pack(*this->get_res_file(this->res_path));
+
+	this->load_language(this->settings_storage.get().cur_language_index);
 
 	auto c = make_root_widgets(this->gui.context);
 
@@ -97,7 +100,10 @@ application::application(bool window, std::string_view res_path) :
 
 	// add fake sensor
 	{
-		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context, U"SpO2 %, simulated");
+		auto pw = utki::make_shared<spo2_parameter_window>(
+			this->gui.context, //
+			this->gui.context.get().localization.get("spo2_simulation")
+		);
 		this->fake_spo2_sensor_v =
 			std::make_unique<fake_spo2_sensor>(pw, utki::cat(papki::as_dir(res_path), "spo2_measurements.tml"));
 
@@ -187,4 +193,13 @@ void bedsidemon::application::close_menu()
 	this->menu->remove_from_parent();
 	this->menu->on_close();
 	this->menu.reset();
+}
+
+void application::load_language(size_t index)
+{
+	auto lng = settings::language_id_to_name_mapping.at(index).first;
+
+	this->gui.context.get().localization =
+		ruis::localization(tml::read(*this->get_res_file(utki::cat(this->res_path, "localization/", lng, ".tml"))));
+	this->gui.get_root().reload();
 }

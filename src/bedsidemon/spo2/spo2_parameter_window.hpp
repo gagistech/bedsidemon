@@ -57,7 +57,7 @@ class spo2_parameter_window :
 	std::shared_ptr<spo2_parameter_window_menu> pw_menu;
 
 public:
-	spo2_parameter_window(utki::shared_ref<ruis::context> context, std::u32string title = std::u32string(U"SpO2 %"));
+	spo2_parameter_window(utki::shared_ref<ruis::context> context, ruis::string title = std::u32string(U"SpO2 %"));
 	~spo2_parameter_window() override;
 
 	spo2_parameter_window(const spo2_parameter_window&) = delete;
