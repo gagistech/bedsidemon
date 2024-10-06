@@ -30,6 +30,9 @@ namespace bedsidemon {
 struct settings {
 	constexpr static const auto default_sweep_speed_um_per_sec = 25000;
 	uint32_t sweep_speed_um_per_sec = default_sweep_speed_um_per_sec;
+
+	static const std::array<std::pair<std::string_view, std::u32string_view>, 3> language_id_to_name_mapping;
+	size_t cur_language_index = 0;
 };
 
 class settings_storage : public utki::singleton<settings_storage>

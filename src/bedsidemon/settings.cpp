@@ -34,6 +34,37 @@ namespace {
 constexpr const auto settings_filename = "settings.tml"sv;
 
 constexpr const auto sweep_speed_key = "sweep_speed_um_per_sec"sv;
+constexpr const auto language_key = "language"sv;
+} // namespace
+
+namespace {
+size_t language_id_to_index(std::string_view id)
+{
+	const auto& lang_mapping = settings::language_id_to_name_mapping;
+
+	auto i = std::find_if(
+		lang_mapping.begin(), //
+		lang_mapping.end(),
+		[&](const auto& a) {
+			return a.first == id;
+		}
+	);
+
+	if (i == lang_mapping.end()) {
+		return 0;
+	}
+
+	return std::distance(lang_mapping.begin(), i);
+}
+
+std::string_view language_index_to_id(size_t index)
+{
+	const auto& lang_mapping = settings::language_id_to_name_mapping;
+
+	ASSERT(index < lang_mapping.size())
+
+	return lang_mapping[index].first;
+}
 } // namespace
 
 settings_storage::settings_storage() :
@@ -57,9 +88,13 @@ settings settings_storage::read(std::string_view filename)
 	auto tml = tml::read(fi);
 
 	for (const auto& t : tml) {
-		if (t.value.to_string() == sweep_speed_key) {
+		if (t.value.string == sweep_speed_key) {
 			if (!t.children.empty()) {
 				ret.sweep_speed_um_per_sec = t.children.front().value.to_uint32();
+			}
+		} else if (t.value.string == language_key) {
+			if (!t.children.empty()) {
+				ret.cur_language_index = language_id_to_index(t.children.front().value.string);
 			}
 		}
 	}
@@ -88,8 +123,20 @@ void settings_storage::write()
 		add_setting(sweep_speed_key, tml::leaf(this->settings_v.sweep_speed_um_per_sec));
 	}
 
+	if (this->settings_v.cur_language_index != 0) {
+		add_setting(language_key, tml::leaf(language_index_to_id(this->settings_v.cur_language_index)));
+	}
+
 	std::filesystem::create_directories(ruisapp::application::inst().directory.config);
 
 	papki::fs_file fi(filename);
 	tml::write(tml, fi);
 }
+
+constexpr decltype(settings::language_id_to_name_mapping) settings::language_id_to_name_mapping{
+	{
+     {"en"sv, U"English"sv},
+     {"fi"sv, U"Suomi"sv},
+     {"ru"sv, U"Русский"sv},
+	 }
+};

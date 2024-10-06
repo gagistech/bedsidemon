@@ -49,10 +49,10 @@ constexpr const std::array<uint32_t, 3> sweep_speeds_um_per_sec = {
 } // namespace
 
 namespace {
-class selection_box_provider : public ruis::selection_box::provider
+class sweep_speed_selection_box_provider : public ruis::selection_box::provider
 {
 public:
-	selection_box_provider() = default;
+	sweep_speed_selection_box_provider() = default;
 
 	size_t count() const noexcept override
 	{
@@ -128,7 +128,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 					.id = "sweep_speed_selection_box"s
 				},
 				.selection_params = {
-					.provider = std::make_shared<selection_box_provider>()
+					.provider = std::make_shared<sweep_speed_selection_box_provider>()
 				}
 			}
 		)

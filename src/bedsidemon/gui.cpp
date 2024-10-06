@@ -200,8 +200,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 									.text_params = {
 										.font_size = style::font_size_label
 									}
-								},
-								{}
+								}
 							)
 						}
 					),
