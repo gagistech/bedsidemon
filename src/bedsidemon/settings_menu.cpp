@@ -160,8 +160,6 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 	// clang-format on
 
 	{
-		constexpr const auto& lang_mapping = settings::language_id_to_name_mapping;
-
 		language_selection_box.get().selection_handler = [](ruis::selection_box& sb) {
 			auto sel = sb.get_selection();
 
@@ -170,7 +168,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				auto& ss = settings_storage::inst();
 				auto s = ss.get();
 
-				ASSERT(sel < lang_mapping.size())
+				ASSERT(sel < settings::language_id_to_name_mapping.size())
 				s.cur_language_index = sel;
 
 				ss.set(s);
@@ -187,7 +185,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 
 		auto& ss = settings_storage::inst();
 		const auto& s = ss.get();
-		ASSERT(s.cur_language_index < lang_mapping.size())
+		ASSERT(s.cur_language_index < settings::language_id_to_name_mapping.size())
 
 		language_selection_box.get().set_selection(s.cur_language_index);
 	}
