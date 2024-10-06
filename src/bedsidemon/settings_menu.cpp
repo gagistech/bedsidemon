@@ -95,9 +95,90 @@ public:
 };
 } // namespace
 
+namespace{
+class language_selection_box_provider : public ruis::selection_box::provider
+{
+public:
+	language_selection_box_provider() = default;
+
+	size_t count() const noexcept override
+	{
+		return settings::language_id_to_name_mapping.size();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		const auto& lang_mapping = settings::language_id_to_name_mapping;
+
+		ASSERT(index < lang_mapping.size())
+
+		auto lang_name = utki::next(lang_mapping.begin(), index)->second;
+
+		auto& c = this->get_selection_box()->context;
+
+		// clang-format off
+		return m::margins(c,
+			{
+				.container_params = {
+					.layout = ruis::layout::pile
+				},
+				.frame_params = {
+					.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+				}
+			},
+			{
+				m::text(c,
+					{
+						.text_params{
+							.font_size = style::font_size_setting
+						}
+					},
+					std::u32string(lang_name)
+				)
+			}
+		);
+		// clang-format on
+	}
+};
+}
+
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c)
 {
+	// clang-format off
+	auto language_selection_box = m::selection_box(c,
+		{
+			.layout_params = {
+				.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+				.align = {ruis::align::front, ruis::align::center}
+			},
+			.selection_params = {
+				.provider = std::make_shared<language_selection_box_provider>()
+			}
+		}
+	);
+	// clang-format on
+
+	{
+		constexpr const auto& lang_mapping = settings::language_id_to_name_mapping;
+
+		language_selection_box.get().selection_handler = [](ruis::selection_box& sb) {
+			auto& ss = settings_storage::inst();
+			auto s = ss.get();
+
+			ASSERT(sb.get_selection() < lang_mapping.size())
+			s.cur_language_index = sb.get_selection();
+
+			ss.set(s);
+		};
+
+		auto& ss = settings_storage::inst();
+		const auto& s = ss.get();
+		ASSERT(s.cur_language_index < lang_mapping.size())
+
+		language_selection_box.get().set_selection(s.cur_language_index);
+	}
+
 	// clang-format off
 	return {
 		m::text(c,
@@ -131,7 +212,33 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 					.provider = std::make_shared<sweep_speed_selection_box_provider>()
 				}
 			}
-		)
+		),
+		m::gap(c,
+			{
+				.layout_params = {
+					.dims{0_px, style::gap_size_between_settings}
+				}
+			}
+		),
+		m::text(c,
+			{
+				.layout_params = {
+					.align = {ruis::align::front, ruis::align::center}
+				},
+                .text_params = {
+                    .font_size = style::font_size_setting
+                }
+			},
+			U"Language:"s
+		),
+		m::gap(c,
+			{
+				.layout_params = {
+					.dims{0_px, style::gap_size_setting_label_value}
+				}
+			}
+		),
+		std::move(language_selection_box)
 	};
 	// clang-format on
 }
