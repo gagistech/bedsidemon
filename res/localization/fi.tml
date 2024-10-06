@@ -1,20 +1,61 @@
 vocabulary{
-    sliders{
-        str{liukusäädin}
+    settings_menu_title{
+        str{Settings}
     }
-    image{
-        str{kuva}
+    
+    sweep_speed_setting_title{
+        str{"Sweep speed:"}
     }
-    selection_box{
-        str{"valintalaatikko"}
+
+    mm_per_sec{
+        str{"mm/s"}
     }
-    hello_world{
-        str{"Hei maailman!"}
+    
+    language_setting_title{
+        str{"Language:"}
     }
-    some_checkbox{
-        str{"jokin valintaruutu"}
+
+    spo2_settings_menu_title{
+        str{"SpO2 settings"}
     }
-    language{
-        str{"Kieli (Language):"}
+
+    waveform_color_setting_title{
+        str{"Color:"}
+    }
+
+    about_menu_title{
+        str{"About"}
+    }
+
+    about_menu:program_title{
+        str{"Bedside Patient Monitor DEMO program"}
+    }
+
+    about_menu:version{
+        str{"Version"}
+    }
+
+    about_menu:powered_by{
+        str{"Powered by"}
+    }
+
+    about_menu:copyright{
+        str{"Copyright"}
+    }
+
+    spo2_simulation{
+        str{"SpO2 %, SIMULATION"}
+    }
+
+    quit_dialog:title{
+        str{"Quit program?"}
+    }
+
+    quit_dialog:yes{
+        str{"Yes"}
+    }
+
+    quit_dialog:no{
+        str{"No"}
     }
 }

@@ -45,7 +45,7 @@ constexpr auto dimension_button_height = 40_pp;
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::shared_ref<ruis::context> c)
 {
-	auto make_button = [&](std::string id, std::u32string text) {
+	auto make_button = [&](std::string id, ruis::string text) {
 		// clang-format off
         return m::push_button(c,
             {
@@ -84,7 +84,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                             .font_size = 20_pp // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
                         }
                     },
-                    U"Quit program?"s
+                    c.get().localization.get("quit_dialog:title")
                 ),
                 m::gap(c,
                     {
@@ -96,7 +96,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                 m::row(c,
                     {},
                     {
-                        make_button("yes_button"s, U"Yes"s),
+                        make_button("yes_button"s, c.get().localization.get("quit_dialog:yes")),
                         m::gap(c,
                             {
                                 .layout_params{
@@ -104,7 +104,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                                 }
                             }
                         ),
-                        make_button("no_button"s, U"No"s),
+                        make_button("no_button"s, c.get().localization.get("quit_dialog:no")),
                     }
                 )
             }

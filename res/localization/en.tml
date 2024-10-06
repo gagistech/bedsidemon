@@ -47,4 +47,15 @@ vocabulary{
         str{"SpO2 %, SIMULATION"}
     }
 
+    quit_dialog:title{
+        str{"Quit program?"}
+    }
+
+    quit_dialog:yes{
+        str{"Yes"}
+    }
+
+    quit_dialog:no{
+        str{"No"}
+    }
 }
