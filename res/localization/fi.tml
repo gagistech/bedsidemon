@@ -1,29 +1,29 @@
 vocabulary{
-    settings_menu_title{
+    settings_menu:title{
         str{Asetukset}
     }
     
-    sweep_speed_setting_title{
+    settings_menu:sweep_speed_title{
         str{"Lakaisunopeus:"}
     }
 
-    mm_per_sec{
-        str{"mm/s"}
+    settings_menu:sweep_speed_value{
+        str{"{0} mm/s"}
     }
     
-    language_setting_title{
+    settings_menu:language_title{
         str{"Kieli (Language):"}
     }
 
-    spo2_settings_menu_title{
+    spo2_settings_menu:title{
         str{"SpO2 asetukset"}
     }
 
-    waveform_color_setting_title{
+    spo2_settings_menu:color_title{
         str{"Väri:"}
     }
 
-    about_menu_title{
+    about_menu:title{
         str{"Tietoja ohjelmasta"}
     }
 
@@ -32,7 +32,7 @@ vocabulary{
     }
 
     about_menu:version{
-        str{"Versio"}
+        str{"Versio: {0}"}
     }
 
     about_menu:powered_by{

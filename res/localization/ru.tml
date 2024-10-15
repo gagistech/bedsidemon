@@ -1,29 +1,29 @@
 vocabulary{
-    settings_menu_title{
+    settings_menu:title{
         str{Настройки}
     }
     
-    sweep_speed_setting_title{
-        str{"Скорость заметания:"}
+    settings_menu:sweep_speed_title{
+        str{"Скорость развертки:"}
     }
 
-    mm_per_sec{
-        str{"мм/с"}
+    settings_menu:sweep_speed_value{
+        str{"{0} мм/с"}
     }
     
-    language_setting_title{
+    settings_menu:language_title{
         str{"Язык (Language):"}
     }
 
-    spo2_settings_menu_title{
+    spo2_settings_menu:title{
         str{"Настройки SpO2"}
     }
 
-    waveform_color_setting_title{
+    spo2_settings_menu:color_title{
         str{"Цвет:"}
     }
 
-    about_menu_title{
+    about_menu:title{
         str{"О программе"}
     }
 
@@ -32,7 +32,7 @@ vocabulary{
     }
 
     about_menu:version{
-        str{"Версия"}
+        str{"Версия: {0}"}
     }
 
     about_menu:powered_by{

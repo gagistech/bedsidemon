@@ -66,7 +66,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
         ),
         m::text(c,
             {},
-            std::u32string(c.get().localization.get("about_menu:version").string()).append(U": "sv).append(utki::to_utf32(program_version))
+            c.get().localization.get("about_menu:version").format({utki::to_utf32(program_version)})
         ),
         m::gap(c,
             {
@@ -133,7 +133,7 @@ about_menu::about_menu(utki::shared_ref<ruis::context> context) :
 	),
 	menu(
 		this->context, //
-		this->context.get().localization.get("about_menu_title"),
+		this->context.get().localization.get("about_menu:title"),
 		make_contents(this->context)
 	)
 {}
