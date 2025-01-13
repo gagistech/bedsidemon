@@ -14,7 +14,7 @@ this__root_dir_rel := ../
 
 this__version_cpp := $(this_out_dir)version.cpp
 
-this_srcs += $(this__version_cpp) $(filter-out %main.cpp,$(call prorab-src-dir, bedsidemon))
+this_srcs += $(this__version_cpp) $(filter-out %main.cpp,$(call prorab-src-dir, $(this_name)))
 
 this_no_install := true
 this_static_lib_only := true
@@ -87,3 +87,6 @@ endef
 $(eval $(call bedsidemon_rules,opengles,xorg))
 # $(eval $(call bedsidemon_rules,opengl,wayland))
 $(eval $(call bedsidemon_rules,opengles,wayland))
+
+# clean up
+bedsidemon_rules :=
