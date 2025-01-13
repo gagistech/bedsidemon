@@ -14,7 +14,7 @@ this__root_dir_rel := ../
 
 this__version_cpp := $(this_out_dir)version.cpp
 
-this_srcs += $(this__version_cpp) $(filter-out main.cpp,$(call prorab-src-dir, bedsidemon))
+this_srcs += $(this__version_cpp) $(filter-out %main.cpp,$(call prorab-src-dir, bedsidemon))
 
 this_no_install := true
 this_static_lib_only := true
