@@ -1,3 +1,9 @@
+bedsidemon (0.0.18) unstable; urgency=medium
+
+  * update
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 23 Jan 2025 23:12:34 +0200
+
 bedsidemon (0.0.17) unstable; urgency=medium
 
   * use ruis formatted localization
