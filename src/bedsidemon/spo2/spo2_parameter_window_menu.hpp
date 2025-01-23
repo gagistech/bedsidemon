@@ -24,6 +24,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "../menu.hpp"
 
 namespace bedsidemon {
+
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false positive")
 class spo2_parameter_window;
 
 class spo2_parameter_window_menu : public menu

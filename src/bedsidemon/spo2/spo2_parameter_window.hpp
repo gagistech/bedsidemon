@@ -34,6 +34,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace bedsidemon {
 
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false positive")
 class spo2_parameter_window :
 	virtual public ruis::widget, //
 	public ruis::color_widget,

@@ -27,6 +27,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false positive")
 class rectangle_button :
 	virtual public button, //
 	// no reason to make rectangle inheritance private
