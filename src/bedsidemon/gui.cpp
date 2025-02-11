@@ -279,7 +279,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 }
 } // namespace
 
-utki::shared_ref<ruis::widget> bedsidemon::make_root_widgets(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> bedsidemon::make_root_widget(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
 	return m::overlay(c,

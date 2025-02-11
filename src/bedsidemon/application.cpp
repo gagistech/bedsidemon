@@ -63,7 +63,7 @@ application::application(bool window, std::string_view res_path) :
 
 	this->load_language(this->settings_storage.get().cur_language_index);
 
-	auto c = make_root_widgets(this->gui.context);
+	auto c = make_root_widget(this->gui.context);
 
 	this->menu_area = c.get().try_get_widget_as<ruis::container>("menu_area"sv);
 	ASSERT(this->menu_area)

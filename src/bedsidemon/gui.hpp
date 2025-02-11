@@ -25,6 +25,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace bedsidemon {
 
-utki::shared_ref<ruis::widget> make_root_widgets(utki::shared_ref<ruis::context> c);
+utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c);
 
 } // namespace bedsidemon
