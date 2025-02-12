@@ -271,10 +271,10 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
 	}
 
 	auto& ss = settings_storage::inst();
-	decltype(settings_storage::settings_changed_signal
-	)::callback_type settings_change_handler = [&pw = *this](const settings& s) {
-		pw.waveform.set_sweep_speed(ruis::real(s.sweep_speed_um_per_sec) / ruis::real(std::milli::den));
-	};
+	decltype(settings_storage::settings_changed_signal)::callback_type settings_change_handler =
+		[&pw = *this](const settings& s) {
+			pw.waveform.set_sweep_speed(ruis::real(s.sweep_speed_um_per_sec) / ruis::real(std::milli::den));
+		};
 	settings_change_handler(ss.get());
 	this->settings_change_signal_connection = ss.settings_changed_signal.connect(std::move(settings_change_handler));
 }

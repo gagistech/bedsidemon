@@ -224,8 +224,8 @@ void contec_cms50d_plus::handle_packet()
 		this->push(
 			spo2_measurement{
 				.signal_strength = uint8_t(
-					(min(max(int(data.signal_strength), min_signal_strength), max_signal_strength) - min_signal_strength
-					) *
+					(min(max(int(data.signal_strength), min_signal_strength), max_signal_strength) -
+					 min_signal_strength) *
 					std::centi::den / (max_signal_strength - min_signal_strength)
 				),
 				.pulse_beat = data.pulse_beep,
