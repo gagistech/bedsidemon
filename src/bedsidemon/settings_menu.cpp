@@ -49,10 +49,12 @@ constexpr const std::array<uint32_t, 3> sweep_speeds_um_per_sec = {
 } // namespace
 
 namespace {
-class sweep_speed_selection_box_provider : public ruis::selection_box::provider
+class sweep_speed_selection_box_provider : public ruis::list_provider
 {
 public:
-	sweep_speed_selection_box_provider() = default;
+	sweep_speed_selection_box_provider(utki::shared_ref<ruis::context> context) :
+		list_provider(std::move(context))
+	{}
 
 	size_t count() const noexcept override
 	{
@@ -67,7 +69,7 @@ public:
 
 		float speed_mm_per_sec = float(speed_um_per_sec) / float(std::kilo::num);
 
-		auto& c = this->get_selection_box()->context;
+		auto& c = this->context;
 
 		// clang-format off
 		return m::margins(c,
@@ -96,10 +98,12 @@ public:
 } // namespace
 
 namespace {
-class language_selection_box_provider : public ruis::selection_box::provider
+class language_selection_box_provider : public ruis::list_provider
 {
 public:
-	language_selection_box_provider() = default;
+	language_selection_box_provider(utki::shared_ref<ruis::context> context) :
+		list_provider(std::move(context))
+	{}
 
 	size_t count() const noexcept override
 	{
@@ -114,7 +118,7 @@ public:
 
 		auto lang_name = utki::next(lang_mapping.begin(), index)->second;
 
-		auto& c = this->get_selection_box()->context;
+		auto& c = this->context;
 
 		// clang-format off
 		return m::margins(c,
@@ -152,8 +156,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 				.align = {ruis::align::front, ruis::align::center}
 			},
-			.selection_params = {
-				.provider = std::make_shared<language_selection_box_provider>()
+			.providable_params = {
+				.provider = std::make_shared<language_selection_box_provider>(c)
 			}
 		}
 	);
@@ -219,8 +223,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.widget_params = {
 					.id = "sweep_speed_selection_box"s
 				},
-				.selection_params = {
-					.provider = std::make_shared<sweep_speed_selection_box_provider>()
+				.providable_params = {
+					.provider = std::make_shared<sweep_speed_selection_box_provider>(c)
 				}
 			}
 		),

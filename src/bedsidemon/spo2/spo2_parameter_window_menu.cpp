@@ -40,10 +40,12 @@ using namespace ruis::length_literals;
 using namespace bedsidemon;
 
 namespace {
-class selection_box_provider : public ruis::selection_box::provider
+class selection_box_provider : public ruis::list_provider
 {
 public:
-	selection_box_provider() = default;
+	selection_box_provider(utki::shared_ref<ruis::context> context) :
+		list_provider(std::move(context))
+	{}
 
 	size_t count() const noexcept override
 	{
@@ -52,7 +54,7 @@ public:
 
 	utki::shared_ref<ruis::widget> get_widget(size_t index) override
 	{
-		auto& c = this->get_selection_box()->context;
+		auto& c = this->context;
 
 		// clang-format off
 		return m::margins(c,
@@ -114,8 +116,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.widget_params = {
 					.id = "color_selection_box"s
 				},
-				.selection_params = {
-					.provider = std::make_shared<selection_box_provider>()
+				.providable_params = {
+					.provider = std::make_shared<selection_box_provider>(c)
 				}
 			}
 		)
