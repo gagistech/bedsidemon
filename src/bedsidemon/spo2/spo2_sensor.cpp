@@ -40,7 +40,7 @@ void spo2_sensor::push(const spo2_measurement& meas)
 	this->record.push_back(meas);
 #endif
 
-	this->param_window.get().context.get().run_from_ui_thread([pw = this->param_window, meas]() {
+	this->param_window.get().context.get().post_to_ui_thread([pw = this->param_window, meas]() {
 		// std::cout << std::dec;
 		// std::cout << "\t" << "signal_strength = " <<
 		// unsigned(meas.signal_strength) << "\n"; std::cout << "\t" <<
