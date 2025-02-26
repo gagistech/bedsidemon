@@ -150,6 +150,7 @@ application::application(bool window, std::string_view res_path) :
 std::unique_ptr<application> bedsidemon::create_application(std::string_view executable, utki::span<const char*> args)
 {
 	bool window = false;
+	bool help = false;
 
 	std::string res_path = []() {
 		papki::fs_file local_share("/usr/local/share/bedsidemon/"sv);
@@ -163,6 +164,8 @@ std::unique_ptr<application> bedsidemon::create_application(std::string_view exe
 
 	clargs::parser p;
 
+	p.add("help"s, "print command line interface help"s, [&](){help = true;});
+
 	p.add("window", "run in window mode", [&]() {
 		window = true;
 	});
@@ -172,6 +175,11 @@ std::unique_ptr<application> bedsidemon::create_application(std::string_view exe
 	});
 
 	p.parse(args);
+
+	if(help){
+		std::cout << p.description() << std::endl;
+		return nullptr;
+	}
 
 	return std::make_unique<application>(window, res_path);
 }
