@@ -133,7 +133,7 @@ void contec_cms50d_plus::handle_packet_type_byte(uint8_t byte)
 			// std::cout << "live data packet" << std::endl;
 			break;
 		default:
-			std::cout << "unknown packet type = " << byte << std::endl;
+			std::cout << "unknown packet type = " << unsigned(byte) << std::endl;
 			// unknown packet, ignore
 			// remain in wait_response state
 			return;
