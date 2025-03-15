@@ -42,10 +42,14 @@ class spo2_parameter_window :
 {
 	friend class spo2_parameter_window_menu;
 
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false positive")
 	ruis::text& spo2_value;
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false positive")
 	ruis::text& bpm_value;
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false positive")
 	ruis::widget& heart;
 
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false positive")
 	bedsidemon::waveform& waveform;
 
 	utki::shared_ref<ruis::timer> heart_timer;
