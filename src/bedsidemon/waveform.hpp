@@ -44,7 +44,7 @@ class waveform :
 	std::array<path, 2> paths;
 
 	ruis::real value_offset{0};
-	ruis::real value_max;
+	ruis::real value_max{0};
 
 	ruis::real px_per_ms;
 
