@@ -74,7 +74,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 									.dims = {ruis::dim::min, ruis::dim::fill}
 								},
 								.image_params = {
-									.img = c.get().loader.load<ruis::res::image>(icon_res_id),
+									.img = c.get().loader().load<ruis::res::image>(icon_res_id),
 									.keep_aspect_ratio = true
 								}
 							}

@@ -88,7 +88,7 @@ public:
 							.font_size = style::font_size_setting
 						}
 					},
-					c.get().localization.get("settings_menu:sweep_speed_value").format({utki::to_utf32(utki::cat(speed_mm_per_sec))})
+					c.get().localization.get().get("settings_menu:sweep_speed_value").format({utki::to_utf32(utki::cat(speed_mm_per_sec))})
 				)
 			}
 		);
@@ -205,7 +205,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
                     .font_size = style::font_size_setting
                 }
 			},
-			c.get().localization.get("settings_menu:sweep_speed_title")
+			c.get().localization.get().get("settings_menu:sweep_speed_title")
 		),
 		m::gap(c,
 			{
@@ -244,7 +244,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
                     .font_size = style::font_size_setting
                 }
 			},
-			c.get().localization.get("settings_menu:language_title")
+			c.get().localization.get().get("settings_menu:language_title")
 		),
 		m::gap(c,
 			{
@@ -269,7 +269,7 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	),
 	menu(
 		this->context, //
-		this->context.get().localization.get("settings_menu:title"),
+		this->context.get().localization.get().get("settings_menu:title"),
 		make_menu_contents(this->context)
 	)
 {

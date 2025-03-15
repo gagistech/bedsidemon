@@ -119,7 +119,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
                             .visible = false
                         },
                         .image_params = {
-                            .img = c.get().loader.load<ruis::res::image>("img_heart"),
+                            .img = c.get().loader().load<ruis::res::image>("img_heart"),
                             .keep_aspect_ratio = true
                         }
                     }

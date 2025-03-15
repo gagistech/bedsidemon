@@ -59,7 +59,7 @@ menu::menu(
 				.layout = ruis::layout::column
 			},
 			.nine_patch_params = {
-				.nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+				.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
 			}
 		},
 		{
@@ -108,7 +108,7 @@ menu::menu(
 										.dims{ruis::dim::fill, ruis::dim::fill}
 									},
 									.image_params{
-										.img = this->context.get().loader.load<ruis::res::image>("img_close")
+										.img = this->context.get().loader().load<ruis::res::image>("img_close")
 									}
 								}
 							)

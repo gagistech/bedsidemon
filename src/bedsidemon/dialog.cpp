@@ -92,7 +92,7 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
                         },
                         .container_params = std::move(container_params),
                         .nine_patch_params{
-                            .nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+                            .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
                         }
                     },
                     contents

@@ -84,7 +84,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                             .font_size = 20_pp // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
                         }
                     },
-                    c.get().localization.get("quit_dialog:title")
+                    c.get().localization.get().get("quit_dialog:title")
                 ),
                 m::gap(c,
                     {
@@ -96,7 +96,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                 m::row(c,
                     {},
                     {
-                        make_button("yes_button"s, c.get().localization.get("quit_dialog:yes")),
+                        make_button("yes_button"s, c.get().localization.get().get("quit_dialog:yes")),
                         m::gap(c,
                             {
                                 .layout_params{
@@ -104,7 +104,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
                                 }
                             }
                         ),
-                        make_button("no_button"s, c.get().localization.get("quit_dialog:no")),
+                        make_button("no_button"s, c.get().localization.get().get("quit_dialog:no")),
                     }
                 )
             }

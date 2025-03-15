@@ -55,7 +55,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
                     .font_size = font_size_program_title
                 }
             },
-            c.get().localization.get("about_menu:program_title")
+            c.get().localization.get().get("about_menu:program_title")
         ),
         m::gap(c,
             {
@@ -66,7 +66,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
         ),
         m::text(c,
             {},
-            c.get().localization.get("about_menu:version").format({utki::to_utf32(program_version)})
+            c.get().localization.get().get("about_menu:version").format({utki::to_utf32(program_version)})
         ),
         m::gap(c,
             {
@@ -84,7 +84,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
                             .font_size = font_size
                         }
                     },
-                    c.get().localization.get("about_menu:powered_by")
+                    c.get().localization.get().get("about_menu:powered_by")
                 ),
                 m::text(c,
                     {
@@ -116,7 +116,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
         ),
         m::text(c,
             {},
-            std::u32string(c.get().localization.get("about_menu:copyright").string()).append(U" © 2024 Gagistech Oy <gagistechoy@gmail.com>"sv)
+            std::u32string(c.get().localization.get().get("about_menu:copyright").string()).append(U" © 2024 Gagistech Oy <gagistechoy@gmail.com>"sv)
         )
     };
 	// clang-format on
@@ -133,7 +133,7 @@ about_menu::about_menu(utki::shared_ref<ruis::context> context) :
 	),
 	menu(
 		this->context, //
-		this->context.get().localization.get("about_menu:title"),
+		this->context.get().localization.get().get("about_menu:title"),
 		make_contents(this->context)
 	)
 {}

@@ -98,7 +98,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
                     .font_size = style::font_size_setting
                 }
 			},
-			c.get().localization.get("spo2_settings_menu:color_title")
+			c.get().localization.get().get("spo2_settings_menu:color_title")
 		),
 		m::gap(c,
 			{
@@ -140,7 +140,7 @@ spo2_parameter_window_menu::spo2_parameter_window_menu(
     ),
     menu(
         this->context, //
-        this->context.get().localization.get("spo2_settings_menu:title"),
+        this->context.get().localization.get().get("spo2_settings_menu:title"),
         make_menu_contents(this->context)
     ),
     spo2_pw(std::move(spo2_pw))
