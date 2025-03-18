@@ -100,10 +100,11 @@ application::application(bool window, std::string_view res_path) :
 
 	// add fake sensor #1
 	{
+		constexpr auto deafult_color = 0xff00ff00;
 		auto pw = utki::make_shared<spo2_parameter_window>(
 			this->gui.context, //
 			this->gui.context.get().localization.get().get("spo2_simulation"),
-			0xff00ff00
+			deafult_color
 		);
 		this->fake_spo2_sensor_v = std::make_unique<fake_spo2_sensor>(
 			pw, //
@@ -115,10 +116,11 @@ application::application(bool window, std::string_view res_path) :
 
 	// add fake sensor #2
 	{
+		constexpr auto deafult_color = 0xffff00ff;
 		auto pw = utki::make_shared<spo2_parameter_window>(
 			this->gui.context, //
 			this->gui.context.get().localization.get().get("spo2_simulation"),
-			0xffff00ff
+			deafult_color
 		);
 		this->fake_spo2_sensor2_v = std::make_unique<fake_spo2_sensor>(
 			pw, //
