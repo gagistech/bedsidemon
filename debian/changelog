@@ -1,3 +1,9 @@
+bedsidemon (0.0.20) unstable; urgency=medium
+
+  * add second fake sensor
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 18 Mar 2025 16:59:36 +0200
+
 bedsidemon (0.0.19) unstable; urgency=medium
 
   * update
