@@ -98,14 +98,32 @@ application::application(bool window, std::string_view res_path) :
 
 	auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
 
-	// add fake sensor
+	// add fake sensor #1
 	{
 		auto pw = utki::make_shared<spo2_parameter_window>(
 			this->gui.context, //
-			this->gui.context.get().localization.get().get("spo2_simulation")
+			this->gui.context.get().localization.get().get("spo2_simulation"),
+			0xff00ff00
 		);
-		this->fake_spo2_sensor_v =
-			std::make_unique<fake_spo2_sensor>(pw, utki::cat(papki::as_dir(res_path), "spo2_measurements.tml"));
+		this->fake_spo2_sensor_v = std::make_unique<fake_spo2_sensor>(
+			pw, //
+			utki::cat(papki::as_dir(res_path), "spo2_measurements.tml")
+		);
+
+		pw_container.push_back(pw);
+	}
+
+	// add fake sensor #2
+	{
+		auto pw = utki::make_shared<spo2_parameter_window>(
+			this->gui.context, //
+			this->gui.context.get().localization.get().get("spo2_simulation"),
+			0xffff00ff
+		);
+		this->fake_spo2_sensor2_v = std::make_unique<fake_spo2_sensor>(
+			pw, //
+			utki::cat(papki::as_dir(res_path), "spo2_measurements2.tml")
+		);
 
 		pw_container.push_back(pw);
 	}

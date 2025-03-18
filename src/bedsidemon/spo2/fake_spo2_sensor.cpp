@@ -56,7 +56,10 @@ std::vector<spo2_measurement> read_recorded_data(std::string_view data_filename)
 }
 } // namespace
 
-fake_spo2_sensor::fake_spo2_sensor(utki::shared_ref<spo2_parameter_window> pw, std::string_view data_filename) :
+fake_spo2_sensor::fake_spo2_sensor(
+	utki::shared_ref<spo2_parameter_window> pw, //
+	std::string_view data_filename
+) :
 	spo2_sensor(pw),
 	record(read_recorded_data(data_filename)),
 	timer(

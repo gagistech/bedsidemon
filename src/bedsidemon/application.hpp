@@ -37,6 +37,7 @@ class application : public ruisapp::application
 	std::shared_ptr<bedsidemon::menu> menu;
 
 	std::unique_ptr<spo2_sensor> fake_spo2_sensor_v;
+	std::unique_ptr<spo2_sensor> fake_spo2_sensor2_v;
 	std::unique_ptr<spo2_sensor> real_spo2_sensor_v;
 
 	// timer for updating clock view once a second

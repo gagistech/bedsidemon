@@ -50,7 +50,6 @@ constexpr auto heart_blink_time_ms = 150;
 
 namespace {
 
-constexpr auto color_main_value = 0xffffff00;
 constexpr auto color_secondary_value = 0xff00ffff;
 
 constexpr auto font_size_label = 16_pp;
@@ -59,7 +58,11 @@ constexpr auto font_size_secondary_value = 40_pp;
 
 constexpr auto heart_size = 15_pp;
 
-std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_ref<ruis::context> c, ruis::string title)
+std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
+	const utki::shared_ref<ruis::context>& c, //
+	ruis::string title,
+	uint32_t color
+)
 {
 	// clang-format off
     return {
@@ -83,7 +86,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
                     .id = "spo2_value"s
                 },
                 .color_params = {
-                    .color = color_main_value
+                    .color = color
                 },
                 .text_params = {
                     .font_size = font_size_main_value
@@ -130,7 +133,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(utki::shared_re
 	// clang-format on
 }
 
-std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::context> c, ruis::string title)
+std::vector<utki::shared_ref<ruis::widget>> make_widgets(
+	const utki::shared_ref<ruis::context>& c, //
+	ruis::string title,
+	uint32_t color
+)
 {
 	// clang-format off
     return {
@@ -143,6 +150,9 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                 .widget_params = {
                     .id = "pw_waveform"s,
                     .clip = true
+                },
+                .color_params{
+                    .color = color
                 }
             }
         ),
@@ -201,7 +211,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
                                             .borders = {style::pw_padding}
                                         }
                                     },
-                                    make_numeric_content(c, std::move(title))
+                                    make_numeric_content(c, std::move(title), color)
                                 )
                             }
                         ),
@@ -224,10 +234,15 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 }
 } // namespace
 
-spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> context, ruis::string title) :
-	ruis::widget( //
+spo2_parameter_window::spo2_parameter_window(
+    utki::shared_ref<ruis::context> context, //
+    ruis::string title,
+    uint32_t color
+) :
+    // clang-format off
+	ruis::widget(
 		std::move(context),
-		{//
+		{
             .dims = {ruis::dim::fill, ruis::dim::min}
         },
         {}
@@ -235,17 +250,23 @@ spo2_parameter_window::spo2_parameter_window(utki::shared_ref<ruis::context> con
     ruis::color_widget(
         this->context,
         ruis::color_widget::parameters{
-            .color = color_main_value
+            .color = color
         }
     ),
-	ruis::container( //
+	ruis::container( 
 		this->context,
-		{.container_params =
-			 {//
-			  .layout = ruis::layout::row
-			 }},
-		make_widgets(this->context, std::move(title))
+		{  
+            .container_params{
+			    .layout = ruis::layout::row
+			}
+        },
+		make_widgets(
+            this->context,
+            std::move(title),
+            color
+        )
 	),
+    // clang-format on
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),
 	bpm_value(this->get_widget_as<ruis::text>("bpm_value")),
 	heart(this->get_widget("heart")),

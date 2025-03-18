@@ -39,7 +39,10 @@ class fake_spo2_sensor : public spo2_sensor
 	uint32_t time_since_frame_start_ms = 0;
 
 public:
-	fake_spo2_sensor(utki::shared_ref<spo2_parameter_window> pw, std::string_view data_filename);
+	fake_spo2_sensor(
+		utki::shared_ref<spo2_parameter_window> pw, //
+		std::string_view data_filename
+	);
 
 	fake_spo2_sensor(const fake_spo2_sensor&) = delete;
 	fake_spo2_sensor& operator=(const fake_spo2_sensor&) = delete;

@@ -64,7 +64,7 @@ spo2_sensor::~spo2_sensor()
 	tml::forest rec;
 
 	for (const auto& m : this->record) {
-		rec.push_back(tml::tree frame("frame", m.to_tml()));
+		rec.push_back(tml::tree("frame", m.to_tml()));
 	}
 
 	papki::fs_file fi("spo2_measurements.tml");
