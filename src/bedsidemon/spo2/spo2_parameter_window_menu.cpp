@@ -154,7 +154,7 @@ spo2_parameter_window_menu::spo2_parameter_window_menu(
 			auto i = std::find(
 				colors.begin(), //
 				colors.end(),
-				pw->get_color()
+				pw->get_color().to_uint32_t()
 			);
 			sb.set_selection(std::distance(colors.begin(), i));
 		}

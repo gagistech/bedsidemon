@@ -67,7 +67,11 @@ void waveform::set_sweep_speed(ruis::real mm_per_sec)
 void waveform::render(const ruis::matrix4& matrix) const
 {
 	for (const auto& pv : this->paths) {
-		pv.vao.render(ruis::matrix4(matrix).translate(pv.origin), this->get_color());
+		pv.vao.render(
+			ruis::matrix4(matrix).translate(pv.origin), //
+			// TODO: do not convert to uint32_t
+			this->get_color().to_uint32_t()
+		);
 	}
 }
 
