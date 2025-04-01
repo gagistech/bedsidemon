@@ -81,9 +81,8 @@ public:
 
 	void on_color_change() override;
 
-	// TODO: store ruis::color in the array
 	// clang-format off
-	constexpr static const std::array<uint32_t, 7> possible_colors = {{
+	constexpr static const std::array<ruis::color, 7> possible_colors = {{
 		 0xffffffff,
 		 0xffffff00,
 		 0xff00ff00,
