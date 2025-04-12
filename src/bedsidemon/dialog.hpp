@@ -38,7 +38,7 @@ public:
 	dialog(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<widget>> contents
+		ruis::widget_list contents
 	);
 
 	void close();

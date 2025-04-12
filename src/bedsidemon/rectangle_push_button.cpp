@@ -32,7 +32,7 @@ void rectangle_push_button::on_pressed_change()
 rectangle_push_button::rectangle_push_button(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> contents
+		ruis::widget_list contents
 	) :
     widget( //
 		std::move(context),
@@ -52,6 +52,6 @@ rectangle_push_button::rectangle_push_button(
 		std::move(params.container_params),
 		std::move(params.frame_params),
 		std::move(params.rectangle_button_params),
-		contents
+		std::move(contents)
 	)
 {}

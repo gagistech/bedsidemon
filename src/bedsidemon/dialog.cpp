@@ -44,7 +44,7 @@ namespace {
 std::vector<utki::shared_ref<widget>> make_root_widget_structure(
 	utki::shared_ref<ruis::context> c, //
 	container::parameters container_params,
-	utki::span<const utki::shared_ref<widget>> contents
+	ruis::widget_list contents
 )
 {
 	// clang-format off
@@ -95,7 +95,7 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
                             .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
                         }
                     },
-                    contents
+                    std::move(contents)
                 )
             }
         )
@@ -107,7 +107,7 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
 dialog::dialog(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	utki::span<const utki::shared_ref<widget>> contents
+	ruis::widget_list contents
 ) :
 	widget(std::move(context), {}, {}),
 	container(
@@ -120,7 +120,7 @@ dialog::dialog(
 		make_root_widget_structure(
 			this->context, //
 			std::move(params.container_params),
-			contents
+			std::move(contents)
 		)
 	)
 {

@@ -44,7 +44,7 @@ public:
 	rectangle_push_button(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> contents
+		ruis::widget_list contents
 	);
 
 	void on_pressed_change() override;
@@ -64,13 +64,13 @@ namespace make {
 inline utki::shared_ref<ruis::rectangle_push_button> rectangle_push_button(
 	utki::shared_ref<ruis::context> context,
 	ruis::rectangle_push_button::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> contents
+	ruis::widget_list contents
 )
 {
 	return utki::make_shared<ruis::rectangle_push_button>(
 		std::move(context), //
 		std::move(params),
-		contents
+		std::move(contents)
 	);
 }
 } // namespace make

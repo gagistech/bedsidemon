@@ -60,7 +60,7 @@ protected:
         ruis::container::parameters container_params,
 		ruis::frame_widget::parameters frame_params,
 		parameters params,
-        utki::span<const utki::shared_ref<ruis::widget>> contents
+        ruis::widget_list contents
 	);
 };
 

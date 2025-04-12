@@ -49,7 +49,7 @@ rectangle_button::rectangle_button( //
         ruis::container::parameters container_params,
 		ruis::frame_widget::parameters frame_params,
 		parameters params,
-        utki::span<const utki::shared_ref<ruis::widget>> contents
+        ruis::widget_list contents
 	):
     widget(std::move(context), {}, {}),
 	button(this->context, button::parameters{}),
@@ -63,7 +63,7 @@ rectangle_button::rectangle_button( //
             .container_params = std::move(container_params), //
             .frame_params = std::move(frame_params)
         },
-        contents
+        std::move(contents)
     ),
 	params(std::move(params))
 {

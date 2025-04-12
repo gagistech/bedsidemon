@@ -31,7 +31,7 @@ public:
 	menu(
 		utki::shared_ref<ruis::context> context, //
 		ruis::string title,
-		utki::span<const utki::shared_ref<ruis::widget>> contents
+		ruis::widget_list contents
 	);
 
 	virtual void on_close() {}

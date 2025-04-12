@@ -42,7 +42,7 @@ constexpr auto size_close_button = 40_pp;
 menu::menu(
 	utki::shared_ref<ruis::context> context, //
 	ruis::string title,
-	utki::span<const utki::shared_ref<ruis::widget>> contents
+	ruis::widget_list contents
 ) :
 	// clang-format off
 	ruis::widget(
@@ -129,7 +129,7 @@ menu::menu(
 						.borders = {style::menu_padding}
 					}
 				},
-				contents
+				std::move(contents)
 			)
 		}
 	)
