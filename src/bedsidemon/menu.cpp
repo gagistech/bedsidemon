@@ -22,7 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "menu.hpp"
 
 #include <ruis/widget/label/gap.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 
 #include "application.hpp"
@@ -116,7 +116,7 @@ menu::menu(
 					)
 				}
 			),
-			m::margins(this->context,
+			m::padding(this->context,
 				{
 					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::fill},
@@ -125,7 +125,7 @@ menu::menu(
 					.container_params{
 						.layout = ruis::layout::column
 					},
-					.frame_params{
+					.padding_params{
 						.borders = {style::menu_padding}
 					}
 				},

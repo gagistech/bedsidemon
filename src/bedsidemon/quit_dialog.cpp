@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/gap.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 
 #include "application.hpp"
@@ -68,12 +68,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
 
 	// clang-format off
     return {
-        m::margins(c,
+        m::padding(c,
             {
                 .container_params{
                     .layout = ruis::layout::column
                 },
-                .frame_params{
+                .padding_params{
                     .borders{dimension_gap}
                 }
             },

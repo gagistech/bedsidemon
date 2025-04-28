@@ -25,7 +25,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/image.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
 
@@ -55,7 +55,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 				}
 			},
 			{
-				m::margins(c,
+				m::padding(c,
                     {
                         .layout_params = {
                             .dims = {ruis::dim::min, ruis::dim::fill}
@@ -63,7 +63,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
                         .container_params = {
                             .layout = ruis::layout::pile
                         },
-                        .frame_params = {
+                        .padding_params = {
                             .borders = {button_icon_padding, button_icon_padding, button_icon_padding, button_icon_padding}
                         }
                     },

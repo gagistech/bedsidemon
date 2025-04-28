@@ -26,7 +26,7 @@ using namespace ruis;
 void rectangle_button::render(const matrix4& matrix) const
 {
 	this->rectangle::render(matrix);
-	this->margins::render(matrix);
+	this->padding::render(matrix);
 }
 
 void rectangle_button::on_pressed_change()
@@ -47,7 +47,7 @@ void rectangle_button::update_color()
 rectangle_button::rectangle_button( //
 		utki::shared_ref<ruis::context> context,
         ruis::container::parameters container_params,
-		ruis::frame_widget::parameters frame_params,
+		ruis::frame_widget::parameters padding_params,
 		parameters params,
         ruis::widget_list contents
 	):
@@ -55,14 +55,10 @@ rectangle_button::rectangle_button( //
 	button(this->context, button::parameters{}),
 	rectangle(
 		this->context,
-		rectangle::all_parameters{}
-	),
-    margins(
-        this->context,
-        {
-            .container_params = std::move(container_params), //
-            .frame_params = std::move(frame_params)
-        },
+		rectangle::all_parameters{
+			.container_params = std::move(container_params), //
+            .padding_params = std::move(padding_params)
+		},
         std::move(contents)
     ),
 	params(std::move(params))

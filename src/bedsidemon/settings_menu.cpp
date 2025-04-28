@@ -26,7 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/widget/label/gap.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <utki/debug.hpp>
 
@@ -72,12 +72,12 @@ public:
 		auto& c = this->context;
 
 		// clang-format off
-		return m::margins(c,
+		return m::padding(c,
 			{
 				.container_params = {
 					.layout = ruis::layout::pile
 				},
-				.frame_params = {
+				.padding_params = {
 					.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 				}
 			},
@@ -121,12 +121,12 @@ public:
 		auto& c = this->context;
 
 		// clang-format off
-		return m::margins(c,
+		return m::padding(c,
 			{
 				.container_params = {
 					.layout = ruis::layout::pile
 				},
-				.frame_params = {
+				.padding_params = {
 					.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 				}
 			},

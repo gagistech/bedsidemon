@@ -26,7 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <ruis/layout/layout.hpp>
 #include <ruis/widget/label/image.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/proxy/click_proxy.hpp>
 
@@ -199,7 +199,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
                                         }
                                     }
                                 ),
-                                m::margins(c,
+                                m::padding(c,
                                     {
                                         .layout_params = {
                                             .dims = {ruis::dim::fill, ruis::dim::min}
@@ -207,7 +207,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
                                         .container_params = {
                                             .layout = ruis::layout::column
                                         },
-                                        .frame_params = {
+                                        .padding_params = {
                                             .borders = {style::pw_padding}
                                         }
                                     },

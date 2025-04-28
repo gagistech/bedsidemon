@@ -22,7 +22,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
 #include <ruis/widget/button/base/button.hpp>
-#include <ruis/widget/label/margins.hpp> // TODO: should be moved into rectangle
 #include <ruis/widget/label/rectangle.hpp>
 
 namespace ruis {
@@ -31,8 +30,7 @@ namespace ruis {
 class rectangle_button :
 	virtual public button, //
 	// no reason to make rectangle inheritance private
-	public rectangle,
-	private margins // TODO: should be moved into rectangle
+	public rectangle
 {
 public:
 	struct parameters {
@@ -58,7 +56,7 @@ protected:
 	rectangle_button( //
 		utki::shared_ref<ruis::context> context,
         ruis::container::parameters container_params,
-		ruis::frame_widget::parameters frame_params,
+		ruis::frame_widget::parameters padding_params,
 		parameters params,
         ruis::widget_list contents
 	);
