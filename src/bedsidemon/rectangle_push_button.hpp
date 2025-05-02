@@ -36,7 +36,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		ruis::container::parameters container_params;
-		ruis::frame_widget::parameters frame_params;
+		ruis::frame_widget::parameters padding_params;
 		button::parameters button_params;
 		rectangle_button::parameters rectangle_button_params;
 	};
