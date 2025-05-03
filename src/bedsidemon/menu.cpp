@@ -21,12 +21,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "menu.hpp"
 
+#include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 
 #include "application.hpp"
-#include "rectangle_push_button.hpp"
 #include "style.hpp"
 
 using namespace std::string_literals;
