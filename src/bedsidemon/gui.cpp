@@ -64,7 +64,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
                             .layout = ruis::layout::pile
                         },
                         .padding_params = {
-                            .borders = {button_icon_padding, button_icon_padding, button_icon_padding, button_icon_padding}
+                            .borders = {button_icon_padding}
                         }
                     },
                     {
@@ -98,7 +98,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 			}
 		),
 		make_button("img_questionmark"sv, "about_button"),
-		make_button("img_exit"sv, "exit_button"),
+		make_button("img_close"sv, "exit_button"),
 	};
 	// clang-format on
 }
