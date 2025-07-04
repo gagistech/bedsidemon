@@ -188,6 +188,9 @@ jobs:
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: emscripten
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@main
