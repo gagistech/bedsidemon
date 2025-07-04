@@ -23,6 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <filesystem>
 
+#include <utki/config.hpp>
 #include <papki/fs_file.hpp>
 #include <ruisapp/application.hpp>
 
@@ -105,7 +106,11 @@ settings settings_storage::read(std::string_view filename)
 void settings_storage::set(const settings& s)
 {
 	this->settings_v = s;
+
+#if CFG_OS_NAME != CFG_OS_NAME_EMSCRIPTEN
 	this->write();
+#endif
+
 	this->settings_changed_signal.emit(this->settings_v);
 }
 
