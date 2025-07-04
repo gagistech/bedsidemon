@@ -21,9 +21,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../bedsidemon/spo2/spo2_sensor.hpp"
 #include "../serial_port_thread.hpp"
-
-#include "spo2_sensor.hpp"
 
 namespace bedsidemon {
 

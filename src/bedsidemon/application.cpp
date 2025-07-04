@@ -23,15 +23,22 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <iomanip>
 
-#include <clargs/parser.hpp>
 #include <papki/fs_file.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>
+#include <utki/config.hpp>
 #include <utki/debug.hpp>
 
-#include "spo2/contec_cms50d_plus.hpp"
+#if CFG_OS_NAME != CFG_OS_NAME_EMSCRIPTEN
+#	include <clargs/parser.hpp>
+#endif
+
+#if CFG_OS_NAME != CFG_OS_NAME_EMSCRIPTEN
+#	include "../sensors/spo2/contec_cms50d_plus.hpp"
+#	include "../sensors/spo2/setocare_st_t130_u01.hpp"
+#endif
+
 #include "spo2/fake_spo2_sensor.hpp"
-#include "spo2/setocare_st_t130_u01.hpp"
 #include "spo2/spo2_parameter_window.hpp"
 
 #include "about_menu.hpp"
@@ -130,6 +137,7 @@ application::application(bool window, std::string_view res_path) :
 		pw_container.push_back(pw);
 	}
 
+#if CFG_OS_NAME != CFG_OS_NAME_EMSCRIPTEN
 	// add real sensor
 	{
 		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
@@ -140,6 +148,7 @@ application::application(bool window, std::string_view res_path) :
 
 		pw_container.push_back(pw);
 	}
+#endif
 
 	// set up buttons
 	{
@@ -172,8 +181,12 @@ std::unique_ptr<application> bedsidemon::make_application(
 	utki::span<std::string_view> args
 )
 {
-	bool window = false;
+#if CFG_OS_NAME == CFG_OS_NAME_EMSCRIPTEN
+	bool window = true;
+	std::string res_path = "res/"s;
+#else
 	bool help = false;
+	bool window = false;
 
 	std::string res_path = []() {
 		papki::fs_file local_share("/usr/local/share/bedsidemon/"sv);
@@ -205,6 +218,7 @@ std::unique_ptr<application> bedsidemon::make_application(
 		std::cout << p.description() << std::endl;
 		return nullptr;
 	}
+#endif
 
 	return std::make_unique<application>(window, res_path);
 }

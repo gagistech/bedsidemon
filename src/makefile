@@ -14,7 +14,14 @@ this__root_dir_rel := ../
 
 this__version_cpp := $(this_out_dir)version.cpp
 
-this_srcs += $(this__version_cpp) $(filter-out %main.cpp,$(call prorab-src-dir, $(this_name)))
+this_srcs += $(this__version_cpp)
+this_srcs += $(call prorab-src-dir, $(this_name))
+
+ifneq ($(config), emsc)
+    this_srcs += $(call prorab-src-dir, sensors)
+endif
+
+this_srcs := $(filter-out %main.cpp,$(this_srcs))
 
 this_no_install := true
 this_static_lib_only := true
@@ -30,7 +37,7 @@ $(eval $(this__rules))
 
 # ================================================
 # ============== format and license ==============
-this_src_dir := $(this_name)
+this_src_dir := .
 $(eval $(prorab-clang-format))
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
@@ -62,10 +69,19 @@ define bedsidemon_rules
 
     this_ldlibs += $$(this_out_dir)libbedsidemon.a
 
+    ifeq ($(config), emsc)
+        this_name := $$(this_name).html
+
+        this_ldflags += -sWASM=1
+        this_ldflags += -sSINGLE_FILE
+        this_ldflags += --embed-file $(d)../res@res
+    else
+        this_ldlibs += -l clargs
+        this_ldlibs += -l nitki
+        this_ldlibs += -l opros
+    endif
+
     this_ldlibs += -l papki
-    this_ldlibs += -l clargs
-    this_ldlibs += -l nitki
-    this_ldlibs += -l opros
     this_ldlibs += -l tml
     this_ldlibs += -l ruis
     this_ldlibs += -l utki
@@ -80,13 +96,20 @@ define bedsidemon_rules
     this_test_deps := $$(prorab_this_name)
     this_test_ld_path := $$(prorab_space)
     $$(eval $$(prorab-run))
-
 endef
 
-# $(eval $(call bedsidemon_rules,opengl,xorg))
-$(eval $(call bedsidemon_rules,opengles,xorg))
-# $(eval $(call bedsidemon_rules,opengl,wayland))
-$(eval $(call bedsidemon_rules,opengles,wayland))
+ifneq ($(config), emsc)
+    # non-Emscripten
+
+    # $(eval $(call bedsidemon_rules,opengl,xorg))
+    $(eval $(call bedsidemon_rules,opengles,xorg))
+    # $(eval $(call bedsidemon_rules,opengl,wayland))
+    $(eval $(call bedsidemon_rules,opengles,wayland))
+else
+    # Emscripten
+
+    $(eval $(call bedsidemon_rules,opengles,sdl))
+endif
 
 # clean up
 bedsidemon_rules :=
