@@ -20,10 +20,12 @@ Standards-Version: 3.9.2
 Package: bedsidemon-opengles-xorg
 Section: misc
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends},
+Depends:
+	${shlibs:Depends},
+	${misc:Depends},
 	bedsidemon-data
 Description: Bed side monitor demo app.
- Demo application of medical bed side monitor.
+	Demo application of medical bed side monitor.
 
 Package: bedsidemon-opengles-wayland
 Section: misc
@@ -31,11 +33,11 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
 	bedsidemon-data
 Description: Bed side monitor demo app.
- Demo application of medical bed side monitor.
+	Demo application of medical bed side monitor.
 
 Package: bedsidemon-data
 Section: misc
 Architecture: all
 Depends: ${misc:Depends}
 Description: Bed side monitor demo app.
- Data files for bedsidemon.
+	Data files for bedsidemon.

@@ -22,7 +22,7 @@ this_static_lib_only := true
 $(eval $(prorab-build-lib))
 
 define this__rules
-$(abspath $(d)$(this__version_cpp)): $(abspath $(d)$(this__root_dir_rel)debian/changelog)
+$(abspath $(d)$(this__version_cpp)): $(abspath $(d)$(this__root_dir_rel)build/debian/changelog)
 $(.RECIPEPREFIX)$(a)mkdir -p $$(dir $$@)
 $(.RECIPEPREFIX)$(a)(cd $(d)$(this__root_dir_rel); echo "extern const char* const program_version = \"$$$$(myci-deb-version.sh)\";" > $$@)
 endef
@@ -90,3 +90,14 @@ $(eval $(call bedsidemon_rules,opengles,wayland))
 
 # clean up
 bedsidemon_rules :=
+
+
+# ==================================================
+# = targets for building with conan and emscripten =
+
+define this__rules
+conan_install:
+$(.RECIPEPREFIX)@echo install conan dependencies
+$(.RECIPEPREFIX)$(a)conan install $(d)../../build/emscripten --update --profile:host $(d)../../build/emscripten/conan.profile --build=missing --output-folder=$(d)out/emsc --deployer-package="*"
+endef
+$(eval $(this__rules))
