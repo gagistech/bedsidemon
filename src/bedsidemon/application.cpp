@@ -51,12 +51,17 @@ using namespace std::string_view_literals;
 
 using namespace bedsidemon;
 
+namespace{
+constexpr std::string_view app_name = "bedsidemon"sv;
+}
+
 application::application(bool window, std::string_view res_path) :
 	ruisapp::application( //
-		"bedsidemon"s,
+		std::string(app_name),
 		[]() {
 			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 			ruisapp::window_params wp(r4::vector2<unsigned>(1024, 600));
+			wp.title = app_name;
 			return wp;
 		}()
 	),
