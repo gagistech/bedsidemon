@@ -98,6 +98,6 @@ bedsidemon_rules :=
 define this__rules
 conan_install:
 $(.RECIPEPREFIX)@echo install conan dependencies
-$(.RECIPEPREFIX)$(a)conan install $(d)../../build/emscripten --update --profile:host $(d)../../build/emscripten/conan.profile --build=missing --output-folder=$(d)out/emsc --deployer-package="*"
+$(.RECIPEPREFIX)$(a)conan install $(d)../build/emscripten --update --profile:host $(d)../build/emscripten/conan.profile --build=missing --output-folder=$(d)out/emsc --deployer-package="*"
 endef
 $(eval $(this__rules))

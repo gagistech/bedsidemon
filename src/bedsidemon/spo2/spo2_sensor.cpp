@@ -1,7 +1,7 @@
 /*
 bedsidemon - Bedside monitor example GUI project
 
-Copyright (C) 2024 Gagistech Oy <gagistechoy@gmail.com>
+Copyright (C) 2024-2025 Gagistech Oy <gagistechoy@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
