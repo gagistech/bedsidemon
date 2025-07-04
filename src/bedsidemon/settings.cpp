@@ -23,9 +23,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <filesystem>
 
-#include <utki/config.hpp>
 #include <papki/fs_file.hpp>
 #include <ruisapp/application.hpp>
+#include <utki/config.hpp>
 
 using namespace std::string_view_literals;
 

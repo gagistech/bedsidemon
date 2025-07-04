@@ -37,9 +37,14 @@ $(eval $(this__rules))
 
 # ================================================
 # ============== format and license ==============
-this_src_dir := .
-$(eval $(prorab-clang-format))
 this_license_file := ../LICENSE
+
+this_src_dir := $(this_name)
+$(eval $(prorab-clang-format))
+$(eval $(prorab-license))
+
+this_src_dir := sensors
+$(eval $(prorab-clang-format))
 $(eval $(prorab-license))
 
 # ===============================================
