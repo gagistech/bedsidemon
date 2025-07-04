@@ -200,10 +200,10 @@ jobs:
         with: {name: PATH, value: "$PATH:$HOME/.local/bin"}
       - name: install conan
         run: pipx install conan
-      # - name: create default conan profile
-      #   run: |
-      #     conan profile detect --name default
-      #     sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
+      - name: create default conan profile
+        run: |
+          conan profile detect --name default
+#          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
       - name: git clone
         uses: myci-actions/checkout@main
         with:
