@@ -51,9 +51,9 @@ using namespace std::string_view_literals;
 
 using namespace bedsidemon;
 
-namespace{
+namespace {
 constexpr std::string_view app_name = "bedsidemon"sv;
-}
+} // namespace
 
 application::application(bool window, std::string_view res_path) :
 	ruisapp::application( //
