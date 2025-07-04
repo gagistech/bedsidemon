@@ -30,8 +30,8 @@ jobs:
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
       - name: git clone
         uses: myci-actions/checkout@main
-      - name: prepare debian package
-        run: myci-deb-prepare.sh
+#      - name: prepare debian package
+#        run: myci-deb-prepare.sh
       - name: install deps
         run: myci-deb-install-build-deps.sh
       - name: add DE locale
@@ -105,8 +105,8 @@ jobs:
           apt install --assume-yes devscripts equivs
       - name: git clone
         uses: myci-actions/checkout@main
-      - name: prepare debian package
-        run: myci-deb-prepare.sh
+#      - name: prepare debian package
+#        run: myci-deb-prepare.sh
       - name: install deps
         run: myci-deb-install-build-deps.sh
       - name: build
