@@ -194,7 +194,7 @@ jobs:
           repo: deb https://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          install: devscripts equivs myci pipx cmake git nodejs
+          install: devscripts equivs myci pipx cmake git nodejs prorab prorab-extra
       - name: add ~/.local/bin to PATH
         uses: myci-actions/export-env-var@main
         with: {name: PATH, value: "$PATH:$HOME/.local/bin"}
@@ -212,6 +212,8 @@ jobs:
         run: make conan_install
       - name: build
         run: |
+          source src/out/emsc/conanbuild.sh
+          source src/out/emsc/conanautotoolsdeps.sh
           make config=emsc --directory=src
       - name: deploy conan package
         run: |
