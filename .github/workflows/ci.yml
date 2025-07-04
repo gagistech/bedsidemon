@@ -5,6 +5,7 @@ on:
 env:
   PACKAGE_NAME: ${{ github.event.repository.name }}
   PACKAGE_VERSION: ${{ github.sha }}
+  MYCI_CONAN_REMOTE: https://gagis.hopto.org/conan
 jobs:
 ##### coverage #####
   coverage:
@@ -204,6 +205,8 @@ jobs:
         run: |
           conan profile detect --name default
 #          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
+      - name: add cppfw conan remote
+        run: conan remote add cppfw $MYCI_CONAN_REMOTE
       - name: git clone
         uses: myci-actions/checkout@main
         with:
