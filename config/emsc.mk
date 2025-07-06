@@ -21,6 +21,3 @@ this_ldflags += -Wno-pthreads-mem-growth
 
 this_cxxflags += --use-port=sdl2
 this_ldflags += --use-port=sdl2
-
-sdl := true
-ogles := true
