@@ -77,8 +77,6 @@ define bedsidemon_rules
     ifeq ($(config), emsc)
         this_name := $$(this_name).html
 
-        this_ldflags += -sWASM=1
-        this_ldflags += -sSINGLE_FILE
         this_ldflags += --embed-file $(d)../res@res
     else
         this_ldlibs += -l clargs

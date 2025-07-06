@@ -15,6 +15,10 @@ this_ldflags += -sSUPPORT_LONGJMP=wasm
 this_ldflags += -sALLOW_MEMORY_GROWTH
 this_ldflags += -sMEMORY_GROWTH_GEOMETRIC_STEP=1.0
 
+# produce single .html file
+this_ldflags += -sWASM=1
+this_ldflags += -sSINGLE_FILE
+
 this_cxxflags += -pthread
 this_ldflags += -pthread
 this_ldflags += -Wno-pthreads-mem-growth
