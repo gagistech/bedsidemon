@@ -53,13 +53,16 @@ using namespace bedsidemon;
 
 namespace {
 constexpr std::string_view app_name = "bedsidemon"sv;
+
+constexpr auto screen_width = 1024;
+constexpr auto screen_height = 600;
 } // namespace
 
 application::application(bool window, std::string_view res_path) :
 	ruisapp::application( //
 		std::string(app_name),
 		{
-			.dims = {1024, 600},
+			.dims = {screen_width, screen_height},
 			.title = std::string(app_name)
 		}
 	),
