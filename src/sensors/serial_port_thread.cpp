@@ -51,12 +51,18 @@ void serial_port_thread::send(std::vector<uint8_t> data)
 	if (this->send_buffer.empty()) {
 		this->send_buffer = std::move(data);
 	} else {
-		using std::begin;
-		using std::end;
-		this->send_buffer.insert(end(this->send_buffer), begin(data), end(data));
+		this->send_buffer.reserve(this->send_buffer.size() + data.size());
+
+		for (auto d : data) {
+			this->send_buffer.push_back(d);
+		}
 	}
 
-	this->wait_set.change(this->port, opros::ready::read | opros::ready::write, &this->port);
+	this->wait_set.change(
+		this->port, //
+		opros::ready::read | opros::ready::write,
+		&this->port
+	);
 }
 
 std::optional<uint32_t> serial_port_thread::on_loop()
@@ -96,7 +102,9 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 				this->on_data_received(received_span);
 			}
 			if (t.flags.get(opros::ready::error)) {
-				std::cout << "port error" << std::endl;
+				utki::log([](auto& o) {
+					o << "serial port error" << std::endl;
+				});
 				this->quit();
 			}
 		}

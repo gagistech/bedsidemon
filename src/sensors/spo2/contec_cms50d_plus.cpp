@@ -221,10 +221,14 @@ void contec_cms50d_plus::handle_packet()
 		constexpr auto max_signal_strength = 10;
 		constexpr auto min_signal_strength = 4;
 
-		this->push(
+		this->push( //
 			spo2_measurement{
 				.signal_strength = uint8_t(
-					(min(max(int(data.signal_strength), min_signal_strength), max_signal_strength) -
+					(std::clamp(
+						 int(data.signal_strength), //
+						 min_signal_strength,
+						 max_signal_strength
+					 ) -
 					 min_signal_strength) *
 					std::centi::den / (max_signal_strength - min_signal_strength)
 				),

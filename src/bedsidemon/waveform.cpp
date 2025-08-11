@@ -32,18 +32,22 @@ constexpr auto default_max_value = 100;
 } // namespace
 
 // NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, "TODO: fix")
-waveform::waveform(//
-utki::shared_ref<ruis::context> context, all_parameters params) :
+waveform::waveform( //
+	utki::shared_ref<ruis::context> context,
+	all_parameters params
+) :
 	ruis::widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	ruis::color_widget(this->context, std::move(params.color_params)),
-	paths{{//
-		   {.vao{this->context.get().renderer}},
-		   {.vao{this->context.get().renderer}}
-	}},
+	paths{
+		{//
+		 {.vao{this->context.get().renderer}},
+		 {.vao{this->context.get().renderer}}
+		}
+},
 	value_max(default_max_value)
 {
 	constexpr auto default_sweep_speed_mm_per_sec = 25;

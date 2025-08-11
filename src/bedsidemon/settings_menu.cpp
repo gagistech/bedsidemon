@@ -156,8 +156,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 				.align = {ruis::align::front, ruis::align::center}
 			},
-			.providable_params = {
-				.provider = std::make_shared<language_selection_box_provider>(c)
+			.list_params = {
+				.provider = utki::make_shared<language_selection_box_provider>(c)
 			}
 		}
 	);
@@ -223,8 +223,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.widget_params = {
 					.id = "sweep_speed_selection_box"s
 				},
-				.providable_params = {
-					.provider = std::make_shared<sweep_speed_selection_box_provider>(c)
+				.list_params = {
+					.provider = utki::make_shared<sweep_speed_selection_box_provider>(c)
 				}
 			}
 		),

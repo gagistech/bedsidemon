@@ -62,14 +62,12 @@ fake_spo2_sensor::fake_spo2_sensor(
 ) :
 	spo2_sensor(pw),
 	record(read_recorded_data(data_filename)),
-	timer(
-		utki::make_shared<ruis::timer>(
-			pw.get().context.get().updater,
-			[this](uint32_t elapsed_ms) {
-				this->on_timer_expired(elapsed_ms);
-			}
-		)
-	),
+	timer(utki::make_shared<ruis::timer>(
+		pw.get().context.get().updater,
+		[this](uint32_t elapsed_ms) {
+			this->on_timer_expired(elapsed_ms);
+		}
+	)),
 	cur_frame(this->record.begin())
 {
 	this->timer.get().start(this->cur_frame->delta_time_ms);

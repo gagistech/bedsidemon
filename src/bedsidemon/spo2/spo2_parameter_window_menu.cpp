@@ -116,8 +116,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.widget_params = {
 					.id = "color_selection_box"s
 				},
-				.providable_params = {
-					.provider = std::make_shared<selection_box_provider>(c)
+				.list_params = {
+					.provider = utki::make_shared<selection_box_provider>(c)
 				}
 			}
 		)

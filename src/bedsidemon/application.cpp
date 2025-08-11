@@ -64,7 +64,7 @@ application::application(bool window, std::string_view res_path) :
 		{
 			.dims = {screen_width, screen_height},
 			.title = std::string(app_name)
-		}
+}
 	),
 	res_path(papki::as_dir(res_path))
 {

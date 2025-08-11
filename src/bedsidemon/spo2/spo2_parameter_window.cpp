@@ -235,11 +235,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 } // namespace
 
 spo2_parameter_window::spo2_parameter_window(
-    utki::shared_ref<ruis::context> context, //
-    ruis::string title,
-    uint32_t color
+	utki::shared_ref<ruis::context> context, //
+	ruis::string title,
+	uint32_t color
 ) :
-    // clang-format off
+	// clang-format off
 	ruis::widget(
 		std::move(context),
 		{
@@ -266,17 +266,15 @@ spo2_parameter_window::spo2_parameter_window(
             color
         )
 	),
-    // clang-format on
-	spo2_value(this->get_widget_as<ruis::text>("spo2_value")),
-	bpm_value(this->get_widget_as<ruis::text>("bpm_value")),
-	heart(this->get_widget("heart")),
-	waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform")),
-	heart_timer(utki::make_shared<ruis::timer>(//
-        this->context.get().updater,
-        [this](uint32_t elapsed_ms) {
-		    this->on_heart_timer_expired();
-	    }
-    ))
+	// clang-format on
+	spo2_value(this->get_widget_as<ruis::text>("spo2_value")), bpm_value(this->get_widget_as<ruis::text>("bpm_value")),
+	heart(this->get_widget("heart")), waveform(this->get_widget_as<bedsidemon::waveform>("pw_waveform")),
+	heart_timer(utki::make_shared<ruis::timer>( //
+		this->context.get().updater,
+		[this](uint32_t elapsed_ms) {
+			this->on_heart_timer_expired();
+		}
+	))
 {
 	{
 		auto& cp = this->get_widget_as<ruis::click_proxy>("click_proxy"sv);
@@ -292,10 +290,10 @@ spo2_parameter_window::spo2_parameter_window(
 	}
 
 	auto& ss = settings_storage::inst();
-	decltype(settings_storage::settings_changed_signal)::callback_type settings_change_handler =
-		[&pw = *this](const settings& s) {
-			pw.waveform.set_sweep_speed(ruis::real(s.sweep_speed_um_per_sec) / ruis::real(std::milli::den));
-		};
+	decltype(settings_storage::settings_changed_signal
+	)::callback_type settings_change_handler = [&pw = *this](const settings& s) {
+		pw.waveform.set_sweep_speed(ruis::real(s.sweep_speed_um_per_sec) / ruis::real(std::milli::den));
+	};
 	settings_change_handler(ss.get());
 	this->settings_change_signal_connection = ss.settings_changed_signal.connect(std::move(settings_change_handler));
 }

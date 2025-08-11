@@ -81,6 +81,13 @@
             "command": "make format",
             "problemMatcher": [],
             "group": "build"
+        },
+        {
+            "label": "lint",
+            "type": "shell",
+            "command": "make config=lint && make config=lint test",
+            "problemMatcher": [],
+            "group": "build"
         }
     ]
 }
