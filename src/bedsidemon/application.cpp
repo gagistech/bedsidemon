@@ -58,28 +58,25 @@ constexpr auto screen_width = 1024;
 constexpr auto screen_height = 600;
 } // namespace
 
-application::application(bool window, std::string_view res_path) :
-	ruisapp::application( //
-		std::string(app_name),
-		{
-			.dims = {screen_width, screen_height},
-			.title = std::string(app_name)
-}
-	),
+application::application(bool windowed, std::string_view res_path) :
+	ruisapp::application({
+		.name = std::string(app_name)  //
+}),
+	window(this->make_window(
+		{.dims = {screen_width, screen_height}, .title = std::string(app_name), .fullscreen = !windowed}
+	)),
 	res_path(papki::as_dir(res_path))
 {
-	this->set_fullscreen(!window);
+	this->window.gui.init_standard_widgets(*this->get_res_file());
 
-	this->gui.init_standard_widgets(*this->get_res_file());
-
-	this->gui.context.get().loader().mount_res_pack(*this->get_res_file(this->res_path));
+	this->window.gui.context.get().loader().mount_res_pack(*this->get_res_file(this->res_path));
 
 	this->load_language(this->settings_storage.get().cur_language_index);
 
-	auto c = make_root_widget(this->gui.context);
+	auto c = make_root_widget(this->window.gui.context);
 
 	this->menu_area = c.get().try_get_widget_as<ruis::container>("menu_area"sv);
-	ASSERT(this->menu_area)
+	utki::assert(this->menu_area, SL);
 
 	// set up clock update
 	{
@@ -88,7 +85,7 @@ application::application(bool window, std::string_view res_path) :
 		auto& time_text_widget = c.get().get_widget_as<ruis::text>("clock_text"sv);
 
 		this->clock_timer = utki::make_shared<ruis::timer>( //
-			this->gui.context.get().updater,
+			this->window.gui.context.get().updater,
 			[this, time_text_widget = utki::make_shared_from(time_text_widget)](uint32_t elapsed_ms) {
 				auto now = std::chrono::system_clock::now();
 				auto time = std::chrono::system_clock::to_time_t(now);
@@ -101,13 +98,13 @@ application::application(bool window, std::string_view res_path) :
 
 				this->clock_timer->stop();
 				this->clock_timer->start(clock_update_interval_ms);
-				ASSERT(this->clock_timer->is_running())
+				utki::assert(this->clock_timer->is_running(), SL);
 			}
 		);
 		this->clock_timer->start(0);
 	}
 
-	this->gui.set_root(c);
+	this->window.gui.set_root(c);
 
 	auto& pw_container = c.get().get_widget_as<ruis::container>("pw_container");
 
@@ -115,8 +112,8 @@ application::application(bool window, std::string_view res_path) :
 	{
 		constexpr auto deafult_color = 0xff00ff00;
 		auto pw = utki::make_shared<spo2_parameter_window>(
-			this->gui.context, //
-			this->gui.context.get().localization.get().get("spo2_simulation"),
+			this->window.gui.context, //
+			this->window.gui.context.get().localization.get().get("spo2_simulation"),
 			deafult_color
 		);
 		this->fake_spo2_sensor_v = std::make_unique<fake_spo2_sensor>(
@@ -131,8 +128,8 @@ application::application(bool window, std::string_view res_path) :
 	{
 		constexpr auto deafult_color = 0xffff00ff;
 		auto pw = utki::make_shared<spo2_parameter_window>(
-			this->gui.context, //
-			this->gui.context.get().localization.get().get("spo2_simulation"),
+			this->window.gui.context, //
+			this->window.gui.context.get().localization.get().get("spo2_simulation"),
 			deafult_color
 		);
 		this->fake_spo2_sensor2_v = std::make_unique<fake_spo2_sensor>(
@@ -146,7 +143,7 @@ application::application(bool window, std::string_view res_path) :
 #if CFG_OS_NAME != CFG_OS_NAME_EMSCRIPTEN
 	// add real sensor
 	{
-		auto pw = utki::make_shared<spo2_parameter_window>(this->gui.context);
+		auto pw = utki::make_shared<spo2_parameter_window>(this->window.gui.context);
 		// this->real_spo2_sensor_v = std::make_unique<contec_cms50d_plus>(pw,
 		// "/dev/ttyUSB0"); NOLINTNEXTLINE(bugprone-unused-return-value, "false
 		// positive")
@@ -164,17 +161,17 @@ application::application(bool window, std::string_view res_path) :
 
 		c.get().get_widget_as<ruis::push_button>("settings_button"sv).click_handler = [](ruis::push_button& b) {
 			auto& app = bedsidemon::application::inst();
-			app.open_menu(utki::make_shared<settings_menu>(app.gui.context));
+			app.open_menu(utki::make_shared<settings_menu>(app.window.gui.context));
 		};
 
 		c.get().get_widget_as<ruis::push_button>("about_button"sv).click_handler = [](ruis::push_button& b) {
 			auto& app = bedsidemon::application::inst();
-			app.open_menu(utki::make_shared<about_menu>(app.gui.context));
+			app.open_menu(utki::make_shared<about_menu>(app.window.gui.context));
 		};
 
 		c.get().get_widget_as<ruis::push_button>("exit_button"sv).click_handler = [](ruis::push_button& b) {
 			auto& app = bedsidemon::application::inst();
-			auto& o = app.gui.get_root().get_widget<ruis::overlay>();
+			auto& o = app.window.gui.get_root().get_widget<ruis::overlay>();
 			o.context.get().post_to_ui_thread([&o]() {
 				o.push_back(utki::make_shared<quit_dialog>(o.context));
 			});
@@ -188,11 +185,11 @@ std::unique_ptr<application> bedsidemon::make_application(
 )
 {
 #if CFG_OS_NAME == CFG_OS_NAME_EMSCRIPTEN
-	bool window = true;
+	bool windowed = true;
 	std::string res_path = "res/"s;
 #else
 	bool help = false;
-	bool window = false;
+	bool windowed = false;
 
 	std::string res_path = []() {
 		papki::fs_file local_share("/usr/local/share/bedsidemon/"sv);
@@ -211,7 +208,7 @@ std::unique_ptr<application> bedsidemon::make_application(
 	});
 
 	p.add("window", "run in window mode", [&]() {
-		window = true;
+		windowed = true;
 	});
 
 	p.add("res-path", "resources path, default = /usr/share/bedsidemon/", [&](std::string_view v) {
@@ -226,7 +223,7 @@ std::unique_ptr<application> bedsidemon::make_application(
 	}
 #endif
 
-	return std::make_unique<application>(window, res_path);
+	return std::make_unique<application>(windowed, res_path);
 }
 
 void bedsidemon::application::open_menu(utki::shared_ref<bedsidemon::menu> menu)
@@ -252,8 +249,8 @@ void application::load_language(size_t index)
 {
 	auto lng = settings::language_id_to_name_mapping.at(index).first;
 
-	this->gui.context.get().localization = utki::make_shared<ruis::localization>(
+	this->window.gui.context.get().localization = utki::make_shared<ruis::localization>(
 		tml::read(*this->get_res_file(utki::cat(this->res_path, "localization/", lng, ".tml")))
 	);
-	this->gui.get_root().reload();
+	this->window.gui.get_root().reload();
 }

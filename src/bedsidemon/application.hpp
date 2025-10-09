@@ -33,6 +33,8 @@ namespace bedsidemon {
 
 class application : public ruisapp::application
 {
+	ruisapp::window& window;
+
 	std::shared_ptr<ruis::container> menu_area;
 	std::shared_ptr<bedsidemon::menu> menu;
 
