@@ -84,7 +84,7 @@ define bedsidemon_rules
         this_ldlibs += -l opros
     endif
 
-    this_ldlibs += -l papki
+    this_ldlibs += -l fsif
     this_ldlibs += -l tml
     this_ldlibs += -l ruis
     this_ldlibs += -l utki

@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <filesystem>
 
-#include <papki/fs_file.hpp>
+#include <fsif/native_file.hpp>
 #include <ruisapp/application.hpp>
 #include <utki/config.hpp>
 
@@ -75,7 +75,7 @@ settings_storage::settings_storage() :
 
 settings settings_storage::read(std::string_view filename)
 {
-	papki::fs_file fi(filename);
+	fsif::native_file fi(filename);
 
 	if (!fi.exists()) {
 		LOG([](auto& o) {
@@ -134,7 +134,7 @@ void settings_storage::write()
 
 	std::filesystem::create_directories(ruisapp::application::inst().directory.config);
 
-	papki::fs_file fi(filename);
+	fsif::native_file fi(filename);
 	tml::write(tml, fi);
 }
 

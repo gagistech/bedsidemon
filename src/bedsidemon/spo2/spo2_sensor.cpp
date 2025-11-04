@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #ifdef BEDSIDEMON_RECORD_SPO2_MEASUREMENTS
 #	include <tml/tree.hpp>
-#	include <papki/fs_file.hpp>
+#	include <fsif/native_file.hpp>
 #endif
 
 using namespace std::string_view_literals;
@@ -67,7 +67,7 @@ spo2_sensor::~spo2_sensor()
 		rec.push_back(tml::tree("frame", m.to_tml()));
 	}
 
-	papki::fs_file fi("spo2_measurements.tml");
+	fsif::native_file fi("spo2_measurements.tml");
 	tml::write(rec, fi);
 }
 #else

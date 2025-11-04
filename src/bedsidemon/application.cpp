@@ -23,7 +23,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <iomanip>
 
-#include <papki/fs_file.hpp>
+#include <fsif/native_file.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <utki/config.hpp>
@@ -65,7 +65,7 @@ application::application(bool windowed, std::string_view res_path) :
 	window(this->make_window(
 		{.dims = {screen_width, screen_height}, .title = std::string(app_name), .fullscreen = !windowed}
 	)),
-	res_path(papki::as_dir(res_path))
+	res_path(fsif::as_dir(res_path))
 {
 	this->window.gui.init_standard_widgets(*this->get_res_file());
 
@@ -118,7 +118,7 @@ application::application(bool windowed, std::string_view res_path) :
 		);
 		this->fake_spo2_sensor_v = std::make_unique<fake_spo2_sensor>(
 			pw, //
-			utki::cat(papki::as_dir(res_path), "spo2_measurements.tml")
+			utki::cat(fsif::as_dir(res_path), "spo2_measurements.tml")
 		);
 
 		pw_container.push_back(pw);
@@ -134,7 +134,7 @@ application::application(bool windowed, std::string_view res_path) :
 		);
 		this->fake_spo2_sensor2_v = std::make_unique<fake_spo2_sensor>(
 			pw, //
-			utki::cat(papki::as_dir(res_path), "spo2_measurements2.tml")
+			utki::cat(fsif::as_dir(res_path), "spo2_measurements2.tml")
 		);
 
 		pw_container.push_back(pw);
@@ -192,7 +192,7 @@ std::unique_ptr<application> bedsidemon::make_application(
 	bool windowed = false;
 
 	std::string res_path = []() {
-		papki::fs_file local_share("/usr/local/share/bedsidemon/"sv);
+		fsif::native_file local_share("/usr/local/share/bedsidemon/"sv);
 
 		if (local_share.exists()) {
 			return local_share.path();
