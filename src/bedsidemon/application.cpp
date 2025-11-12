@@ -67,9 +67,9 @@ application::application(bool windowed, std::string_view res_path) :
 	)),
 	res_path(fsif::as_dir(res_path))
 {
-	this->window.gui.init_standard_widgets(*this->get_res_file());
+	this->window.gui.init_standard_widgets(this->get_res_file());
 
-	this->window.gui.context.get().loader().mount_res_pack(*this->get_res_file(this->res_path));
+	this->window.gui.context.get().loader().mount_res_pack(this->get_res_file(this->res_path));
 
 	this->load_language(this->settings_storage.get().cur_language_index);
 
@@ -250,7 +250,7 @@ void application::load_language(size_t index)
 	auto lng = settings::language_id_to_name_mapping.at(index).first;
 
 	this->window.gui.context.get().localization = utki::make_shared<ruis::localization>(
-		tml::read(*this->get_res_file(utki::cat(this->res_path, "localization/", lng, ".tml")))
+		tml::read(this->get_res_file(utki::cat(this->res_path, "localization/", lng, ".tml")))
 	);
 	this->window.gui.get_root().reload();
 }

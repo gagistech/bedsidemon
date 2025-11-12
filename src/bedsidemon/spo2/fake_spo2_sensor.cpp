@@ -36,9 +36,8 @@ std::vector<spo2_measurement> read_recorded_data(std::string_view data_filename)
 	std::vector<spo2_measurement> ret;
 
 	auto fi = bedsidemon::application::inst().get_res_file(data_filename);
-	ASSERT(fi)
 
-	auto frames = tml::read(*fi);
+	auto frames = tml::read(fi);
 
 	for (const auto& f : frames) {
 		if (f.value.to_string() != "frame"sv) {
