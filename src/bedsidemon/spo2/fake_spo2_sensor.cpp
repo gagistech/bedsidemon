@@ -88,7 +88,7 @@ void fake_spo2_sensor::on_timer_expired(uint32_t elapsed_ms)
 		}
 	}
 
-	ASSERT(dt_ms < this->cur_frame->delta_time_ms)
+	utki::assert(dt_ms < this->cur_frame->delta_time_ms, SL);
 
 	this->time_since_frame_start_ms = dt_ms;
 

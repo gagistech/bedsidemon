@@ -69,7 +69,7 @@ void contec_cms50d_plus::on_port_closed()
 
 void contec_cms50d_plus::request_live_data(uint32_t cur_ticks)
 {
-	ASSERT(!this->is_sending)
+	utki::assert(!this->is_sending, SL);
 
 	this->last_ticks = cur_ticks;
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
@@ -113,7 +113,7 @@ void contec_cms50d_plus::feed(uint8_t byte)
 			}
 			break;
 		case state::enum_size:
-			ASSERT(false)
+			utki::assert(false, SL);
 			break;
 	}
 }
@@ -125,7 +125,7 @@ constexpr auto live_data_packet_size = 7;
 
 void contec_cms50d_plus::handle_packet_type_byte(uint8_t byte)
 {
-	ASSERT(this->state_v == state::idle)
+	utki::assert(this->state_v == state::idle, SL);
 	switch (byte) {
 		case live_data_packet_type:
 			this->packet_v.type = packet_type::live_data;
@@ -143,7 +143,7 @@ void contec_cms50d_plus::handle_packet_type_byte(uint8_t byte)
 
 void contec_cms50d_plus::apply_packet_high_bits()
 {
-	ASSERT(this->packet_v.buffer.size() <= utki::byte_bits - 1)
+	utki::assert(this->packet_v.buffer.size() <= utki::byte_bits - 1, SL);
 	for (auto& b : this->packet_v.buffer) {
 		b &= (utki::byte_mask >> 1);
 		b |= ((this->packet_v.high_bits & 0x01) << (utki::byte_bits - 1));
@@ -185,7 +185,7 @@ void contec_cms50d_plus::handle_packet()
 	// std::cout << std::endl;
 
 	if (this->packet_v.type == packet_type::live_data) {
-		ASSERT(this->packet_v.buffer.size() == live_data_packet_size)
+		utki::assert(this->packet_v.buffer.size() == live_data_packet_size, SL);
 		live_data data{
 			.signal_strength = uint8_t(this->packet_v.buffer[0] & utki::lower_nibble_mask),
 			.searching_time_too_long = (this->packet_v.buffer[0] & utki::bit_4_mask) != 0,

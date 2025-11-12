@@ -77,7 +77,7 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 				std::lock_guard lock_guard(this->send_buffer_mutex);
 
 				auto num_sent = this->port.send(this->send_buffer);
-				ASSERT(num_sent <= this->send_buffer.size())
+				utki::assert(num_sent <= this->send_buffer.size(), SL);
 				this->send_buffer.erase(this->send_buffer.begin(), utki::next(this->send_buffer.begin(), num_sent));
 				if (this->send_buffer.empty()) {
 					// std::cout << "all sent" << std::endl;
@@ -89,7 +89,7 @@ std::optional<uint32_t> serial_port_thread::on_loop()
 				constexpr auto receive_buffer_size = 0x100;
 				std::array<uint8_t, receive_buffer_size> buffer{};
 				auto num_received = this->port.receive(buffer);
-				ASSERT(num_received <= buffer.size())
+				utki::assert(num_received <= buffer.size(), SL);
 
 				auto received_span = utki::make_span(buffer.data(), num_received);
 

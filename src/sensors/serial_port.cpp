@@ -60,7 +60,7 @@ serial_port::serial_port(std::string_view port_filename, baud_rate baud_rate) :
 		newtermios.c_cc[VMIN] = 0;
 		newtermios.c_cc[VTIME] = 0;
 
-		ASSERT(size_t(baud_rate) < size_t(baud_rate::enum_size))
+		utki::assert(size_t(baud_rate) < size_t(baud_rate::enum_size), SL);
 		// NOLINTNEXTLINE(cppcoreguidelines-init-variables, "false positive")
 		speed_t br = baud_rate_map[size_t(baud_rate)];
 		cfsetospeed(&newtermios, br);

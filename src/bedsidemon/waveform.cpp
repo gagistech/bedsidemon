@@ -118,9 +118,13 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 
 	// dx can be 0 when it is a very first sample received from sensor, dt_ms == 0
 	// in this case and => dx == 0
-	ASSERT(dx > 0 || (dx == 0 && dt_ms == 0), [&](auto& o) {
-		o << "dx = " << dx << ", dt_ms = " << dt_ms << ", this->px_per_ms = " << this->px_per_ms;
-	})
+	utki::assert(
+		dx > 0 || (dx == 0 && dt_ms == 0),
+		[&](auto& o) {
+			o << "dx = " << dx << ", dt_ms = " << dt_ms << ", this->px_per_ms = " << this->px_per_ms;
+		},
+		SL
+	);
 
 	// push new point
 	if (this->paths[0].points.empty()) {
@@ -137,18 +141,18 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 		}
 	}
 
-	ASSERT(!this->paths[0].points.empty())
+	utki::assert(!this->paths[0].points.empty(), SL);
 
 	// wrap around paths[0].points if needed
 	if (this->paths[0].points.back().x() >= this->rect().d.x()) {
 		auto dx1 = this->paths[0].points.back().x() - this->rect().d.x();
 		auto dx2 = dx - dx1;
-		ASSERT(dx1 >= 0)
-		ASSERT(dx2 >= 0)
+		utki::assert(dx1 >= 0, SL);
+		utki::assert(dx2 >= 0, SL);
 
 		auto ratio = dx1 / dx;
 
-		ASSERT(this->paths[0].points.size() >= 2) // TODO: why?
+		utki::assert(this->paths[0].points.size() >= 2, SL); // TODO: why?
 
 		auto v = this->paths[0].points.back().y();
 		auto dv = v - std::next(this->paths[0].points.rbegin())->y();
@@ -182,7 +186,7 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 
 	if (!pop_path.points.empty()) {
 		// there should be at least one line segment
-		ASSERT(pop_path.points.size() >= 2)
+		utki::assert(pop_path.points.size() >= 2, SL);
 
 		for (; pop_path.points.size() >= 2;) {
 			if (std::next(pop_path.points.begin())->x() <= pop_pos) {
@@ -191,9 +195,13 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 			} else {
 				auto tail_x = pop_path.points.front().x();
 				auto tail_dx = std::next(pop_path.points.begin())->x() - tail_x;
-				ASSERT(tail_dx > 0, [&](auto& o) {
-					o << "tail_dx = " << tail_dx << ", pop_path.size() = " << pop_path.points.size();
-				})
+				utki::assert(
+					tail_dx > 0,
+					[&](auto& o) {
+						o << "tail_dx = " << tail_dx << ", pop_path.size() = " << pop_path.points.size();
+					},
+					SL
+				);
 
 				auto ratio = (pop_pos - tail_x) / tail_dx;
 				auto tail_dv = std::next(pop_path.points.begin())->y() - pop_path.points.front().y();
@@ -224,7 +232,7 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 
 void waveform::make_vaos()
 {
-	ASSERT(this->value_max > this->value_offset)
+	utki::assert(this->value_max > this->value_offset, SL);
 	const auto& height = this->rect().d.y() - 1; // -1 due to line width
 	auto scale = height / (this->value_max - this->value_offset);
 

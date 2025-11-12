@@ -62,7 +62,7 @@ std::string_view language_index_to_id(size_t index)
 {
 	const auto& lang_mapping = settings::language_id_to_name_mapping;
 
-	ASSERT(index < lang_mapping.size())
+	utki::assert(index < lang_mapping.size(), SL);
 
 	return lang_mapping[index].first;
 }
@@ -78,9 +78,9 @@ settings settings_storage::read(std::string_view filename)
 	fsif::native_file fi(filename);
 
 	if (!fi.exists()) {
-		LOG([](auto& o) {
+		utki::log_debug([](auto& o) {
 			o << "settings file not found, use default settings" << std::endl;
-		})
+		});
 		return {};
 	}
 

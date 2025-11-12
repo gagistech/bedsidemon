@@ -63,7 +63,7 @@ public:
 
 	utki::shared_ref<ruis::widget> get_widget(size_t index) override
 	{
-		ASSERT(index < sweep_speeds_um_per_sec.size())
+		utki::assert(index < sweep_speeds_um_per_sec.size(), SL);
 
 		auto speed_um_per_sec = *utki::next(sweep_speeds_um_per_sec.begin(), index);
 
@@ -114,7 +114,7 @@ public:
 	{
 		const auto& lang_mapping = settings::language_id_to_name_mapping;
 
-		ASSERT(index < lang_mapping.size())
+		utki::assert(index < lang_mapping.size(), SL);
 
 		auto lang_name = utki::next(lang_mapping.begin(), index)->second;
 
@@ -172,7 +172,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				auto& ss = settings_storage::inst();
 				auto s = ss.get();
 
-				ASSERT(sel < settings::language_id_to_name_mapping.size())
+				utki::assert(sel < settings::language_id_to_name_mapping.size(), SL);
 				s.cur_language_index = sel;
 
 				ss.set(s);
@@ -189,7 +189,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 
 		auto& ss = settings_storage::inst();
 		const auto& s = ss.get();
-		ASSERT(s.cur_language_index < settings::language_id_to_name_mapping.size())
+		utki::assert(s.cur_language_index < settings::language_id_to_name_mapping.size(), SL);
 
 		language_selection_box.get().set_selection(s.cur_language_index);
 	}
@@ -276,7 +276,7 @@ settings_menu::settings_menu(utki::shared_ref<ruis::context> context) :
 	{
 		auto& sb = this->get_widget_as<ruis::selection_box>("sweep_speed_selection_box"sv);
 		sb.selection_handler = [](ruis::selection_box& sb) {
-			ASSERT(sb.get_selection() < sweep_speeds_um_per_sec.size())
+			utki::assert(sb.get_selection() < sweep_speeds_um_per_sec.size(), SL);
 			auto speed = sweep_speeds_um_per_sec[sb.get_selection()];
 
 			auto& ss = settings_storage::inst();

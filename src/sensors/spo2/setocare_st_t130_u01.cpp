@@ -74,7 +74,7 @@ void setocare_st_t130_u01::feed(uint8_t byte)
 				// ignore
 				break;
 			}
-			ASSERT(this->packet_v.buffer.empty())
+			utki::assert(this->packet_v.buffer.empty(), SL);
 			this->packet_v.buffer.push_back(byte);
 			this->packet_v.num_bytes_to_read = bci_protocol_packet_size - 1;
 			this->state_v = state::read_packet;
@@ -99,7 +99,7 @@ void setocare_st_t130_u01::feed(uint8_t byte)
 			}
 			break;
 		case state::enum_size:
-			ASSERT(false)
+			utki::assert(false, SL);
 			break;
 	}
 }
@@ -108,7 +108,7 @@ void setocare_st_t130_u01::handle_packet()
 {
 	const auto& buf = this->packet_v.buffer;
 
-	ASSERT(buf.size() == bci_protocol_packet_size)
+	utki::assert(buf.size() == bci_protocol_packet_size, SL);
 
 	// std::cout << "packet received =";
 	// for (const auto& b : buf) {
