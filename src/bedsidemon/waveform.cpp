@@ -238,13 +238,13 @@ void waveform::make_vaos()
 
 	for (auto& pv : this->paths) {
 		if (pv.points.empty()) {
-			pv.vao.set(ruis::path().stroke());
+			pv.vao.set(ruis::paint::path().stroke());
 			continue;
 		}
 
 		pv.origin = {pv.points.front().x(), height - pv.points.front().y() * scale + this->value_offset};
 
-		ruis::path path;
+		ruis::paint::path path;
 		for (const auto& p : utki::skip_front<1>(pv.points)) {
 			ruis::vector2 point = {p.x(), height - p.y() * scale + this->value_offset};
 			path.line_to(point - pv.origin);

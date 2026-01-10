@@ -35,7 +35,7 @@ class waveform :
 {
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, "false positive")
 	struct path {
-		ruis::path_vao vao;
+		ruis::paint::path_vao vao;
 		ruis::vector2 origin;
 
 		std::deque<ruis::vector2> points;
@@ -62,7 +62,7 @@ class waveform :
 
 public:
 	struct all_parameters {
-		ruis::layout_parameters layout_params;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 
 		constexpr static const auto default_waveform_color = 0xffffff00;

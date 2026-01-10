@@ -24,7 +24,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ratio>
 #include <vector>
 
-#include <ruis/layout/layout.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/rectangle.hpp>
