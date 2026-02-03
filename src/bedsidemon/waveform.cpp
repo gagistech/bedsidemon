@@ -68,11 +68,11 @@ void waveform::set_sweep_speed(ruis::real mm_per_sec)
 	// std::cout << "px per ms = " << this->px_per_ms << std::endl;
 }
 
-void waveform::render(const ruis::matrix4& matrix) const
+void waveform::render(const ruis::mat4& matrix) const
 {
 	for (const auto& pv : this->paths) {
 		pv.vao.render(
-			ruis::matrix4(matrix).translate(pv.origin), //
+			ruis::mat4(matrix).translate(pv.origin), //
 			this->get_color()
 		);
 	}
@@ -208,7 +208,7 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 
 				auto dv1 = tail_dv * ratio;
 
-				pop_path.points.front() += ruis::vector2{dx, dv1};
+				pop_path.points.front() += ruis::vec2{dx, dv1};
 
 				// it is possible that due to floating point calculation errors points
 				// coincide
@@ -246,7 +246,7 @@ void waveform::make_vaos()
 
 		ruis::paint::path path;
 		for (const auto& p : utki::skip_front<1>(pv.points)) {
-			ruis::vector2 point = {p.x(), height - p.y() * scale + this->value_offset};
+			ruis::vec2 point = {p.x(), height - p.y() * scale + this->value_offset};
 			path.line_to(point - pv.origin);
 		}
 

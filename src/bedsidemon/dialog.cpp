@@ -80,9 +80,9 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
                             }
                         }
                     );
-                    mp.get().mouse_button_handler = [](mouse_proxy& w, const mouse_button_event&){return true;};
-                    mp.get().mouse_move_handler = [](mouse_proxy& w, const mouse_move_event&){return true;};
-                    mp.get().hovered_change_handler = [](mouse_proxy& w, unsigned pointer_id){return true;};
+                    mp.get().mouse_button_handler = [](mouse_proxy& w, const mouse_button_event&){return ruis::event_status::consumed;};
+                    mp.get().mouse_move_handler = [](mouse_proxy& w, const mouse_move_event&){return ruis::event_status::consumed;};
+                    mp.get().hovered_change_handler = [](mouse_proxy& w, unsigned pointer_id){};
                     return mp;
                 }(),
                 m::nine_patch(c,
@@ -128,8 +128,7 @@ dialog::dialog(
 		auto& mp = this->get_widget_as<ruis::mouse_proxy>("ruis_mouse_proxy"sv);
 		mp.mouse_button_handler = [this](ruis::mouse_proxy&, const ruis::mouse_button_event& e) {
 			this->on_dismiss();
-			// consume event
-			return true;
+			return ruis::event_status::consumed;
 		};
 	}
 }

@@ -36,9 +36,9 @@ class waveform :
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init, "false positive")
 	struct path {
 		ruis::paint::path_vao vao;
-		ruis::vector2 origin;
+		ruis::vec2 origin;
 
-		std::deque<ruis::vector2> points;
+		std::deque<ruis::vec2> points;
 	};
 
 	std::array<path, 2> paths;
@@ -71,7 +71,7 @@ public:
 
 	waveform(utki::shared_ref<ruis::context> context, all_parameters params);
 
-	void render(const ruis::matrix4& matrix) const override;
+	void render(const ruis::mat4& matrix) const override;
 
 	void on_resize() override;
 
