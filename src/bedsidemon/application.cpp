@@ -1,7 +1,7 @@
 /*
 bedsidemon - Bedside monitor example GUI project
 
-Copyright (C) 2024-2025 Gagistech Oy <gagistechoy@gmail.com>
+Copyright (C) 2024-2026 Gagistech Oy <gagistechoy@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <iomanip>
 
 #include <fsif/native_file.hpp>
+#include <ruis/standard_widgets.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <utki/config.hpp>
@@ -67,7 +68,10 @@ application::application(bool windowed, std::string_view res_path) :
 	)),
 	res_path(fsif::as_dir(res_path))
 {
-	this->window.gui.init_standard_widgets(this->get_res_file());
+	ruis::init_standard_widgets(
+		this->window.gui.context, //
+		this->get_res_file()
+	);
 
 	this->window.gui.context.get().loader().mount_res_pack(this->get_res_file(this->res_path));
 
