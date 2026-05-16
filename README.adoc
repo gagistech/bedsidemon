@@ -7,3 +7,7 @@
 |====
 
 Bed-side monitor GUI example project
+
+== online demo
+
+link:https://gagistech.com/apps/bedsidemon-opengles-sdl.html[Emscripten]
