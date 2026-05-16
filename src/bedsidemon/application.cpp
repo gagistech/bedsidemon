@@ -68,6 +68,10 @@ application::application(bool windowed, std::string_view res_path) :
 	)),
 	res_path(fsif::as_dir(res_path))
 {
+	this->window.gui.context.get().window().close_handler = [this]() {
+		this->quit();
+	};
+
 	ruis::init_standard_widgets(
 		this->window.gui.context, //
 		this->get_res_file()

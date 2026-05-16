@@ -128,7 +128,7 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 
 	// push new point
 	if (this->paths[0].points.empty()) {
-		this->paths[0].points.push_back({0, value});
+		this->paths[0].points.emplace_back(0, value);
 		return;
 	} else {
 		if (dx == 0) {
@@ -137,7 +137,7 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 			this->paths[0].points.back().y() = value;
 			return;
 		} else {
-			this->paths[0].points.push_back({this->paths[0].points.back().x() + dx, value});
+			this->paths[0].points.emplace_back(this->paths[0].points.back().x() + dx, value);
 		}
 	}
 
@@ -167,8 +167,8 @@ void waveform::push(ruis::real value, ruis::real dt_ms)
 		using std::swap;
 		swap(this->paths[0].points, this->paths[1].points);
 		this->paths[0].points.clear();
-		this->paths[0].points.push_back({0, this->paths[1].points.back().y()});
-		this->paths[0].points.push_back({dx2, v});
+		this->paths[0].points.emplace_back(0, this->paths[1].points.back().y());
+		this->paths[0].points.emplace_back(dx2, v);
 	}
 
 	auto sweep_pos = this->paths[0].points.back().x();

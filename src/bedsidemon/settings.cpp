@@ -22,6 +22,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include "settings.hpp"
 
 #include <filesystem>
+#include <ranges>
 
 #include <fsif/native_file.hpp>
 #include <ruisapp/application.hpp>
@@ -43,9 +44,8 @@ size_t language_id_to_index(std::string_view id)
 {
 	const auto& lang_mapping = settings::language_id_to_name_mapping;
 
-	auto i = std::find_if(
-		lang_mapping.begin(), //
-		lang_mapping.end(),
+	auto i = std::ranges::find_if(
+		lang_mapping, //
 		[&](const auto& a) {
 			return a.first == id;
 		}
