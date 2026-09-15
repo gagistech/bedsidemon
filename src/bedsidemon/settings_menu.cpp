@@ -74,18 +74,22 @@ public:
 		// clang-format off
 		return m::padding(c,
 			{
-				.container_params = {
-					.layout = ruis::layout::pile
-				},
-				.padding_params = {
-					.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+				.params{
+					.container{
+						.layout = ruis::layout::pile
+					},
+					.specific{
+						.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+					}
 				}
 			},
 			{
 				m::text(c,
 					{
-						.text_params{
-							.font_size = style::font_size_setting
+						.params{
+							.font{
+								.size = style::font_size_setting
+							}
 						}
 					},
 					c.get().localization.get().get("settings_menu:sweep_speed_value").format({utki::to_utf32(utki::cat(speed_mm_per_sec))})
@@ -123,18 +127,22 @@ public:
 		// clang-format off
 		return m::padding(c,
 			{
-				.container_params = {
-					.layout = ruis::layout::pile
-				},
-				.padding_params = {
-					.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+				.params{
+					.container{
+						.layout = ruis::layout::pile
+					},
+					.specific{
+						.borders = {10_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+					}
 				}
 			},
 			{
 				m::text(c,
 					{
-						.text_params{
-							.font_size = style::font_size_setting
+						.params{
+							.font{
+								.size = style::font_size_setting
+							}
 						}
 					},
 					std::u32string(lang_name)
@@ -152,12 +160,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 	// clang-format off
 	auto language_selection_box = m::selection_box(c,
 		{
-			.layout_params = {
+			.layout{
 				.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 				.align = {ruis::align::front, ruis::align::center}
 			},
-			.list_params = {
-				.provider = utki::make_shared<language_selection_box_provider>(c)
+			.params{
+				.list{
+					.provider = utki::make_shared<language_selection_box_provider>(c)
+				}
 			}
 		}
 	);
@@ -198,12 +208,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 	return {
 		m::text(c,
 			{
-				.layout_params = {
+				.layout{
 					.align = {ruis::align::front, ruis::align::center}
 				},
-                .text_params = {
-                    .font_size = style::font_size_setting
-                }
+				.params{
+					.font{
+						.size = style::font_size_setting
+					}
+				}
 			},
 			c.get().localization.get().get("settings_menu:sweep_speed_title")
 		),
@@ -216,15 +228,17 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::selection_box(c,
 			{
-				.layout_params = {
+				.layout{
 					.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 					.align = {ruis::align::front, ruis::align::center}
 				},
-				.widget_params = {
+				.widget{
 					.id = "sweep_speed_selection_box"s
 				},
-				.list_params = {
-					.provider = utki::make_shared<sweep_speed_selection_box_provider>(c)
+				.params{
+					.list{
+						.provider = utki::make_shared<sweep_speed_selection_box_provider>(c)
+					}
 				}
 			}
 		),
@@ -237,12 +251,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::text(c,
 			{
-				.layout_params = {
+				.layout{
 					.align = {ruis::align::front, ruis::align::center}
 				},
-                .text_params = {
-                    .font_size = style::font_size_setting
-                }
+				.params{
+					.font{
+						.size = style::font_size_setting
+					}
+				}
 			},
 			c.get().localization.get().get("settings_menu:language_title")
 		),

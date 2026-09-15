@@ -47,69 +47,73 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
 {
 	auto make_button = [&](std::string id, ruis::string text) {
 		// clang-format off
-        return m::push_button(c,
-            {
-                .layout_params{
-                    .dims = {dimension_button_width, dimension_button_height}
-                },
-                .widget_params{
-                    .id = std::move(id)
-                }
-            },
-            {
-                m::text(c,
-                    {},
-                    std::move(text)
-                )
-            }
-        );
+		return m::push_button(c,
+			{
+				.layout{
+					.dims = {dimension_button_width, dimension_button_height}
+				},
+				.widget{
+					.id = std::move(id)
+				}
+			},
+			{
+				m::text(c,
+					{},
+					std::move(text)
+				)
+			}
+		);
 		// clang-format on
 	};
 
 	// clang-format off
-    return {
-        m::padding(c,
-            {
-                .container_params{
-                    .layout = ruis::layout::column
-                },
-                .padding_params{
-                    .borders{dimension_gap}
-                }
-            },
-            {
-                m::text(c,
-                    {
-                        .text_params{
-                            .font_size = 20_pp // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
-                        }
-                    },
-                    c.get().localization.get().get("quit_dialog:title")
-                ),
-                m::gap(c,
-                    {
-                        .layout_params{
-                            .dims = {1_px, dimension_gap}
-                        }
-                    }
-                ),
-                m::row(c,
-                    {},
-                    {
-                        make_button("yes_button"s, c.get().localization.get().get("quit_dialog:yes")),
-                        m::gap(c,
-                            {
-                                .layout_params{
-                                    .dims = {dimension_gap, 1_px}
-                                }
-                            }
-                        ),
-                        make_button("no_button"s, c.get().localization.get().get("quit_dialog:no")),
-                    }
-                )
-            }
-        )
-    };
+	return {
+		m::padding(c,
+			{
+				.params{
+					.container{
+						.layout = ruis::layout::column
+					},
+					.specific{
+						.borders = {dimension_gap}
+					}
+				}
+			},
+			{
+				m::text(c,
+					{
+						.params{
+							.font{
+								.size = 20_pp // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+							}
+						}
+					},
+					c.get().localization.get().get("quit_dialog:title")
+				),
+				m::gap(c,
+					{
+						.layout_params{
+							.dims = {1_px, dimension_gap}
+						}
+					}
+				),
+				m::row(c,
+					{},
+					{
+						make_button("yes_button"s, c.get().localization.get().get("quit_dialog:yes")),
+						m::gap(c,
+							{
+								.layout_params{
+									.dims = {dimension_gap, 1_px}
+								}
+							}
+						),
+						make_button("no_button"s, c.get().localization.get().get("quit_dialog:no")),
+					}
+				)
+			}
+		)
+	};
 	// clang-format on
 }
 } // namespace

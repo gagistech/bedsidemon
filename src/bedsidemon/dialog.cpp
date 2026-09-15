@@ -61,11 +61,13 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
         ),
         m::rectangle(c,
             {
-                .layout_params{
+                .layout{
                     .dims{ruis::dim::fill, ruis::dim::fill}
                 },
-                .color_params{
-                    .color = color_dialog_surroundings
+                .params{
+                    .specific{
+                        .fill_color = color_dialog_surroundings
+                    }
                 }
             }
         ),
@@ -87,12 +89,16 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
                 }(),
                 m::nine_patch(c,
                     {
-                        .widget_params{
+                        .widget{
                             .id = "ruis_nine_patch"s
                         },
-                        .container_params = std::move(container_params),
-                        .nine_patch_params{
-                            .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+                        .params{
+                            .padding{
+                                .container = std::move(container_params)
+                            },
+                            .specific{
+                                .source = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+                            }
                         }
                     },
                     std::move(contents)
@@ -112,11 +118,13 @@ dialog::dialog(
 	widget(std::move(context), {}, {}),
 	container(
 		this->context, //
+        // clang-format off
 		{
-			.container_params{
-				.layout = ruis::layout::pile //
-			} //
+			.params{
+				.layout = ruis::layout::pile
+			}
 		},
+        // clang-format on
 		make_root_widget_structure(
 			this->context, //
 			std::move(params.container_params),

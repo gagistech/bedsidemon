@@ -47,35 +47,39 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 		// clang-format off
 		return m::push_button(c,
 			{
-				.layout_params = {
+				.layout{
 					.dims = {ruis::dim::min, ruis::dim::fill}
 				},
-				.widget_params = {
+				.widget{
 					.id = std::move(id)
 				}
 			},
 			{
 				m::padding(c,
                     {
-                        .layout_params = {
+                        .layout{
                             .dims = {ruis::dim::min, ruis::dim::fill}
                         },
-                        .container_params = {
-                            .layout = ruis::layout::pile
-                        },
-                        .padding_params = {
-                            .borders = {button_icon_padding}
-                        }
+						.params{
+							.container{
+                            	.layout = ruis::layout::pile
+							},
+							.specific{
+								.borders = {button_icon_padding}
+							}
+						}
                     },
                     {
 						m::image(c,
 							{
-								.layout_params = {
+								.layout{
 									.dims = {ruis::dim::min, ruis::dim::fill}
 								},
-								.image_params = {
-									.img = c.get().loader().load<ruis::res::image>(icon_res_id),
-									.keep_aspect_ratio = true
+								.params{
+									.specific{
+										.source = c.get().loader().load<ruis::res::image>(icon_res_id),
+										.keep_aspect_ratio = true
+									}
 								}
 							}
 						)
@@ -111,14 +115,16 @@ utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context>
 	return m::rectangle(
 		std::move(c),
 		{
-			.layout_params = {
+			.layout{
 				.dims = {
 					vertical ? ruis::layout::dimension(1_pp) : ruis::layout::dimension(ruis::dim::fill),
 					vertical ? ruis::layout::dimension(ruis::dim::fill) : ruis::layout::dimension(1_pp)
 				}
 			},
-			.color_params = {
-				.color = style::color_border
+			.params{
+				.specific{
+					.fill_color = style::color_border
+				}
 			}
 		}
 	);
@@ -146,10 +152,10 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 	// clang-format off
 	return m::container(c,
 		{
-			.layout_params = {
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.container_params = {
+			.params{
 				.layout = ruis::layout::column
 			}
 		},
@@ -191,14 +197,16 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 						{
 							m::text(c,
 								{
-									.widget_params = {
+									.widget{
 										.id = "clock_text"s
 									},
-									.color_params = {
-										.color = style::color_info_text
-									},
-									.text_params = {
-										.font_size = style::font_size_label
+									.params{
+										.color{
+											.normal = style::color_info_text
+										},
+										.font{
+											.size = style::font_size_label
+										}
 									}
 								}
 							)

@@ -55,11 +55,15 @@ menu::menu(
 	ruis::nine_patch(
 		this->context,
 		{
-			.container_params = {
-				.layout = ruis::layout::column
-			},
-			.nine_patch_params = {
-				.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+			.params{
+				.padding{
+					.container{
+						.layout = ruis::layout::column
+					}
+				},
+				.specific{
+					.source = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+				}
 			}
 		},
 		{
@@ -73,11 +77,13 @@ menu::menu(
 				{
 					m::text(this->context,
 						{
-							.layout_params = {
+							.layout{
 								.align = {ruis::align::front, ruis::align::center}
 							},
-							.text_params = {
-								.font_size = style::font_size_menu_title
+							.params{
+								.font{
+									.size = style::font_size_menu_title
+								}
 							}
 						},
 						std::move(title)
@@ -91,24 +97,34 @@ menu::menu(
 					),
 					m::rectangle_push_button(this->context,
 						{
-							.layout_params{
+							.layout{
 								.dims{size_close_button, size_close_button}
 							},
-							.widget_params{
+							.widget{
 								.id = "close_button"s
 							},
-							.container_params{
-								.layout = ruis::layout::pile
+							.params{
+								.rectangle_button{
+									.rectangle{
+										.padding{
+											.container{
+												.layout = ruis::layout::pile
+											}
+										}
+									}
+								}
 							}
 						},
 						{
 							m::image(this->context,
 								{
-									.layout_params{
+									.layout{
 										.dims{ruis::dim::fill, ruis::dim::fill}
 									},
-									.image_params{
-										.img = this->context.get().loader().load<ruis::res::image>("img_close")
+									.params{
+										.specific{
+											.source = this->context.get().loader().load<ruis::res::image>("img_close")
+										}
 									}
 								}
 							)
@@ -118,15 +134,17 @@ menu::menu(
 			),
 			m::padding(this->context,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					},
-					.container_params{
-						.layout = ruis::layout::column
-					},
-					.padding_params{
-						.borders = {style::menu_padding}
+					.params{
+						.container{
+							.layout = ruis::layout::column
+						},
+						.specific{
+							.borders = {style::menu_padding}
+						}
 					}
 				},
 				std::move(contents)

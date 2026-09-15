@@ -59,21 +59,25 @@ public:
 		// clang-format off
 		return m::padding(c,
 			{
-				.container_params = {
-					.layout = ruis::layout::pile
-				},
-				.padding_params = {
-					.borders = {3_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+				.params{
+					.container{
+						.layout = ruis::layout::pile
+					},
+					.specific{
+						.borders = {3_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+					}
 				}
 			},
 			{
 				m::rectangle(c,
 					{
-                        .layout_params{
-                            .dims{40_pp, 30_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
-                        },
-						.color_params{
-							.color = spo2_parameter_window::possible_colors.at(index)
+						.layout{
+							.dims{40_pp, 30_pp} // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+						},
+						.params{
+							.specific{
+								.fill_color = spo2_parameter_window::possible_colors.at(index)
+							}
 						}
 					}
 				)
@@ -85,18 +89,20 @@ public:
 } // namespace
 
 namespace {
-std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<ruis::context> c)
+std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
-    return {
-        m::text(c,
+	return {
+		m::text(c,
 			{
-				.layout_params = {
+				.layout{
 					.align = {ruis::align::front, ruis::align::center}
 				},
-                .text_params = {
-                    .font_size = style::font_size_setting
-                }
+				.params{
+					.font{
+						.size = style::font_size_setting
+					}
+				}
 			},
 			c.get().localization.get().get("spo2_settings_menu:color_title")
 		),
@@ -109,19 +115,21 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::selection_box(c,
 			{
-				.layout_params = {
+				.layout{
 					.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 					.align = {ruis::align::front, ruis::align::center}
 				},
-				.widget_params = {
+				.widget{
 					.id = "color_selection_box"s
 				},
-				.list_params = {
-					.provider = utki::make_shared<selection_box_provider>(c)
+				.params{
+					.list{
+						.provider = utki::make_shared<selection_box_provider>(c)
+					}
 				}
 			}
 		)
-    };
+	};
 	// clang-format on
 }
 } // namespace
@@ -131,19 +139,19 @@ spo2_parameter_window_menu::spo2_parameter_window_menu(
 	std::weak_ptr<spo2_parameter_window> spo2_pw
 ) :
 	// clang-format off
-    ruis::widget(
-        std::move(context),
-        {
-            .dims{ruis::dim::fill, ruis::dim::fill}
-        },
-        {}
-    ),
-    menu(
-        this->context, //
-        this->context.get().localization.get().get("spo2_settings_menu:title"),
-        make_menu_contents(this->context)
-    ),
-    spo2_pw(std::move(spo2_pw))
+	ruis::widget(
+		std::move(context),
+		{
+			.dims{ruis::dim::fill, ruis::dim::fill}
+		},
+		{}
+	),
+	menu(
+		this->context, //
+		this->context.get().localization.get().get("spo2_settings_menu:title"),
+		make_menu_contents(this->context)
+	),
+	spo2_pw(std::move(spo2_pw))
 // clang-format on
 {
 	{

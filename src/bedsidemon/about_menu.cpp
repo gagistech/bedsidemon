@@ -46,79 +46,87 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 
 	// clang-format off
 	return {
-        m::text(c,
-            {
-                .color_params{
-                    .color = color_program_title
-                },
-                .text_params{
-                    .font_size = font_size_program_title
-                }
-            },
-            c.get().localization.get().get("about_menu:program_title")
-        ),
-        m::gap(c,
-            {
-                .layout_params{
-                    .dims = {0_px, gap_paragraph}
-                }
-            }
-        ),
-        m::text(c,
-            {},
-            c.get().localization.get().get("about_menu:version").format({utki::to_utf32(program_version)})
-        ),
-        m::gap(c,
-            {
-                .layout_params{
-                    .dims = {0_px, gap_paragraph}
-                }
-            }
-        ),
-        m::row(c,
-            {},
-            {
-                m::text(c,
-                    {
-                        .text_params{
-                            .font_size = font_size
-                        }
-                    },
-                    c.get().localization.get().get("about_menu:powered_by")
-                ),
-                m::text(c,
-                    {
-                        .color_params{
-                            .color = 0xff8080ff // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
-                        },
-                        .text_params{
-                            .font_size = font_size
-                        }
-                    },
-                    U" ruis"s
-                ),
-                m::text(c,
-                    {
-                        .text_params{
-                            .font_size = font_size
-                        }
-                    },
-                    U" GUI"s
-                )
-            }
-        ),
-        m::gap(c,
-            {
-                .layout_params{
-                    .dims = {0_px, gap_paragraph}
-                }
-            }
-        ),
-        m::text(c,
-            {},
-            std::u32string(c.get().localization.get().get("about_menu:copyright").string()).append(U" © 2024 Gagistech Oy <gagistechoy@gmail.com>"sv)
-        )
-    };
+		m::text(c,
+			{
+				.params{
+					.color{
+						.normal = color_program_title
+					},
+					.font{
+						.size = font_size_program_title
+					}
+				}
+			},
+			c.get().localization.get().get("about_menu:program_title")
+		),
+		m::gap(c,
+			{
+				.layout_params{
+					.dims = {0_px, gap_paragraph}
+				}
+			}
+		),
+		m::text(c,
+			{},
+			c.get().localization.get().get("about_menu:version").format({utki::to_utf32(program_version)})
+		),
+		m::gap(c,
+			{
+				.layout_params{
+					.dims = {0_px, gap_paragraph}
+				}
+			}
+		),
+		m::row(c,
+			{},
+			{
+				m::text(c,
+					{
+						.params{
+							.font{
+								.size = font_size
+							}
+						}
+					},
+					c.get().localization.get().get("about_menu:powered_by")
+				),
+				m::text(c,
+					{
+						.params{
+							.color{
+								.normal = 0xff8080ff // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
+							},
+							.font{
+								.size = font_size
+							}
+						}
+					},
+					U" ruis"s
+				),
+				m::text(c,
+					{
+						.params{
+							.font{
+								.size = font_size
+							}
+						}
+					},
+					U" GUI"s
+				)
+			}
+		),
+		m::gap(c,
+			{
+				.layout_params{
+					.dims = {0_px, gap_paragraph}
+				}
+			}
+		),
+		m::text(c,
+			{},
+			std::u32string(c.get().localization.get().get("about_menu:copyright").string()).append(U" © 2024 Gagistech Oy <gagistechoy@gmail.com>"sv)
+		)
+	};
 	// clang-format on
 }
 } // namespace

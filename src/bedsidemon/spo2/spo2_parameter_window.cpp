@@ -64,71 +64,79 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 )
 {
 	// clang-format off
-    return {
-        m::text(c,
-            {
-                .layout_params = {
-                    .align = {ruis::align::front, ruis::align::front}
-                },
-                .color_params = {
-                    .color = style::color_info_text
-                },
-                .text_params = {
-                    .font_size = font_size_label
-                }
-            },
-            std::move(title)
-        ),
-        m::text(c,
-            {
-                .widget_params = {
-                    .id = "spo2_value"s
-                },
-                .color_params = {
-                    .color = color
-                },
-                .text_params = {
-                    .font_size = font_size_main_value
-                }
-            },
-            U"---"s
-        ),
-        m::row(c,
-            {},
-            {
-                m::text(c,
-                    {
-                        .widget_params = {
-                            .id = "bpm_value"s
-                        },
-                        .color_params = {
-                            .color = color_secondary_value
-                        },
-                        .text_params = {
-                            .font_size = font_size_secondary_value
-                        }
-                    },
-                    U"---"s
-                ),
-                m::image(c,
-                    {
-                        .layout_params = {
-                            .dims = {heart_size, ruis::dim::min},
-                            .align = {ruis::align::front, ruis::align::front}
-                        },
-                        .widget_params = {
-                            .id = "heart"s,
-                            .visible = false
-                        },
-                        .image_params = {
-                            .img = c.get().loader().load<ruis::res::image>("img_heart"),
-                            .keep_aspect_ratio = true
-                        }
-                    }
-                )
-            }
-        )
-    };
+	return {
+		m::text(c,
+			{
+				.layout{
+					.align = {ruis::align::front, ruis::align::front}
+				},
+				.params{
+					.color{
+						.normal = style::color_info_text
+					},
+					.font{
+						.size = font_size_label
+					}
+				}
+			},
+			std::move(title)
+		),
+		m::text(c,
+			{
+				.widget{
+					.id = "spo2_value"s
+				},
+				.params{
+					.color{
+						.normal = color
+					},
+					.font{
+						.size = font_size_main_value
+					}
+				}
+			},
+			U"---"s
+		),
+		m::row(c,
+			{},
+			{
+				m::text(c,
+					{
+						.widget{
+							.id = "bpm_value"s
+						},
+						.params{
+							.color{
+								.normal = color_secondary_value
+							},
+							.font{
+								.size = font_size_secondary_value
+							}
+						}
+					},
+					U"---"s
+				),
+				m::image(c,
+					{
+						.layout{
+							.dims = {heart_size, ruis::dim::min},
+							.align = {ruis::align::front, ruis::align::front}
+						},
+						.widget{
+							.id = "heart"s,
+							.visible = false
+						},
+						.params{
+							.specific{
+								.source = c.get().loader().load<ruis::res::image>("img_heart"),
+								.keep_aspect_ratio = true
+							}
+						}
+					}
+				)
+			}
+		)
+	};
 	// clang-format on
 }
 
@@ -139,96 +147,102 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 )
 {
 	// clang-format off
-    return {
-        m::waveform(c,
-            {
-                .layout_params = {
-                    .dims = {ruis::dim::fill, ruis::dim::fill},
-                    .weight = 3
-                },
-                .widget_params = {
-                    .id = "pw_waveform"s,
-                    .clip = true
-                },
-                .color_params{
-                    .color = color
-                }
-            }
-        ),
-        m::row(c,
-            {
-                .layout_params = {
-                    .dims = {ruis::dim::fill, ruis::dim::min},
-                    .weight = 1
-                }
-            },
-            {
-                m::rectangle(c,
-                    {
-                        .layout_params = {
-                            .dims = {1_pp, ruis::dim::fill}
-                        },
-                        .color_params = {
-                            .color = style::color_border
-                        }
-                    }
-                ),
-                m::column(c,
-                    {
-                        .layout_params = {
-                            .dims = {ruis::dim::fill, ruis::dim::min},
-                            .weight = 1
-                        }
-                    },
-                    {
-                        m::pile(c,
-                            {
-                                .layout_params{
-                                    .dims = {ruis::dim::fill, ruis::dim::min}
-                                }
-                            },
-                            {
-                                m::click_proxy(c,
-                                    {
-                                        .layout_params{
-                                            .dims{ruis::dim::fill, ruis::dim::fill}
-                                        },
-                                        .widget_params{
-                                            .id = "click_proxy"s
-                                        }
-                                    }
-                                ),
-                                m::padding(c,
-                                    {
-                                        .layout_params = {
-                                            .dims = {ruis::dim::fill, ruis::dim::min}
-                                        },
-                                        .container_params = {
-                                            .layout = ruis::layout::column
-                                        },
-                                        .padding_params = {
-                                            .borders = {style::pw_padding}
-                                        }
-                                    },
-                                    make_numeric_content(c, std::move(title), color)
-                                )
-                            }
-                        ),
-                        m::rectangle(c,
-                            {
-                                .layout_params = {
-                                    .dims = {ruis::dim::fill, 1_pp}
-                                },
-                                .color_params = {
-                                    .color = style::color_border
-                                }
-                            }
-                        )
-                    }
-                )
-            }
-        )
-    };
+	return {
+		m::waveform(c,
+			{
+				.layout_params = {
+					.dims = {ruis::dim::fill, ruis::dim::fill},
+					.weight = 3
+				},
+				.widget_params = {
+					.id = "pw_waveform"s,
+					.clip = true
+				},
+				.color_params{
+					.normal = color
+				}
+			}
+		),
+		m::row(c,
+			{
+				.layout_params = {
+					.dims = {ruis::dim::fill, ruis::dim::min},
+					.weight = 1
+				}
+			},
+			{
+				m::rectangle(c,
+					{
+						.layout{
+							.dims = {1_pp, ruis::dim::fill}
+						},
+						.params{
+							.specific{
+								.fill_color = style::color_border
+							}
+						}
+					}
+				),
+				m::column(c,
+					{
+						.layout_params = {
+							.dims = {ruis::dim::fill, ruis::dim::min},
+							.weight = 1
+						}
+					},
+					{
+						m::pile(c,
+							{
+								.layout_params{
+									.dims = {ruis::dim::fill, ruis::dim::min}
+								}
+							},
+							{
+								m::click_proxy(c,
+									{
+										.layout_params{
+											.dims{ruis::dim::fill, ruis::dim::fill}
+										},
+										.widget_params{
+											.id = "click_proxy"s
+										}
+									}
+								),
+								m::padding(c,
+									{
+										.layout{
+											.dims = {ruis::dim::fill, ruis::dim::min}
+										},
+										.params{
+											.container{
+												.layout = ruis::layout::column
+											},
+											.specific{
+												.borders = {style::pw_padding}
+											}
+										}
+									},
+									make_numeric_content(c, std::move(title), color)
+								)
+							}
+						),
+						m::rectangle(c,
+							{
+								.layout{
+									.dims = {ruis::dim::fill, 1_pp}
+								},
+								.params{
+									.specific{
+										.fill_color = style::color_border
+									}
+								}
+							}
+						)
+					}
+				)
+			}
+		)
+	};
 	// clang-format on
 }
 } // namespace
@@ -242,28 +256,28 @@ spo2_parameter_window::spo2_parameter_window(
 	ruis::widget(
 		std::move(context),
 		{
-            .dims = {ruis::dim::fill, ruis::dim::min}
-        },
-        {}
+			.dims = {ruis::dim::fill, ruis::dim::min}
+		},
+		{}
 	),
-    ruis::color_widget(
-        this->context,
-        ruis::color_widget::parameters{
-            .color = color
-        }
-    ),
+	ruis::color_widget(
+		this->context,
+		{
+			.normal = color
+		}
+	),
 	ruis::container( 
 		this->context,
-		{  
-            .container_params{
-			    .layout = ruis::layout::row
+		{
+			.params{
+				.layout = ruis::layout::row
 			}
-        },
+		},
 		make_widgets(
-            this->context,
-            std::move(title),
-            color
-        )
+			this->context,
+			std::move(title),
+			color
+		)
 	),
 	// clang-format on
 	spo2_value(this->get_widget_as<ruis::text>("spo2_value")), bpm_value(this->get_widget_as<ruis::text>("bpm_value")),

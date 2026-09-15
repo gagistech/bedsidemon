@@ -40,7 +40,7 @@ std::vector<spo2_measurement> read_recorded_data(std::string_view data_filename)
 	auto frames = tml::read(fi);
 
 	for (const auto& f : frames) {
-		if (f.value.to_string() != "frame"sv) {
+		if (f.value.string != "frame"sv) {
 			continue;
 		}
 
