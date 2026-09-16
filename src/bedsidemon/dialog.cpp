@@ -51,7 +51,7 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
     return {
         m::mouse_proxy(c,
             {
-                .layout{
+                .layout_params{
                     .dims{ruis::dim::fill, ruis::dim::fill}
                 },
                 .widget{
@@ -61,7 +61,7 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
         ),
         m::rectangle(c,
             {
-                .layout{
+                .layout_params{
                     .dims{ruis::dim::fill, ruis::dim::fill}
                 },
                 .params{
@@ -77,7 +77,7 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
                 [&](){
                     auto mp = m::mouse_proxy(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             }
                         }

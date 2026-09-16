@@ -47,7 +47,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 		// clang-format off
 		return m::push_button(c,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::min, ruis::dim::fill}
 				},
 				.widget{
@@ -57,7 +57,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 			{
 				m::padding(c,
                     {
-                        .layout{
+                        .layout_params{
                             .dims = {ruis::dim::min, ruis::dim::fill}
                         },
 						.params{
@@ -72,7 +72,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
                     {
 						m::image(c,
 							{
-								.layout{
+								.layout_params{
 									.dims = {ruis::dim::min, ruis::dim::fill}
 								},
 								.params{
@@ -96,7 +96,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 		make_button("img_cog"sv, "settings_button"),
 		m::gap(c,
 			{
-				.layout = {
+				.layout_params = {
 					.weight = 1
 				}
 			}
@@ -115,7 +115,7 @@ utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context>
 	return m::rectangle(
 		std::move(c),
 		{
-			.layout{
+			.layout_params{
 				.dims = {
 					vertical ? ruis::layout::dimension(1_pp) : ruis::layout::dimension(ruis::dim::fill),
 					vertical ? ruis::layout::dimension(ruis::dim::fill) : ruis::layout::dimension(1_pp)
@@ -152,7 +152,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 	// clang-format off
 	return m::container(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.params{
@@ -162,14 +162,14 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 		{
 			m::row(c,
 				{
-					.layout = {
+					.layout_params = {
 						.dims = {ruis::dim::fill, alarms_area_height}
 					}
 				},
 				{
 					m::row(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {ruis::dim::fill, ruis::dim::fill},
 								.weight = 1
 							},
@@ -181,14 +181,14 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 					make_vertical_separator(c),
 					m::gap(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {style::clock_padding, 0_pp}
 							}
 						}
 					),
 					m::pile(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {clock_area_width, ruis::dim::min},
 								.align = {ruis::align::center, ruis::align::center}
 
@@ -214,7 +214,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 					),
 					m::gap(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {style::clock_padding, 0_pp}
 							}
 						}
@@ -224,7 +224,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 			make_horizontal_separator(c),
 			m::pile(c,
 				{
-					.layout = {
+					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					}
@@ -232,7 +232,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 				{
 					m::column(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							},
 							.widget = {
@@ -242,14 +242,14 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 					),
 					m::row(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							}
 						},
 						{
 							m::pile(c,
 								{
-									.layout = {
+									.layout_params = {
 										.dims = {ruis::dim::fill, ruis::dim::fill},
 										.weight = 3
 									},
@@ -260,7 +260,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 							),
 							m::gap(c,
 								{
-									.layout = {
+									.layout_params = {
 										.weight = 1
 									}
 								}
@@ -272,7 +272,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 			make_horizontal_separator(c),
 			m::row(c,
 				{
-					.layout = {
+					.layout_params = {
 						.dims = {ruis::dim::fill, buttons_area_height}
 					},
 					.widget = {

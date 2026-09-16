@@ -62,7 +62,7 @@ class waveform :
 
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget;
 
 		constexpr static const auto default_waveform_color = 0xffffff00;

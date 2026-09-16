@@ -160,7 +160,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 	// clang-format off
 	auto language_selection_box = m::selection_box(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 				.align = {ruis::align::front, ruis::align::center}
 			},
@@ -208,7 +208,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 	return {
 		m::text(c,
 			{
-				.layout{
+				.layout_params{
 					.align = {ruis::align::front, ruis::align::center}
 				},
 				.params{
@@ -221,14 +221,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::gap(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims{0_px, style::gap_size_setting_label_value}
 				}
 			}
 		),
 		m::selection_box(c,
 			{
-				.layout{
+				.layout_params{
 					.dims = {200_pp, ruis::dim::min}, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 					.align = {ruis::align::front, ruis::align::center}
 				},
@@ -244,14 +244,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::gap(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims{0_px, style::gap_size_between_settings}
 				}
 			}
 		),
 		m::text(c,
 			{
-				.layout{
+				.layout_params{
 					.align = {ruis::align::front, ruis::align::center}
 				},
 				.params{
@@ -264,7 +264,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::gap(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims{0_px, style::gap_size_setting_label_value}
 				}
 			}

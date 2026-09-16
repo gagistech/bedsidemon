@@ -67,7 +67,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 	return {
 		m::text(c,
 			{
-				.layout{
+				.layout_params{
 					.align = {ruis::align::front, ruis::align::front}
 				},
 				.params{
@@ -118,7 +118,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 				),
 				m::image(c,
 					{
-						.layout{
+						.layout_params{
 							.dims = {heart_size, ruis::dim::min},
 							.align = {ruis::align::front, ruis::align::front}
 						},
@@ -150,7 +150,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 	return {
 		m::waveform(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims = {ruis::dim::fill, ruis::dim::fill},
 					.weight = 3
 				},
@@ -165,7 +165,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 		),
 		m::row(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims = {ruis::dim::fill, ruis::dim::min},
 					.weight = 1
 				}
@@ -173,7 +173,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 			{
 				m::rectangle(c,
 					{
-						.layout{
+						.layout_params{
 							.dims = {1_pp, ruis::dim::fill}
 						},
 						.params{
@@ -185,7 +185,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 				),
 				m::column(c,
 					{
-						.layout = {
+						.layout_params = {
 							.dims = {ruis::dim::fill, ruis::dim::min},
 							.weight = 1
 						}
@@ -193,14 +193,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 					{
 						m::pile(c,
 							{
-								.layout{
+								.layout_params{
 									.dims = {ruis::dim::fill, ruis::dim::min}
 								}
 							},
 							{
 								m::click_proxy(c,
 									{
-										.layout{
+										.layout_params{
 											.dims{ruis::dim::fill, ruis::dim::fill}
 										},
 										.widget{
@@ -210,7 +210,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 								),
 								m::padding(c,
 									{
-										.layout{
+										.layout_params{
 											.dims = {ruis::dim::fill, ruis::dim::min}
 										},
 										.params{
@@ -228,7 +228,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 						),
 						m::rectangle(c,
 							{
-								.layout{
+								.layout_params{
 									.dims = {ruis::dim::fill, 1_pp}
 								},
 								.params{

@@ -69,7 +69,7 @@ menu::menu(
 		{
 			m::row(this->context,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::min},
 						.align{ruis::align::front, ruis::align::center}
 					}
@@ -77,7 +77,7 @@ menu::menu(
 				{
 					m::text(this->context,
 						{
-							.layout{
+							.layout_params{
 								.align = {ruis::align::front, ruis::align::center}
 							},
 							.params{
@@ -90,14 +90,14 @@ menu::menu(
 					),
 					m::gap(this->context,
 						{
-							.layout = {
+							.layout_params = {
 								.weight = 1
 							}
 						}
 					),
 					m::rectangle_push_button(this->context,
 						{
-							.layout{
+							.layout_params{
 								.dims{size_close_button, size_close_button}
 							},
 							.widget{
@@ -118,7 +118,7 @@ menu::menu(
 						{
 							m::image(this->context,
 								{
-									.layout{
+									.layout_params{
 										.dims{ruis::dim::fill, ruis::dim::fill}
 									},
 									.params{
@@ -134,7 +134,7 @@ menu::menu(
 			),
 			m::padding(this->context,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					},

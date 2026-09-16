@@ -38,7 +38,7 @@ waveform::waveform( //
 ) :
 	ruis::widget( //
 		std::move(context),
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	ruis::color_widget(this->context, std::move(params.color_params)),

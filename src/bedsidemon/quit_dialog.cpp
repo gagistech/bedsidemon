@@ -49,7 +49,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
 		// clang-format off
 		return m::push_button(c,
 			{
-				.layout{
+				.layout_params{
 					.dims = {dimension_button_width, dimension_button_height}
 				},
 				.widget{
@@ -92,7 +92,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
 				),
 				m::gap(c,
 					{
-						.layout{
+						.layout_params{
 							.dims = {1_px, dimension_gap}
 						}
 					}
@@ -103,7 +103,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
 						make_button("yes_button"s, c.get().localization.get().get("quit_dialog:yes")),
 						m::gap(c,
 							{
-								.layout{
+								.layout_params{
 									.dims = {dimension_gap, 1_px}
 								}
 							}
