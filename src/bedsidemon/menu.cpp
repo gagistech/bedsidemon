@@ -69,7 +69,7 @@ menu::menu(
 		{
 			m::row(this->context,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::fill, ruis::dim::min},
 						.align{ruis::align::front, ruis::align::center}
 					}
@@ -90,7 +90,7 @@ menu::menu(
 					),
 					m::gap(this->context,
 						{
-							.layout_params = {
+							.layout = {
 								.weight = 1
 							}
 						}

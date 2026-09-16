@@ -96,7 +96,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_buttons(utki::shared_ref<ruis::
 		make_button("img_cog"sv, "settings_button"),
 		m::gap(c,
 			{
-				.layout_params = {
+				.layout = {
 					.weight = 1
 				}
 			}
@@ -162,18 +162,18 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 		{
 			m::row(c,
 				{
-					.layout_params = {
+					.layout = {
 						.dims = {ruis::dim::fill, alarms_area_height}
 					}
 				},
 				{
 					m::row(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {ruis::dim::fill, ruis::dim::fill},
 								.weight = 1
 							},
-							.widget_params = {
+							.widget = {
 								.id = "notification_area"s,
 							}
 						}
@@ -181,14 +181,14 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 					make_vertical_separator(c),
 					m::gap(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {style::clock_padding, 0_pp}
 							}
 						}
 					),
 					m::pile(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {clock_area_width, ruis::dim::min},
 								.align = {ruis::align::center, ruis::align::center}
 
@@ -214,7 +214,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 					),
 					m::gap(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {style::clock_padding, 0_pp}
 							}
 						}
@@ -224,7 +224,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 			make_horizontal_separator(c),
 			m::pile(c,
 				{
-					.layout_params = {
+					.layout = {
 						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					}
@@ -232,35 +232,35 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 				{
 					m::column(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							},
-							.widget_params = {
+							.widget = {
 								.id = "pw_container"s
 							}
 						}
 					),
 					m::row(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							}
 						},
 						{
 							m::pile(c,
 								{
-									.layout_params = {
+									.layout = {
 										.dims = {ruis::dim::fill, ruis::dim::fill},
 										.weight = 3
 									},
-									.widget_params = {
+									.widget = {
 										.id = "menu_area"s
 									}
 								}
 							),
 							m::gap(c,
 								{
-									.layout_params = {
+									.layout = {
 										.weight = 1
 									}
 								}
@@ -272,10 +272,10 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 			make_horizontal_separator(c),
 			m::row(c,
 				{
-					.layout_params = {
+					.layout = {
 						.dims = {ruis::dim::fill, buttons_area_height}
 					},
-					.widget_params = {
+					.widget = {
 						.id = "button_area"s
 					}
 				},

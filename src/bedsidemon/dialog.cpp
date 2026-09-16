@@ -51,10 +51,10 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
     return {
         m::mouse_proxy(c,
             {
-                .layout_params{
+                .layout{
                     .dims{ruis::dim::fill, ruis::dim::fill}
                 },
-                .widget_params{
+                .widget{
                     .id = "ruis_mouse_proxy"s
                 }
             }
@@ -77,7 +77,7 @@ std::vector<utki::shared_ref<widget>> make_root_widget_structure(
                 [&](){
                     auto mp = m::mouse_proxy(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             }
                         }

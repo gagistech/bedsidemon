@@ -221,7 +221,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::gap(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims{0_px, style::gap_size_setting_label_value}
 				}
 			}
@@ -244,7 +244,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::gap(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims{0_px, style::gap_size_between_settings}
 				}
 			}
@@ -264,7 +264,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 		),
 		m::gap(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims{0_px, style::gap_size_setting_label_value}
 				}
 			}

@@ -61,7 +61,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 		),
 		m::gap(c,
 			{
-				.layout_params{
+				.layout{
 					.dims = {0_px, gap_paragraph}
 				}
 			}
@@ -72,7 +72,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 		),
 		m::gap(c,
 			{
-				.layout_params{
+				.layout{
 					.dims = {0_px, gap_paragraph}
 				}
 			}
@@ -117,7 +117,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 		),
 		m::gap(c,
 			{
-				.layout_params{
+				.layout{
 					.dims = {0_px, gap_paragraph}
 				}
 			}

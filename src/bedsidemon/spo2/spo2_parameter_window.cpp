@@ -150,11 +150,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 	return {
 		m::waveform(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims = {ruis::dim::fill, ruis::dim::fill},
 					.weight = 3
 				},
-				.widget_params = {
+				.widget = {
 					.id = "pw_waveform"s,
 					.clip = true
 				},
@@ -165,7 +165,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 		),
 		m::row(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims = {ruis::dim::fill, ruis::dim::min},
 					.weight = 1
 				}
@@ -185,7 +185,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 				),
 				m::column(c,
 					{
-						.layout_params = {
+						.layout = {
 							.dims = {ruis::dim::fill, ruis::dim::min},
 							.weight = 1
 						}
@@ -193,17 +193,17 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 					{
 						m::pile(c,
 							{
-								.layout_params{
+								.layout{
 									.dims = {ruis::dim::fill, ruis::dim::min}
 								}
 							},
 							{
 								m::click_proxy(c,
 									{
-										.layout_params{
+										.layout{
 											.dims{ruis::dim::fill, ruis::dim::fill}
 										},
-										.widget_params{
+										.widget{
 											.id = "click_proxy"s
 										}
 									}

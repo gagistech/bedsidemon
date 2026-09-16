@@ -108,7 +108,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(const utki::share
 		),
 		m::gap(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims{0_px, style::gap_size_setting_label_value}
 				}
 			}
