@@ -117,8 +117,8 @@ utki::shared_ref<ruis::rectangle> make_separator(utki::shared_ref<ruis::context>
 		{
 			.layout_params{
 				.dims = {
-					vertical ? ruis::layout::dimension(1_pp) : ruis::layout::dimension(ruis::dim::fill),
-					vertical ? ruis::layout::dimension(ruis::dim::fill) : ruis::layout::dimension(1_pp)
+					vertical ? ruis::dimension(1_pp) : ruis::dimension(ruis::dim::fill),
+					vertical ? ruis::dimension(ruis::dim::fill) : ruis::dimension(1_pp)
 				}
 			},
 			.params{
