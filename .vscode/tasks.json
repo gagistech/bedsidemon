@@ -20,6 +20,15 @@
             "group": "build"
         },
         {
+            "label": "build-asan",
+            "type": "shell",
+            "command": "make config=asan",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
             "label": "clean-all",
             "type": "shell",
             "command": "make clean-all",
