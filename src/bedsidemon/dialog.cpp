@@ -118,13 +118,13 @@ dialog::dialog(
 	widget(std::move(context), {}, {}),
 	container(
 		this->context, //
-        // clang-format off
+		// clang-format off
 		{
 			.params{
 				.layout = ruis::layout::pile
 			}
 		},
-        // clang-format on
+		// clang-format on
 		make_root_widget_structure(
 			this->context, //
 			std::move(params.container_params),
