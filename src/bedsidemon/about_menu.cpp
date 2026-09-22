@@ -49,9 +49,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 		m::text(c,
 			{
 				.params{
-					.color{
-						.normal = color_program_title
-					},
+					.color = color_program_title,
 					.font{
 						.size = font_size_program_title
 					}
@@ -93,9 +91,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 				m::text(c,
 					{
 						.params{
-							.color{
-								.normal = 0xff8080ff // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
-							},
+							.color = 0xff8080ff, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 							.font{
 								.size = font_size
 							}

@@ -41,7 +41,7 @@ waveform::waveform( //
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
-	ruis::color_widget(this->context, std::move(params.color_params)),
+	ruis::color_widget(this->context, std::move(params.color)),
 	paths{
 		{//
 		 {.vao{this->context.get().renderer}},

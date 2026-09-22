@@ -66,7 +66,7 @@ public:
 		ruis::widget::parameters widget;
 
 		constexpr static const auto default_waveform_color = 0xffffff00;
-		ruis::color_widget::parameters color_params = {.normal = default_waveform_color};
+		ruis::styled<ruis::color> color = default_waveform_color;
 	};
 
 	waveform(utki::shared_ref<ruis::context> context, all_parameters params);

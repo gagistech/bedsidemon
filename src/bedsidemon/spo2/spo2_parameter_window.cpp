@@ -71,9 +71,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 					.align = {ruis::align::front, ruis::align::front}
 				},
 				.params{
-					.color{
-						.normal = style::color_info_text
-					},
+					.color = style::color_info_text,
 					.font{
 						.size = font_size_label
 					}
@@ -87,9 +85,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 					.id = "spo2_value"s
 				},
 				.params{
-					.color{
-						.normal = color
-					},
+					.color = color,
 					.font{
 						.size = font_size_main_value
 					}
@@ -106,9 +102,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 							.id = "bpm_value"s
 						},
 						.params{
-							.color{
-								.normal = color_secondary_value
-							},
+							.color = color_secondary_value,
 							.font{
 								.size = font_size_secondary_value
 							}
@@ -158,9 +152,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(
 					.id = "pw_waveform"s,
 					.clip = true
 				},
-				.color_params{
-					.normal = color
-				}
+				.color = color
 			}
 		),
 		m::row(c,
@@ -262,9 +254,7 @@ spo2_parameter_window::spo2_parameter_window(
 	),
 	ruis::color_widget(
 		this->context,
-		{
-			.normal = color
-		}
+		color
 	),
 	ruis::container( 
 		this->context,

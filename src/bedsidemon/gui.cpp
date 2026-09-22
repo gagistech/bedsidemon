@@ -201,9 +201,7 @@ utki::shared_ref<ruis::widget> make_root_widget_structure(utki::shared_ref<ruis:
 										.id = "clock_text"s
 									},
 									.params{
-										.color{
-											.normal = style::color_info_text
-										},
+										.color = style::color_info_text,
 										.font{
 											.size = style::font_size_label
 										}
