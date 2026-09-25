@@ -102,7 +102,7 @@ application::application(bool windowed, std::string_view res_path) :
 				std::stringstream ss;
 				ss << std::put_time(&tm, "%T");
 
-				time_text_widget.get().set_text(ss.str());
+				time_text_widget.get().set_string(ss.str());
 
 				this->clock_timer->stop();
 				this->clock_timer->start(clock_update_interval_ms);

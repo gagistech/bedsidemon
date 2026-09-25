@@ -318,9 +318,9 @@ void spo2_parameter_window::set(const spo2_measurement& meas)
 	// set oxygenation
 	if (meas.spo2 == 0 || meas.spo2 > std::centi::den) {
 		// invalid value
-		this->spo2_value.set_text("---");
+		this->spo2_value.set_string("---");
 	} else {
-		this->spo2_value.set_text(std::to_string(unsigned(meas.spo2)));
+		this->spo2_value.set_string(std::to_string(unsigned(meas.spo2)));
 	}
 
 	constexpr auto bpm_invalid_value = 0xff;
@@ -328,9 +328,9 @@ void spo2_parameter_window::set(const spo2_measurement& meas)
 	// set bpm
 	if (meas.pulse_rate == 0 || meas.pulse_rate == bpm_invalid_value) {
 		// invalid value
-		this->bpm_value.set_text("---");
+		this->bpm_value.set_string("---");
 	} else {
-		this->bpm_value.set_text(std::to_string(unsigned(meas.pulse_rate)));
+		this->bpm_value.set_string(std::to_string(unsigned(meas.pulse_rate)));
 	}
 
 	if (meas.pulse_beat) {
