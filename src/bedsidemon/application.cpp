@@ -24,7 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <iomanip>
 
 #include <fsif/native_file.hpp>
-#include <ruis/standard_widgets.hpp>
+#include <ruis/standard_resources.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <utki/config.hpp>
@@ -72,7 +72,7 @@ application::application(bool windowed, std::string_view res_path) :
 		this->quit();
 	};
 
-	ruis::init_standard_widgets(
+	ruis::mount_ruis_res_pack(
 		this->window.gui.context, //
 		this->get_res_file()
 	);
