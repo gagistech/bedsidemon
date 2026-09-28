@@ -72,11 +72,6 @@ application::application(bool windowed, std::string_view res_path) :
 		this->quit();
 	};
 
-	ruis::mount_ruis_res_pack(
-		this->window.gui.context, //
-		this->get_res_file()
-	);
-
 	this->window.gui.context.get().loader().mount_res_pack(this->get_res_file(this->res_path));
 
 	this->load_language(this->settings_storage.get().cur_language_index);
