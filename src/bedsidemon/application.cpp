@@ -24,7 +24,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <iomanip>
 
 #include <fsif/native_file.hpp>
-#include <ruis/standard_resources.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <utki/config.hpp>
