@@ -124,7 +124,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(const utki::share
 				},
 				.params{
 					.list{
-						.provider = utki::make_shared<selection_box_provider>(c)
+						.provider = utki::make_unique<selection_box_provider>(c)
 					}
 				}
 			}

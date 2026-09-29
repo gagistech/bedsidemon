@@ -166,7 +166,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 			},
 			.params{
 				.list{
-					.provider = utki::make_shared<language_selection_box_provider>(c)
+					.provider = utki::make_unique<language_selection_box_provider>(c)
 				}
 			}
 		}
@@ -237,7 +237,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				},
 				.params{
 					.list{
-						.provider = utki::make_shared<sweep_speed_selection_box_provider>(c)
+						.provider = utki::make_unique<sweep_speed_selection_box_provider>(c)
 					}
 				}
 			}
