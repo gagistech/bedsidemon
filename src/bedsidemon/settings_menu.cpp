@@ -61,7 +61,7 @@ public:
 		return sweep_speeds_um_per_sec.size();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		utki::assert(index < sweep_speeds_um_per_sec.size(), SL);
 
@@ -114,7 +114,7 @@ public:
 		return settings::language_id_to_name_mapping.size();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		const auto& lang_mapping = settings::language_id_to_name_mapping;
 

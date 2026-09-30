@@ -52,7 +52,7 @@ public:
 		return spo2_parameter_window::possible_colors.size();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		auto& c = this->context;
 
