@@ -24,8 +24,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/text.hpp>
 
-#include "style.hpp"
 #include "../version.hxx"
+
+#include "style.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
