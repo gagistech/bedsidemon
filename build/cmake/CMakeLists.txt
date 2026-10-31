@@ -18,8 +18,6 @@ myci_add_source_files(srcs
     RECURSIVE
 )
 
-list(APPEND srcs ../../src/version.cpp)
-
 myci_declare_application(${PROJECT_NAME}-opengles
     SOURCES
         ${srcs}
