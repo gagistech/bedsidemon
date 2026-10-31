@@ -48,12 +48,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 	return {
 		m::text(c,
 			{
-				.params{
+				.params{ .text_string{
 					.color = color_program_title,
 					.font{
 						.size = font_size_program_title
 					}
-				}
+				 } }
 			},
 			c.get().localization.get().get("about_menu:program_title")
 		),
@@ -80,32 +80,32 @@ std::vector<utki::shared_ref<ruis::widget>> make_contents(utki::shared_ref<ruis:
 			{
 				m::text(c,
 					{
-						.params{
+						.params{ .text_string{
 							.font{
 								.size = font_size
 							}
-						}
+						 } }
 					},
 					c.get().localization.get().get("about_menu:powered_by")
 				),
 				m::text(c,
 					{
-						.params{
+						.params{ .text_string{
 							.color = 0xff8080ff, // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 							.font{
 								.size = font_size
 							}
-						}
+						 } }
 					},
 					U" ruis"s
 				),
 				m::text(c,
 					{
-						.params{
+						.params{ .text_string{
 							.font{
 								.size = font_size
 							}
-						}
+						 } }
 					},
 					U" GUI"s
 				)

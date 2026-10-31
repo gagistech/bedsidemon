@@ -82,11 +82,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_root_widget_structure(utki::sha
 			{
 				m::text(c,
 					{
-						.params{
+						.params{ .text_string{
 							.font{
 								.size = 20_pp // NOLINT(cppcoreguidelines-avoid-magic-numbers, "TODO: fix")
 							}
-						}
+						 } }
 					},
 					c.get().localization.get().get("quit_dialog:title")
 				),

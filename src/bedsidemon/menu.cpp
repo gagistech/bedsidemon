@@ -80,11 +80,11 @@ menu::menu(
 							.layout_params{
 								.align = {ruis::align::front, ruis::align::center}
 							},
-							.params{
+							.params{ .text_string{
 								.font{
 									.size = style::font_size_menu_title
 								}
-							}
+							 } }
 						},
 						std::move(title)
 					),

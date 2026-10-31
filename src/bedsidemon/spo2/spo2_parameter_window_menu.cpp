@@ -98,11 +98,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(const utki::share
 				.layout_params{
 					.align = {ruis::align::front, ruis::align::center}
 				},
-				.params{
+				.params{ .text_string{
 					.font{
 						.size = style::font_size_setting
 					}
-				}
+				 } }
 			},
 			c.get().localization.get().get("spo2_settings_menu:color_title")
 		),

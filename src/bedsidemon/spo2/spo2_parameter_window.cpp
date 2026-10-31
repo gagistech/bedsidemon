@@ -70,12 +70,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 				.layout_params{
 					.align = {ruis::align::front, ruis::align::front}
 				},
-				.params{
+				.params{ .text_string{
 					.color = style::color_info_text,
 					.font{
 						.size = font_size_label
 					}
-				}
+				 } }
 			},
 			std::move(title)
 		),
@@ -84,12 +84,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 				.widget{
 					.id = "spo2_value"s
 				},
-				.params{
+				.params{ .text_string{
 					.color = color,
 					.font{
 						.size = font_size_main_value
 					}
-				}
+				 } }
 			},
 			U"---"s
 		),
@@ -101,12 +101,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_numeric_content(
 						.widget{
 							.id = "bpm_value"s
 						},
-						.params{
+						.params{ .text_string{
 							.color = color_secondary_value,
 							.font{
 								.size = font_size_secondary_value
 							}
-						}
+						 } }
 					},
 					U"---"s
 				),

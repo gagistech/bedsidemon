@@ -86,11 +86,11 @@ public:
 			{
 				m::text(c,
 					{
-						.params{
+						.params{ .text_string{
 							.font{
 								.size = style::font_size_setting
 							}
-						}
+						 } }
 					},
 					c.get().localization.get().get("settings_menu:sweep_speed_value").format({utki::to_utf32(utki::cat(speed_mm_per_sec))})
 				)
@@ -139,11 +139,11 @@ public:
 			{
 				m::text(c,
 					{
-						.params{
+						.params{ .text_string{
 							.font{
 								.size = style::font_size_setting
 							}
-						}
+						 } }
 					},
 					std::u32string(lang_name)
 				)
@@ -211,11 +211,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.layout_params{
 					.align = {ruis::align::front, ruis::align::center}
 				},
-				.params{
+				.params{ .text_string{
 					.font{
 						.size = style::font_size_setting
 					}
-				}
+				 } }
 			},
 			c.get().localization.get().get("settings_menu:sweep_speed_title")
 		),
@@ -254,11 +254,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_menu_contents(utki::shared_ref<
 				.layout_params{
 					.align = {ruis::align::front, ruis::align::center}
 				},
-				.params{
+				.params{ .text_string{
 					.font{
 						.size = style::font_size_setting
 					}
-				}
+				 } }
 			},
 			c.get().localization.get().get("settings_menu:language_title")
 		),
