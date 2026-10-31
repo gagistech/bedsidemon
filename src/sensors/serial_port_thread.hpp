@@ -35,6 +35,10 @@ class serial_port_thread : protected nitki::loop_thread
 
 	std::vector<uint8_t> send_buffer;
 
+	// True while 'port' is registered in the wait_set, so that it is removed
+	// from it exactly once while its file descriptor is still valid.
+	bool port_in_wait_set = true;
+
 public:
 	serial_port_thread(std::string_view port_filename, baud_rate speed);
 
@@ -57,6 +61,9 @@ public:
 private:
 	std::optional<uint32_t> on_loop() override;
 	void on_quit() override;
+
+	// Remove 'port' from the wait_set if it is still registered (no-op otherwise).
+	void remove_port_from_wait_set();
 };
 
 } // namespace bedsidemon

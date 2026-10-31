@@ -35,11 +35,28 @@ serial_port_thread::serial_port_thread(std::string_view port_filename, baud_rate
 
 serial_port_thread::~serial_port_thread()
 {
+	// The port is normally removed from the wait_set in on_quit(), before it is
+	// closed. Remove it here as well to cover the case where the loop never ran
+	// (so on_quit() was not invoked). Safe because remove_port_from_wait_set()
+	// is idempotent.
+	this->remove_port_from_wait_set();
+}
+
+void serial_port_thread::remove_port_from_wait_set()
+{
+	if (!this->port_in_wait_set) {
+		return;
+	}
+	this->port_in_wait_set = false;
 	this->wait_set.remove(this->port);
 }
 
 void serial_port_thread::on_quit()
 {
+	// Remove the port from the wait_set while its file descriptor is still
+	// valid. Closing the port first would make wait_set::remove() fail, because
+	// epoll_ctl(EPOLL_CTL_DEL) on a closed descriptor returns an error.
+	this->remove_port_from_wait_set();
 	this->port.close();
 	this->on_port_closed();
 }
