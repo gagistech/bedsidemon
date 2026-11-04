@@ -81,6 +81,17 @@ public:
 
 	void on_color_change() override;
 
+	/**
+	 * @brief Handle a probe (debug inspection) command.
+	 * Resolves the (color_widget, container) diamond of probe overrides:
+	 * combines the responses of both branches, the set semantics
+	 * deduplicates the shared 'ruis::widget' section.
+	 *
+	 * @param command - probe command.
+	 * @return probe response.
+	 */
+	ruis::widget::probe_response_set probe(const tml::tree& command) override;
+
 	// clang-format off
 	constexpr static const std::array<ruis::color, 7> possible_colors = {{
 		 0xffffffff,
