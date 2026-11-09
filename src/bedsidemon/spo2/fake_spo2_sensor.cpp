@@ -77,7 +77,7 @@ void fake_spo2_sensor::on_timer_expired(uint32_t elapsed_ms)
 	auto dt_ms = this->time_since_frame_start_ms + elapsed_ms;
 
 	while (dt_ms >= this->cur_frame->delta_time_ms) {
-		this->push(*this->cur_frame);
+		this->push_measurement(*this->cur_frame);
 
 		dt_ms -= this->cur_frame->delta_time_ms;
 

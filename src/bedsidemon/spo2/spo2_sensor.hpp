@@ -49,7 +49,7 @@ public:
 
 protected:
 	// thread safe
-	void push(const spo2_measurement& meas);
+	void push_measurement(const spo2_measurement& meas);
 };
 
 } // namespace bedsidemon

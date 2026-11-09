@@ -34,7 +34,7 @@ spo2_sensor::spo2_sensor(utki::shared_ref<spo2_parameter_window> pw) :
 	param_window(std::move(pw))
 {}
 
-void spo2_sensor::push(const spo2_measurement& meas)
+void spo2_sensor::push_measurement(const spo2_measurement& meas)
 {
 #ifdef BEDSIDEMON_RECORD_SPO2_MEASUREMENTS
 	this->record.push_back(meas);

@@ -152,7 +152,7 @@ void setocare_st_t130_u01::handle_packet()
 	constexpr uint8_t max_signal_strength = 8;
 	constexpr auto max_pleth_value = 100;
 
-	this->push(spo2_measurement{
+	this->push_measurement(spo2_measurement{
 		.signal_strength = min(signal_strength, max_signal_strength),
 		.pulse_beat = pulse_beep,
 		.finger_out = no_finger,
