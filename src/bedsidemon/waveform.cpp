@@ -44,8 +44,8 @@ waveform::waveform( //
 	ruis::color_widget(this->context, std::move(params.color)),
 	paths{
 		{//
-		 {.vao{this->context.get().renderer}},
-		 {.vao{this->context.get().renderer}}
+		 {.vao{this->context.get().loader().factory, this->context.get().loader().common_rendering_objects.get()}},
+		 {.vao{this->context.get().loader().factory, this->context.get().loader().common_rendering_objects.get()}}
 		}
 },
 	value_max(default_max_value)
@@ -72,6 +72,7 @@ void waveform::render(const ruis::mat4& matrix) const
 {
 	for (const auto& pv : this->paths) {
 		pv.vao.render(
+			this->context.get().renderer.get(), //
 			ruis::mat4(matrix).translate(pv.origin), //
 			this->get_color()
 		);
